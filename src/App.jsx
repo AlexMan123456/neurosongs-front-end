@@ -1,5 +1,14 @@
+import { Route, Routes } from "react-router-dom"
+import Header from "./components/Header"
+import Homepage from "./components/Homepage"
+
 function App() {
-  return (<h1>Test</h1>)
+  return (<>
+    <Header/>
+    <Routes>
+      <Route path="" element={<Homepage/>}/>
+    </Routes>
+  </>)
 }
 
 export default App
