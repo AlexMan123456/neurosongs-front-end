@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { getAllSongs } from "../../api";
-import SongCard from "./songs/SongCard";
-import SongList from "./songs/SongList";
+import { useEffect, useState } from "react"
+import { getSongsFromUser } from "../../../api"
+import SongList from "../songs/SongList";
 
-function Homepage(){
+function UserSongs(props){
+    const {username} = props;
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
 
     useEffect(() => {
         setIsLoading(true);
-        getAllSongs().then((songs) => {
+        getSongsFromUser(username).then((songs) => {
             setIsLoading(false);
             setSongs(songs);
         }).catch((err) => {
@@ -27,7 +27,7 @@ function Homepage(){
         return <p>{error}</p>
     }
 
-    return (<SongList songs={songs}/>)
+    return <SongList songs={songs}/>
 }
 
-export default Homepage
+export default UserSongs

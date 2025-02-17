@@ -7,7 +7,7 @@ function StyledLink(props){
         &:hover {
             color: purple;
         }
-    `}>{props.children}</Link>
+    `} to={props.to}>{props.children}</Link>
 }
 
 export default StyledLink

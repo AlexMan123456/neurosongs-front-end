@@ -10,4 +10,16 @@ function getAllSongs(){
     })
 }
 
-export { getAllSongs }
+function getUserByUsername(username){
+    return api.get(`/api/users/${username}`).then(({data}) => {
+        return data.user
+    })
+}
+
+function getSongsFromUser(username){
+    return api.get(`/api/users/${username}/songs`).then(({data}) => {
+        return data.songs
+    })
+}
+
+export { getAllSongs, getUserByUsername, getSongsFromUser }
