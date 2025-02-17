@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "axios": "^1.7.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
