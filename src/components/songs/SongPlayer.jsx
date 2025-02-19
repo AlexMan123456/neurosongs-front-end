@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSong } from "../../../api";
+import { getSongById } from "../../../api";
 import { useParams } from "react-router-dom";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
@@ -16,7 +16,7 @@ function SongPlayer(){
 
     useEffect(() => {
         setIsLoading(true);
-        getSong(song_id).then((songData) => {
+        getSongById(song_id).then((songData) => {
             setSongData(songData)
             const songRef = ref(storage, `${songData.username}/${songData.album_id}/${songData.reference}`);
             return getDownloadURL(songRef);

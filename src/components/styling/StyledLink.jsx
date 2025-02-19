@@ -1,13 +1,13 @@
 import { css } from "@emotion/css"
 import { Link } from "react-router-dom"
 
-function StyledLink(props){
+function StyledLink({to, children}){
     return <Link className={css`
         color: blue;
         &:hover {
             color: purple;
         }
-    `} to={props.to}>{props.children}</Link>
+    `} to={to}>{children}</Link>
 }
 
 export default StyledLink

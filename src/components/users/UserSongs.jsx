@@ -27,11 +27,9 @@ function UserSongs(props){
         return <p>{error}</p>
     }
 
-    return (<ul>
+    return (<ul style={{listStyle: "none"}}>
         {songs.map((song) => {
-            return (<li key={`song-list-element-${song.song_id}`}>
-                <SongCard key={`song-card-${song.song_id}`} song={song}/>
-            </li>)
+            return <SongCard key={`song-card-${song.song_id}`} song={song}/>
         })}
     </ul>)
 }
