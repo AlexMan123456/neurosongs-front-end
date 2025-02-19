@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getSongsFromUser } from "../../../api"
-import SongList from "../songs/SongList";
+import SongCard from "../songs/SongCard";
 
 function UserSongs(props){
     const {username} = props;
@@ -27,7 +27,13 @@ function UserSongs(props){
         return <p>{error}</p>
     }
 
-    return <SongList songs={songs}/>
+    return (<ul>
+        {songs.map((song) => {
+            return (<li key={`song-list-element-${song.song_id}`}>
+                <SongCard key={`song-card-${song.song_id}`} song={song}/>
+            </li>)
+        })}
+    </ul>)
 }
 
 export default UserSongs

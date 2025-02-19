@@ -31,6 +31,7 @@ function UserPage(props){
     return (<section>
         <h2>{user.artist_name}</h2>
         <p>{`@${user.username}`}</p>
+        <h3>Songs</h3>
         <UserSongs username={username}/>
     </section>)
 }

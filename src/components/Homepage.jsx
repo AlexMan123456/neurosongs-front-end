@@ -29,9 +29,13 @@ function Homepage(){
         </>
         : null}
         <h3>Featured Songs</h3>
-        {featuredSongs.map((song) => {
-            return <SongCard key={`song-card-${song.song_id}`} song={song}/>
-        })}
+        <ol>
+            {featuredSongs.map((song) => {
+                return (<li key={`song-list-element-${song.song_id}`}>
+                    <SongCard key={`song-card-${song.song_id}`} song={song}/>
+                </li>)
+            })}
+        </ol>
     </section>)
 }
 
