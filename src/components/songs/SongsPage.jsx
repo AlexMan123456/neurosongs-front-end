@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllSongs } from "../../../api";
+import { getSongs } from "../../../api";
 import SongList from "./SongList";
 
 function SongsPage(){
@@ -9,7 +9,7 @@ function SongsPage(){
 
     useEffect(() => {
         setIsLoading(true);
-        getAllSongs().then((songs) => {
+        getSongs().then((songs) => {
             setIsLoading(false);
             setSongs(songs);
         }).catch((err) => {

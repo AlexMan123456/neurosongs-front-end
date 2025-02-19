@@ -4,8 +4,8 @@ const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL
 })
 
-function getAllSongs(){
-    return api.get("/api/songs").then(({data}) => {
+function getSongs(queries){
+    return api.get("/api/songs", {params: {...queries}}).then(({data}) => {
         return data.songs
     })
 }
@@ -28,4 +28,4 @@ function getSong(song_id){
     })
 }
 
-export { getAllSongs, getUserByUsername, getSongsFromUser, getSong }
+export { getSongs, getUserByUsername, getSongsFromUser, getSong }
