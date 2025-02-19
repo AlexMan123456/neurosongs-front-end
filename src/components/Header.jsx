@@ -1,5 +1,10 @@
+import Navigation from "./Navigation"
+
 function Header(){
-    return <h1>Neurosongs</h1>
+    return (<header>
+        <h1>Neurosongs</h1>
+        <Navigation/>
+    </header>)
 }
 
 export default Header
