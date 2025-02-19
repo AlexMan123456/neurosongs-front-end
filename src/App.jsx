@@ -12,7 +12,7 @@ function App() {
       <Route path="" element={<Homepage/>}/>
       <Route path="/users/:username" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPlayer/>}/>
-      <Route path="/songs" element={<SongsPage/>}/>
+      <Route path="/search" element={<SongsPage/>}/>
     </Routes>
   </>)
 }

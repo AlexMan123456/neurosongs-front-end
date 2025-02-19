@@ -9,7 +9,6 @@ import { useLocation } from "react-router-dom";
 function SongCard({song}){
     const [showSongPlayer, setShowSongPlayer] = useState(false);
     const [songURL, setSongURL] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
 
     useEffect(() => {
@@ -17,7 +16,6 @@ function SongCard({song}){
             const songRef = ref(storage, `${songData.username}/${songData.album_id}/${songData.reference}`)
             return getDownloadURL(songRef)
         }).then((songURL) => {
-            setIsLoading(false);
             setSongURL(songURL)
         }).catch((err) => {
             setError("Error getting song to play. Please try again later.")
@@ -29,10 +27,6 @@ function SongCard({song}){
         setShowSongPlayer((showSongPlayer) => {
             return !showSongPlayer
         })
-    }
-
-    if(isLoading){
-        return <p>Now Loading...</p>
     }
 
     if(error){
