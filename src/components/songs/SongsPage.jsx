@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSongs } from "../../../api";
-import SongList from "./SongList";
+import SongCard from "./SongCard";
 
 function SongsPage(){
     const [songs, setSongs] = useState([]);
@@ -26,7 +26,16 @@ function SongsPage(){
         return <p>{error}</p>
     }
 
-    return (<SongList songs={songs}/>)
+    return (<section>
+        <h2>Most recent songs</h2>
+        <ul>
+            {songs.map((song) => {
+                return (<li key={`song-list-element-${song.song_id}`}>
+                    <SongCard key={`song-card-${song.song_id}`} song={song}/>
+                </li>)
+            })}
+        </ul>
+    </section>)
 }
 
 export default SongsPage
