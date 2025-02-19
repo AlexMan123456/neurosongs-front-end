@@ -15,10 +15,10 @@ function SongPlayer(){
     useEffect(() => {
         setIsLoading(true);
         getSong(song_id).then((songData) => {
-            setIsLoading(false);
             const songRef = ref(storage, `${songData.username}/${songData.album_id}/${songData.reference}`);
             return getDownloadURL(songRef);
         }).then((songURL) => {
+            setIsLoading(false);
             setSong(songURL);
         })
         .catch((err) => {
