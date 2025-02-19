@@ -5,7 +5,7 @@ const api = axios.create({
 })
 
 function getSongs(queries){
-    return api.get("/api/songs", {params: {...queries}}).then(({data}) => {
+    return api.get("/api/songs", {params: queries}).then(({data}) => {
         return data.songs
     })
 }
@@ -28,4 +28,10 @@ function getSongById(song_id){
     })
 }
 
-export { getSongs, getUserByUsername, getSongsFromUser, getSongById }
+function getAlbums(queries){
+    return api.get("/api/albums", {parapms: queries}).then(({data}) => {
+        return data.albums
+    })
+}
+
+export { getSongs, getUserByUsername, getSongsFromUser, getSongById, getAlbums }

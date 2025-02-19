@@ -39,19 +39,21 @@ function SongCard({song}){
         return <p>{error}</p>
     }
 
-    return (<fieldset>
-        <li>
-            <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
-            {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.username}`}><p>{song.artist.artist_name}</p></StyledLink>}
-            <button onClick={handleClick}>Show song player</button>
-            {showSongPlayer 
-            ?
-            <>
-                <H5AudioPlayer src={songURL}/>
-            </>
-            : null}
-        </li>
-    </fieldset>)
+    return (<li>
+        <fieldset>
+            <legend>
+                {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.username}`}><p>{song.artist.artist_name}</p></StyledLink>}
+            </legend>
+                <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
+                <button onClick={handleClick}>Show song player</button>
+                {showSongPlayer 
+                ?
+                <>
+                    <H5AudioPlayer src={songURL}/>
+                </>
+                : null}
+        </fieldset>
+    </li>)
 }
 
 export default SongCard
