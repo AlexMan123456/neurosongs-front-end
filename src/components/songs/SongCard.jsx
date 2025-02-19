@@ -31,6 +31,14 @@ function SongCard({song}){
         })
     }
 
+    if(isLoading){
+        return <p>Now Loading...</p>
+    }
+
+    if(error){
+        return <p>{error}</p>
+    }
+
     return (<fieldset>
         <li>
             <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
