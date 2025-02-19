@@ -5,7 +5,7 @@ import SongCard from "./songs/SongCard";
 function Homepage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
 
     useEffect(() => {
         setIsLoading(true);
@@ -31,9 +31,7 @@ function Homepage(){
         <h3>Featured Songs</h3>
         <ol>
             {featuredSongs.map((song) => {
-                return (<li key={`song-list-element-${song.song_id}`}>
-                    <SongCard key={`song-card-${song.song_id}`} song={song}/>
-                </li>)
+                return (<SongCard song={song}/>)
             })}
         </ol>
     </section>)

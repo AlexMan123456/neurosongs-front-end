@@ -30,9 +30,7 @@ function SongsPage(){
         <h2>Most recent songs</h2>
         <ul>
             {songs.map((song) => {
-                return (<li key={`song-list-element-${song.song_id}`}>
-                    <SongCard key={`song-card-${song.song_id}`} song={song}/>
-                </li>)
+                return <SongCard key={`song-card-${song.song_id}`} song={song}/>
             })}
         </ul>
     </section>)

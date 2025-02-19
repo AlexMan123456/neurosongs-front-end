@@ -22,10 +22,10 @@ function getSongsFromUser(username){
     })
 }
 
-function getSong(song_id){
+function getSongById(song_id){
     return api.get(`/api/songs/${song_id}`).then(({data}) => {
         return data.song
     })
 }
 
-export { getSongs, getUserByUsername, getSongsFromUser, getSong }
+export { getSongs, getUserByUsername, getSongsFromUser, getSongById }
