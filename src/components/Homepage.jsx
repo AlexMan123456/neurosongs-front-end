@@ -1,27 +1,39 @@
 import { useEffect, useState } from "react"
-import { getSongs } from "../../api";
+import { getAlbums, getSongs } from "../../api";
 import SongCard from "./songs/SongCard";
+import AlbumCard from "./albums/AlbumCard";
 
 function Homepage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
-    const [error, setError] = useState("")
+    const [featuredAlbums, setFeaturedAlbums] = useState([])
+    const [error, setError] = useState("");
 
     useEffect(() => {
         getSongs({is_featured: true}).then((songs) => {
             setFeaturedSongs(songs);
-        }).catch((err) => {
+            return getAlbums({is_featured: true});
+        }).then((albums) => {
+            setFeaturedAlbums(albums);
+        })
+        .catch((err) => {
             setError("Usually we'd display a list of featured songs, but we're having problems at the moment...");
         })
     }, [])
 
     return (<section>
         <h2>Welcome to Neurosongs!</h2>
-        {error ? <p>{error}</p> : 
+        {error ? <p>{error}</p> :
         <>
+            <h3>Featured Albums</h3>
+            <ol>
+                {featuredAlbums.map((album) => {
+                    return <AlbumCard key={`album-card-${album.album_id}`} album={album}/>
+                })}
+            </ol>
             <h3>Featured Songs</h3>
             <ol>
                 {featuredSongs.map((song) => {
-                    return (<SongCard song={song}/>)
+                    return (<SongCard key={`song-card-${song.song_id}`} song={song}/>)
                 })}
             </ol>
         </>}
