@@ -40,9 +40,11 @@ function SongCard({song}){
     }
 
     return (<fieldset>
+        <legend>
+            {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.username}`}><p>{song.artist.artist_name}</p></StyledLink>}
+        </legend>
         <li>
             <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
-            {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.username}`}><p>{song.artist.artist_name}</p></StyledLink>}
             <button onClick={handleClick}>Show song player</button>
             {showSongPlayer 
             ?
