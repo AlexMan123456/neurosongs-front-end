@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getSongs } from "../../../api";
 import SongCard from "./SongCard";
+import { CircularProgress } from "@mui/material";
+import Loading from "../Loading";
 
 function SongsPage(){
     const [songs, setSongs] = useState([]);
@@ -19,7 +21,7 @@ function SongsPage(){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

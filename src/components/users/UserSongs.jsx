@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
-import { getSongsFromUser } from "../../../api"
+import { useEffect, useState } from "react";
+import { getSongsFromUser } from "../../../api";
 import SongCard from "../songs/SongCard";
+import Loading from "../Loading";
 
 function UserSongs(props){
     const {username} = props;
@@ -20,7 +21,7 @@ function UserSongs(props){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

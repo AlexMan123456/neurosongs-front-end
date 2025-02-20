@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { getUserByUsername } from "../../../api";
 import UserSongs from "./UserSongs";
+import Loading from "../Loading";
 
 function UserPage(props){
     const {username} = useParams();
@@ -21,7 +22,7 @@ function UserPage(props){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){
