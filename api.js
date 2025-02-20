@@ -34,4 +34,10 @@ function getAlbums(queries){
     })
 }
 
-export { getSongs, getUserByUsername, getSongsFromUser, getSongById, getAlbums }
+function getAlbumById(album_id){
+    return api.get(`/api/albums/${album_id}`).then(({data}) => {
+        return data.album
+    })
+}
+
+export { getSongs, getUserByUsername, getSongsFromUser, getSongById, getAlbums, getAlbumById }
