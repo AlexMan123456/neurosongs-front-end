@@ -12,13 +12,11 @@ function SongCard({song}){
     const [error, setError] = useState("")
 
     useEffect(() => {
-        getSongById(song.song_id).then((songData) => {
-            const songRef = ref(storage, `${songData.username}/${songData.album_id}/${songData.reference}`)
-            return getDownloadURL(songRef)
-        }).then((songURL) => {
+        const songRef = ref(storage, `${song.username}/${song.album_id}/${song.reference}`)
+        getDownloadURL(songRef).then((songURL) => {
             setSongURL(songURL)
         }).catch((err) => {
-            setError("Error getting song to play. Please try again later.")
+            setError("Error fetching song. Please try again later.")
         })
     }, [])
 

@@ -4,6 +4,7 @@ import Homepage from "./components/Homepage"
 import UserPage from "./components/users/UserPage"
 import SongPlayer from "./components/songs/SongPlayer"
 import SongsPage from "./components/songs/SongsPage"
+import AlbumPage from "./components/albums/AlbumPage"
 
 function App() {
   return (<>
@@ -13,6 +14,7 @@ function App() {
       <Route path="/users/:username" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPlayer/>}/>
       <Route path="/search" element={<SongsPage/>}/>
+      <Route path="/albums/:album_id" element={<AlbumPage/>}/>
     </Routes>
   </>)
 }
