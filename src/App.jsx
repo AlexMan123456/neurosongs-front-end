@@ -5,7 +5,8 @@ import UserPage from "./components/users/UserPage"
 import SongPlayer from "./components/songs/SongPlayer"
 import SongsPage from "./components/songs/SongsPage"
 import AlbumPage from "./components/albums/AlbumPage"
-import SignInPage from "./components/users/SignInPage"
+import GetEmailForSignUpPage from "./components/users/sign-in/GetEmailForSignUpPage"
+import SignInPage from "./components/users/sign-in/SignInPage"
 
 function App() {
   return (<>
@@ -17,6 +18,7 @@ function App() {
       <Route path="/search" element={<SongsPage/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>
       <Route path="/sign_in" element={<SignInPage/>}/>
+      <Route path="/create-account" element={<GetEmailForSignUpPage/>}/>
     </Routes>
   </>)
 }
