@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Loading from "../../Loading";
 import { Button, FormControl, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import getMissingPasswordRequirements from "../../../utils/get-missing-password-requirements";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -36,7 +37,8 @@ function CompleteSignUpPage(){
             navigate("/sign_in")
         })
         .catch((err) => {
-            setPasswordError(err.message)
+            console.log(err)
+            setPasswordError(err)
         })
     }
 
@@ -57,6 +59,14 @@ function CompleteSignUpPage(){
             value={password}
             onChange={(event) => {setPassword(event.target.value)}}
         />
+        {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
+            <p>Your password does not match the following criteria:</p>
+            <ul>
+                {getMissingPasswordRequirements(passwordError.message).map((requirement, index) => {
+                    return <li key={`requirement-${index}`}>{requirement}</li>
+                })}
+            </ul>
+        </> : null}
         <Button onClick={handleSubmit}>Submit</Button>
     </FormControl>)
 }
