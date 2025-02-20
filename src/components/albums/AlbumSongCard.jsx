@@ -1,39 +1,25 @@
 import { useEffect, useState } from "react"
 import { getSongById } from "../../../api";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import StyledLink from "../styling/StyledLink";
+import H5AudioPlayer from "react-h5-audio-player";
 
 function AlbumSongCard({song}){
-    const [songURL, setSongURL] = useState({});
-    const {album_id} = useParams()
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        setIsLoading(true);
-        const songRef = ref(storage, `${song.username}/${album_id}/${song.reference}`);
-        getDownloadURL(songRef).then((songURL) => {
-            setIsLoading(false);
-            setSongURL(songURL);
-        }).catch((err) => {
-            setIsLoading(false);
-            setError("Error fetching song. Please try again later.")
-        })
-    }, [])
-
-    if(isLoading){
-        return <p>Now Loading...</p>
-    }
-
-    if(error){
-        return <p>{error}</p>
+    function handleClick(event){
+        event.preventDefault();
+        searchParams.set("song_id", song.song_id);
+        navigate(`${location.pathname}?${searchParams.toString()}`)
     }
 
     return (<li>
         <fieldset>
-            <legend><StyledLink to={`songs/${song.song_id}`}>{song.title}</StyledLink> - {song.artist.artist_name}</legend>
+            <legend><button onClick={handleClick} style={{backgroundColor: "transparent", border: "none"}}>{song.title}</button> - {song.artist.artist_name}</legend>
         </fieldset>
     </li>)
 }
