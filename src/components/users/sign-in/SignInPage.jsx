@@ -6,7 +6,7 @@ function SignInPage(){
     return (<section>
         <EmailOrUsernameAndPasswordSignIn/>
         <GoogleSignIn/>
-        <p>New to this site? <StyledLink to="/create-account">Create an account</StyledLink></p>
+        <p>New to this site? <StyledLink to="/create_account">Create an account</StyledLink></p>
     </section>)
 }
 

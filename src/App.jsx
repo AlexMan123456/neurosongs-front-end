@@ -7,6 +7,7 @@ import SongsPage from "./components/songs/SongsPage"
 import AlbumPage from "./components/albums/AlbumPage"
 import GetEmailForSignUpPage from "./components/users/sign-in/GetEmailForSignUpPage"
 import SignInPage from "./components/users/sign-in/SignInPage"
+import CompleteSignUpPage from "./components/users/sign-in/CompleteSignUpPage"
 
 function App() {
   return (<>
@@ -18,7 +19,8 @@ function App() {
       <Route path="/search" element={<SongsPage/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>
       <Route path="/sign_in" element={<SignInPage/>}/>
-      <Route path="/create-account" element={<GetEmailForSignUpPage/>}/>
+      <Route path="/create_account" element={<GetEmailForSignUpPage/>}/>
+      <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
     </Routes>
   </>)
 }
