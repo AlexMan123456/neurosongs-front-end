@@ -1,25 +1,32 @@
-import { useEffect, useState } from "react"
-import { getSongById } from "../../../api";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import AlbumSongTitleButton from "./AlbumSongTItleButton";
 import StyledLink from "../styling/StyledLink";
-import H5AudioPlayer from "react-h5-audio-player";
 
 function AlbumSongCard({song}){
     const [searchParams, setSearchParams] = useSearchParams();
+    const song_id = parseInt(searchParams.get("song_id"));
     const location = useLocation();
     const navigate = useNavigate();
 
     function handleClick(event){
         event.preventDefault();
+        if(song_id === song.song_id){
+            searchParams.delete("song_id")
+            navigate(`${location.pathname}`);
+            return;
+        }
         searchParams.set("song_id", song.song_id);
-        navigate(`${location.pathname}?${searchParams.toString()}`)
+        navigate(`${location.pathname}?${searchParams.toString()}`);
     }
 
     return (<li>
         <fieldset>
-            <legend><button onClick={handleClick} style={{backgroundColor: "transparent", border: "none"}}>{song.title}</button> - {song.artist.artist_name}</legend>
+            <legend>
+                <p>
+                    <AlbumSongTitleButton onClick={handleClick} song={song}>{song.title}</AlbumSongTitleButton> - {song.artist.artist_name}
+                </p>
+            </legend>
+            {song_id === song.song_id ? <StyledLink to={`/songs/${song.song_id}`}>Go to song page</StyledLink> : null}
         </fieldset>
     </li>)
 }

@@ -75,7 +75,7 @@ function AlbumSongPlayer({album}){
     return <H5AudioPlayer
         src={songURL}
         autoPlay={true} 
-        howJumpControls={false}
+        showJumpControls={false}
         showSkipControls={true}
         onClickNext={nextSong}
         onEnded={nextSong}
