@@ -6,6 +6,7 @@ import { storage } from "../../firebase-config";
 import 'react-h5-audio-player/lib/styles.css';
 import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
+import Loading from "../Loading";
 
 function SongPlayer(){
     const {song_id} = useParams()
@@ -30,7 +31,7 @@ function SongPlayer(){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

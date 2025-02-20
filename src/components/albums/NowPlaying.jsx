@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { getSongById } from "../../../api";
+import Loading from "../Loading";
 
 function NowPlaying(){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -21,7 +22,7 @@ function NowPlaying(){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

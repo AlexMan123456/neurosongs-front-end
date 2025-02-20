@@ -4,6 +4,7 @@ import { getSongById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import H5AudioPlayer from "react-h5-audio-player";
+import Loading from "../Loading";
 
 function AlbumSongPlayer({album}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -65,7 +66,7 @@ function AlbumSongPlayer({album}){
     }
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

@@ -7,6 +7,7 @@ import StyledLink from "../styling/StyledLink";
 import H5AudioPlayer from "react-h5-audio-player";
 import AlbumSongPlayer from "./AlbumSongPlayer";
 import NowPlaying from "./NowPlaying";
+import Loading from "../Loading";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -29,7 +30,7 @@ function AlbumPage(){
     }, [])
 
     if(isLoading){
-        return <p>Now Loading...</p>
+        return <Loading/>
     }
 
     if(error){

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import AlbumSongTitleButton from "./AlbumSongTItleButton";
+import AlbumSongTitleButton from "./AlbumSongTitleButton.jsx"
 import StyledLink from "../styling/StyledLink";
 
 function AlbumSongCard({song}){

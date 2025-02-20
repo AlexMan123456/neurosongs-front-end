@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getAlbums, getSongs } from "../../api";
 import SongCard from "./songs/SongCard";
 import AlbumCard from "./albums/AlbumCard";
+import Loading from "./Loading";
 
 function Homepage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
@@ -29,14 +30,14 @@ function Homepage(){
         {error ? <p>{error}</p> :
         <>
             <h3>Featured Albums</h3>
-            {isLoading ? <p>Now Loading...</p> : 
+            {isLoading ? <Loading/> : 
             <ol>
                 {featuredAlbums.map((album) => {
                     return <AlbumCard key={`album-card-${album.album_id}`} album={album}/>
                 })}
             </ol>}
             <h3>Featured Songs</h3>
-            {isLoading ? <p>Now Loading...</p> : 
+            {isLoading ? <Loading/> : 
             <ol>
                 {featuredSongs.map((song) => {
                     return (<SongCard key={`song-card-${song.song_id}`} song={song}/>)
