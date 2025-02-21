@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom"
-import Header from "./components/Header"
 import Homepage from "./components/Homepage"
 import UserPage from "./components/users/UserPage"
 import SongPlayer from "./components/songs/SongPlayer"
@@ -10,6 +9,7 @@ import SignInPage from "./components/users/sign-in/SignInPage"
 import CompleteSignUpPage from "./components/users/sign-in/CompleteSignUpPage"
 import UserSettingsPage from "./components/users/settings/UserSettingsPage"
 import LoadingPage from "./components/LoadingPage"
+import Header from "./components/header/Header"
 
 function App() {
   return (<>

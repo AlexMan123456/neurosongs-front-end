@@ -1,15 +1,22 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { Avatar, Button, FormControl, Input, TextField } from "@mui/material";
+import { patchUser } from "../../../../api";
+import { useNavigate, useParams } from "react-router-dom";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../firebase-config";
 
 function UserDetails(){
-    const {signedInUser} = useContext(UserContext);
+    const params = useParams()
+    const {signedInUser, setSignedInUser} = useContext(UserContext);
     const [username, setUsername] = useState(signedInUser.username);
-    const [artistName, setArtistName] = useState(signedInUser.artist_name);
+    const [artist_name, setArtistName] = useState(signedInUser.artist_name);
     const [description, setDescription] = useState(signedInUser.description);
     const [profilePicture, setProfilePicture] = useState(signedInUser.profile_picture);
     const [profilePictureDisplay, setProfilePictureDisplay] = useState(signedInUser.profile_picture);
     const [profilePictureError, setProfilePictureError] = useState("")
+    const [patchError, setPatchError] = useState("")
+    const navigate = useNavigate()
 
     function handleAvatarDisplay(profilePicture){
         setProfilePicture(profilePicture)
@@ -32,7 +39,24 @@ function UserDetails(){
     }
 
     function handleSubmit(){
-        
+        navigate("/loading");
+        const newImageRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${profilePicture.name}`)
+        return uploadBytes(newImageRef, profilePicture).then(() => {
+            return patchUser(signedInUser.user_id, {username, artist_name, profile_picture: profilePicture.name, description}).then((user) => {
+                setSignedInUser(user);
+                navigate(`/users/${user.user_id}`)
+            }).catch((err) => {
+                navigate(`/users/${user.user_id}/settings`)
+                setPatchError("Error updating profile. Please try again later.")
+            })
+        })
+    }
+
+    if(signedInUser.user_id !== params.user_id){
+        return (<section>
+                <h2>Wrong account!</h2>
+                <p>Looks like you're on the wrong edit page...</p>
+            </section>)
     }
 
     return (<section>
@@ -54,7 +78,7 @@ function UserDetails(){
             />
             <TextField
                 label="Artist Name"
-                value={artistName}
+                value={artist_name}
                 onChange={(event) => {setArtistName(event.target.value)}}
             />
             <TextField
@@ -63,7 +87,7 @@ function UserDetails(){
                 value={description}
                 onChange={(event) => {setDescription(event.target.value)}}
             />
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
         </FormControl>
     </section>)
 }
