@@ -10,6 +10,12 @@ function getSongs(queries){
     })
 }
 
+function getUsers(){
+    return api.get("/api/users").then(({data}) => {
+        return data.users
+    })
+}
+
 function getUserById(user_id){
     return api.get(`/api/users/${user_id}`).then(({data}) => {
         return data.user
@@ -41,9 +47,10 @@ function getAlbumById(album_id){
 }
 
 function postUser(data){
+    console.log(data)
     return api.post("/api/users", data).then(({data}) => {
         return data.user
     })
 }
 
-export { getSongs, getUserById, getSongsFromUser, getSongById, getAlbums, getAlbumById }
+export { getSongs, getUsers, getUserById, getSongsFromUser, getSongById, getAlbums, getAlbumById, postUser }

@@ -3,12 +3,14 @@ import { sendSignInLinkToEmail } from "firebase/auth";
 import { useState } from "react"
 import { auth } from "../../../firebase-config";
 import Loading from "../../Loading";
+import StyledLink from "../../styling/StyledLink";
 
 function GetEmailForSignUpPage(){
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [emailSent, setEmailSent] = useState(false);
+    const [showEmailExistsMessage, setShowEmailExistsMessage] = useState(false);
 
     const actionCodeSettings = {
         url: `${import.meta.env.VITE_BASE_URL}/complete_signup`,
@@ -16,9 +18,25 @@ function GetEmailForSignUpPage(){
     }
 
     function handleSubmit(event){
-        sendSignInLinkToEmail(auth, email, actionCodeSettings).then(() => {
+        getUsers().then((users) => {
+            const userEmails = users.map((user) => {
+                return user.email;
+            })
+
+            if(userEmails.includes(email)){
+                return Promise.reject({code: "Email already exists"});
+            }
+            
+            return sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        }).then(() => {
             localStorage.setItem("email", email);
             setEmailSent(true);
+        }).catch((err) => {
+            if(err.code === "Email already exists"){
+                setShowEmailExistsMessage(true);
+                return;
+            }
+            setError("Error sending verification email. Please try again later.")
         })
     }
 
@@ -48,6 +66,9 @@ function GetEmailForSignUpPage(){
         />
         <Button onClick={handleSubmit}>Submit</Button>
     </FormControl>
+    {showEmailExistsMessage ? <p>
+        Looks like an account with this email already exists. <StyledLink to="/sign_in">Return to sign-in page</StyledLink>.
+    </p> : null}
     </section>)
 }
 

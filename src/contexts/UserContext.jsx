@@ -11,7 +11,7 @@ function UserProvider({children}){
     const [signedInUser, setUser] = useState({});
 
     function setSignedInUser(user){
-        localStorage.setItem("signedInUser", user.username);
+        localStorage.setItem("signedInUser", user.user_id);
         setUser(user);
     }
 

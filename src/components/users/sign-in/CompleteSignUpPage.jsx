@@ -2,9 +2,10 @@ import { isSignInWithEmailLink, signInWithEmailLink, signOut, updatePassword } f
 import { auth } from "../../../firebase-config"
 import { useEffect, useState } from "react";
 import Loading from "../../Loading";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import getMissingPasswordRequirements from "../../../utils/get-missing-password-requirements";
+import { postUser } from "../../../../api";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -12,6 +13,10 @@ function CompleteSignUpPage(){
     const [formLoadError, setFormLoadError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [artist_name, setArtistName] = useState("");
+    const [username, setUsername] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,7 +28,6 @@ function CompleteSignUpPage(){
                 setDisplayForm(true);
             }).catch((err) => {
                 setIsLoading(false);
-                console.log(err)
                 setFormLoadError("Could not sign you in. Please try again later.");
             })
         }
@@ -31,13 +35,23 @@ function CompleteSignUpPage(){
 
     function handleSubmit(){
         const user = auth.currentUser
-        updatePassword(user, password).then(() => {
-            return signOut(auth)
+        if(username.includes(" ") || username.includes("@")){
+            setUsernameError("Username must not contain spaces or @")
+            return;
+        }
+        postUser({
+            user_id: user.uid,
+            username,
+            artist_name,
+            email: user.email
         }).then(() => {
-            navigate("/sign_in")
+            return updatePassword(user, password)
+        }).then(() => {
+            return signOut(auth);
+        }).then(() => {
+            navigate("/sign_in");
         })
         .catch((err) => {
-            console.log(err)
             setPasswordError(err)
         })
     }
@@ -51,7 +65,24 @@ function CompleteSignUpPage(){
         return <p>{formLoadError}</p>
     }
 
-    return (<FormControl>
+    return (<>
+    <h2>Please enter the following details</h2>
+    <FormControl>
+        <TextField
+            required
+            label="Artist name"
+            value={artist_name}
+            onChange={(event) => {setArtistName(event.target.value)}}
+            />
+        <TextField
+            required
+            label="Username"
+            value={username}
+            onChange={(event) => {setUsername(event.target.value)}}
+            onFocus={() => {setDisplayUsernameHelperText(true)}}
+            onBlur={() => {setDisplayUsernameHelperText(false)}}
+            />
+        {displayUsernameHelperText ? <FormHelperText>NOTE: Your username must be unique and not contain spaces or @ sign</FormHelperText> : null}
         <TextField
             required
             label="Password"
@@ -59,6 +90,7 @@ function CompleteSignUpPage(){
             value={password}
             onChange={(event) => {setPassword(event.target.value)}}
         />
+        {passwordError || usernameError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
             <ul>
@@ -67,8 +99,10 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
+        {usernameError ? <p>{usernameError}</p> : null}
         <Button onClick={handleSubmit}>Submit</Button>
-    </FormControl>)
+    </FormControl>
+    </>)
 }
 
 export default CompleteSignUpPage

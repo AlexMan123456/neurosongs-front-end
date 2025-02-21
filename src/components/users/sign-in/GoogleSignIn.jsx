@@ -1,5 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth } from "../../../firebase-config"
+import { Button } from "@mui/material"
 
 function GoogleSignIn(){
     const provider = new GoogleAuthProvider()
@@ -10,7 +11,7 @@ function GoogleSignIn(){
         })
     }
 
-    return <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
+    return <Button onClick={handleSignInWithGoogle}>Sign in with Google</Button>
 }
 
 export default GoogleSignIn
