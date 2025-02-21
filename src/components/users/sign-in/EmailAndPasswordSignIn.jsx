@@ -21,7 +21,6 @@ function EmailAndPasswordSignIn({setIsLoading, setSignInError}){
             navigate("/");
         }).catch((err) => {
             setIsLoading(false);
-            console.log(err.code)
             setSignInError(err.code);
         })
     }
