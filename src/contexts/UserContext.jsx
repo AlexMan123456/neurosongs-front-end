@@ -11,7 +11,7 @@ function UserProvider({children}){
     const [signedInUser, setUser] = useState({});
 
     function setSignedInUser(user){
-        localStorage.setItem("signedInUser", user.user_id);
+        localStorage.setItem("signedInUserID", user.user_id);
         setUser(user);
     }
 
@@ -23,12 +23,12 @@ function UserProvider({children}){
                 setSignedInUser(user);
             }).catch((err) => {
                 setIsLoading(false);
-                setError("Error signing in. Please try again later.")
+                setError("Error signing in. Please try again later.");
             })
         } else {
             setIsLoading(false);
         }
-    }, [])
+    }, [signedInUserID])
 
     if(isLoading){
         return <Loading/>
