@@ -10,14 +10,14 @@ function getSongs(queries){
     })
 }
 
-function getUserByUsername(username){
-    return api.get(`/api/users/${username}`).then(({data}) => {
+function getUserById(user_id){
+    return api.get(`/api/users/${user_id}`).then(({data}) => {
         return data.user
     })
 }
 
-function getSongsFromUser(username){
-    return api.get(`/api/users/${username}/songs`).then(({data}) => {
+function getSongsFromUser(user_id){
+    return api.get(`/api/users/${user_id}/songs`).then(({data}) => {
         return data.songs
     })
 }
@@ -29,7 +29,7 @@ function getSongById(song_id){
 }
 
 function getAlbums(queries){
-    return api.get("/api/albums", {parapms: queries}).then(({data}) => {
+    return api.get("/api/albums", {params: queries}).then(({data}) => {
         return data.albums
     })
 }
@@ -40,4 +40,10 @@ function getAlbumById(album_id){
     })
 }
 
-export { getSongs, getUserByUsername, getSongsFromUser, getSongById, getAlbums, getAlbumById }
+function postUser(data){
+    return api.post("/api/users", data).then(({data}) => {
+        return data.user
+    })
+}
+
+export { getSongs, getUserById, getSongsFromUser, getSongById, getAlbums, getAlbumById }

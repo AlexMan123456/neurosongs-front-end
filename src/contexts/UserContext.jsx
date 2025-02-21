@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { getUserByUsername } from "../../api";
+import { getUserById } from "../../api";
 import Loading from "../components/Loading";
 
 const UserContext = createContext();
 
 function UserProvider({children}){
-    const signedInUserUsername = localStorage.getItem("signedInUser");
+    const signedInUserID = localStorage.getItem("signedInUserID");
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
     const [signedInUser, setUser] = useState({});
@@ -16,9 +16,9 @@ function UserProvider({children}){
     }
 
     useEffect(() => {
-        if(signedInUserUsername){
+        if(signedInUserID){
             setIsLoading(true);
-            getUserByUsername(signedInUserUsername).then((user) => {
+            getUserById(signedInUserID).then((user) => {
                 setIsLoading(false);
                 setSignedInUser(user);
             }).catch((err) => {

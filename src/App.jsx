@@ -14,7 +14,7 @@ function App() {
     <Header/>
     <Routes>
       <Route path="" element={<Homepage/>}/>
-      <Route path="/users/:username" element={<UserPage/>}/>
+      <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPlayer/>}/>
       <Route path="/search" element={<SongsPage/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>

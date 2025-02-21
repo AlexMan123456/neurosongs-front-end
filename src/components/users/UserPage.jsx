@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { getUserByUsername } from "../../../api";
+import { getUserById } from "../../../api";
 import UserSongs from "./UserSongs";
 import Loading from "../Loading";
 
 function UserPage(props){
-    const {username} = useParams();
+    const {user_id} = useParams();
     const [user, setUser] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState("")
 
     useEffect(() => {
         setIsLoading(true)
-        getUserByUsername(username).then((user) => {
+        getUserById(user_id).then((user) => {
             setIsLoading(false);
             setUser(user);
         }).catch((err) => {
@@ -33,7 +33,7 @@ function UserPage(props){
         <h2>{user.artist_name}</h2>
         <p>{`@${user.username}`}</p>
         <h3>Songs</h3>
-        <UserSongs username={username}/>
+        <UserSongs user_id={user_id}/>
     </section>)
 }
 
