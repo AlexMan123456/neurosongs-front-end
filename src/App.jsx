@@ -9,7 +9,7 @@ import GetEmailForSignUpPage from "./components/users/sign-in/GetEmailForSignUpP
 import SignInPage from "./components/users/sign-in/SignInPage"
 import CompleteSignUpPage from "./components/users/sign-in/CompleteSignUpPage"
 import UserSettingsPage from "./components/users/settings/UserSettingsPage"
-import Loading from "./components/Loading"
+import LoadingPage from "./components/LoadingPage"
 
 function App() {
   return (<>
@@ -24,7 +24,7 @@ function App() {
       <Route path="/create_account" element={<GetEmailForSignUpPage/>}/>
       <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
       <Route path="/users/:user_id/settings" element={<UserSettingsPage/>}/>
-      <Route path="/loading" element={<Loading/>}/>
+      <Route path="/loading" element={<LoadingPage/>}/>
     </Routes>
   </>)
 }
