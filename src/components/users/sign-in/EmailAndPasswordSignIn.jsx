@@ -4,21 +4,25 @@ import { auth } from "../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getUserById } from "../../../../api";
 import { UserContext } from "../../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
-function EmailAndPasswordSignIn(){
+function EmailAndPasswordSignIn({setIsLoading, setSignInError}){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("")
     const {setSignedInUser} = useContext(UserContext);
+    const navigate = useNavigate()
 
     function handleSubmit(){
+        setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password).then((userCredentials) => {
             return getUserById(userCredentials.user.uid)
         }).then((user) => {
-            setSignedInUser(user)
-        })
-        .catch((err) => {
-            setError(err.message)
+            setSignedInUser(user);
+            navigate("/");
+        }).catch((err) => {
+            setIsLoading(false);
+            console.log(err.code)
+            setSignInError(err.code);
         })
     }
 

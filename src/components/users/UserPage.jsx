@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { getUserById } from "../../../api";
 import UserSongs from "./UserSongs";
 import Loading from "../Loading";
+import StyledLink from "../styling/StyledLink";
 
 function UserPage(props){
     const {user_id} = useParams();
@@ -32,6 +33,7 @@ function UserPage(props){
     return (<section>
         <h2>{user.artist_name}</h2>
         <p>{`@${user.username}`}</p>
+        <StyledLink to={`/users/${user_id}/settings`}>User Settings</StyledLink>
         <h3>Songs</h3>
         <UserSongs user_id={user_id}/>
     </section>)
