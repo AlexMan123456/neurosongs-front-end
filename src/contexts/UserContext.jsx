@@ -11,7 +11,7 @@ function UserProvider({children}){
     const [signedInUser, setUser] = useState({});
 
     function setSignedInUser(user){
-        localStorage.setItem("signedInUserID", user.user_id);
+        Object.keys(user).length === 0 ? localStorage.removeItem("signedInUserID") : localStorage.setItem("signedInUserID", user.user_id);
         setUser(user);
     }
 
