@@ -47,10 +47,15 @@ function getAlbumById(album_id){
 }
 
 function postUser(data){
-    console.log(data)
     return api.post("/api/users", data).then(({data}) => {
         return data.user
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongsFromUser, getSongById, getAlbums, getAlbumById, postUser }
+function patchUser(user_id, data){
+    return api.patch(`/api/users/${user_id}`, data).then(({data}) => {
+        return data.user
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongsFromUser, getSongById, getAlbums, getAlbumById, postUser, patchUser }
