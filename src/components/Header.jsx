@@ -6,6 +6,7 @@ import { Avatar, List, ListItem, ListItemButton, ListItemText } from "@mui/mater
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
+import wait from "../utils/wait";
 
 function Header(){
     const {signedInUser, setSignedInUser} = useContext(UserContext);
@@ -23,8 +24,9 @@ function Header(){
     function handleSignOut(){
         const previousLocationString = `${location.pathname}${location.search}`
         navigate("/loading")
-        return signOut(auth)
-        .then(() => {
+        return wait(2).then(() => {
+            return signOut(auth)
+        }).then(() => {
             setSignedInUser({});
         }).catch((err) => {
             setSignOutError("Error signing out. Please try again later.");
