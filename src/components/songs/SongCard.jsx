@@ -12,7 +12,7 @@ function SongCard({song}){
     const [error, setError] = useState("")
 
     useEffect(() => {
-        const songRef = ref(storage, `${song.username}/${song.album_id}/${song.reference}`)
+        const songRef = ref(storage, `${song.artist.username}/${song.album_id}/${song.reference}`)
         getDownloadURL(songRef).then((songURL) => {
             setSongURL(songURL)
         }).catch((err) => {
@@ -34,7 +34,7 @@ function SongCard({song}){
     return (<li>
         <fieldset>
             <legend>
-                {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.username}`}><p>{song.artist.artist_name}</p></StyledLink>}
+                {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.user_id}`}><p>{song.artist.artist_name}</p></StyledLink>}
             </legend>
                 <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
                 <button onClick={handleClick}>Show song player</button>

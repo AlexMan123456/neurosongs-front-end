@@ -4,14 +4,14 @@ import SongCard from "../songs/SongCard";
 import Loading from "../Loading";
 
 function UserSongs(props){
-    const {username} = props;
+    const {user_id} = props;
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
         setIsLoading(true);
-        getSongsFromUser(username).then((songs) => {
+        getSongsFromUser(user_id).then((songs) => {
             setIsLoading(false);
             setSongs(songs);
         }).catch((err) => {
