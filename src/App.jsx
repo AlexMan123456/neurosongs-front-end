@@ -8,7 +8,6 @@ import AlbumPage from "./components/albums/AlbumPage"
 import GetEmailForSignUpPage from "./components/users/sign-in/GetEmailForSignUpPage"
 import SignInPage from "./components/users/sign-in/SignInPage"
 import CompleteSignUpPage from "./components/users/sign-in/CompleteSignUpPage"
-import { useEffect } from "react"
 
 function App() {
   return (<>

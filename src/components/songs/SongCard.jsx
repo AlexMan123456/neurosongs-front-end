@@ -12,7 +12,7 @@ function SongCard({song}){
     const [error, setError] = useState("")
 
     useEffect(() => {
-        const songRef = ref(storage, `${song.artist.username}/${song.album_id}/${song.reference}`)
+        const songRef = ref(storage, `${song.user_id}/albums/${song.album_id}/${song.reference}`)
         getDownloadURL(songRef).then((songURL) => {
             setSongURL(songURL)
         }).catch((err) => {

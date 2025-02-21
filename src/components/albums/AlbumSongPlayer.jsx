@@ -20,7 +20,7 @@ function AlbumSongPlayer({album}){
             try {
                 setIsLoading(true);
                 const songData = await getSongById(song_id);
-                const songRef = ref(storage, `${songData.username}/${album.album_id}/${songData.reference}`);
+                const songRef = ref(storage, `${songData.user_id}/albums/${album.album_id}/${songData.reference}`);
                 setIsLoading(false);
                 setSongURL(await getDownloadURL(songRef));
             } catch(err) {
