@@ -5,7 +5,7 @@ import { signOut } from "firebase/auth";
 import { Avatar, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
+import { auth, storage } from "../../firebase-config";
 
 function UserDropdown({setSignOutError}){
     const {signedInUser, setSignedInUser} = useContext(UserContext);
