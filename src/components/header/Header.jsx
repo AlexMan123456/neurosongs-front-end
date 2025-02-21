@@ -1,20 +1,16 @@
 import { useContext, useState } from "react"
 import Navigation from "../Navigation"
-import StyledLink from "../styling/StyledLink"
-import { UserContext } from "../../contexts/UserContext"
-import { Avatar, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase-config";
-import wait from "../../utils/wait";
-import { getDownloadURL, ref } from "firebase/storage";
 import UserDropdown from "./UserDropdown";
+import { UserContext } from "../../contexts/UserContext";
+import StyledLink from "../styling/StyledLink";
 
 function Header(){
+    const {signedInUser} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
+    const isUserSignedIn = Object.keys(signedInUser).length !== 0;
   
     return (<header>
-        <UserDropdown setSignOutError={setSignOutError}/>
+        {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
         {signOutError ? <p>{signOutError}</p> : null}
         <h1>Neurosongs</h1>
         <Navigation/>

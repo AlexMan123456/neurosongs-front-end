@@ -44,6 +44,7 @@ function UserDropdown({setSignOutError}){
         }).then(() => {
             setSignedInUser({});
         }).catch((err) => {
+            console.log(err)
             setSignOutError("Error signing out. Please try again later.");
         }).finally(() => {
             setDisplayUserList(false);
