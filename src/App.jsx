@@ -8,6 +8,7 @@ import AlbumPage from "./components/albums/AlbumPage"
 import GetEmailForSignUpPage from "./components/users/sign-in/GetEmailForSignUpPage"
 import SignInPage from "./components/users/sign-in/SignInPage"
 import CompleteSignUpPage from "./components/users/sign-in/CompleteSignUpPage"
+import UserSettingsPage from "./components/users/settings/UserSettingsPage"
 
 function App() {
   return (<>
@@ -21,6 +22,7 @@ function App() {
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/create_account" element={<GetEmailForSignUpPage/>}/>
       <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
+      <Route path="/users/:user_id/settings" element={<UserSettingsPage/>}/>
     </Routes>
   </>)
 }
