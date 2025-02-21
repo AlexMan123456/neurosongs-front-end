@@ -39,7 +39,7 @@ function AlbumPage(){
 
     return (<section>
         <h2>{album.title}</h2>
-        <p>By <StyledLink to={`/users/${album.username}`}>{album.artist.artist_name}</StyledLink></p>
+        <p>By <StyledLink to={`/users/${album.user_id}`}>{album.artist.artist_name}</StyledLink></p>
         
         {song_id
         ? <div>
