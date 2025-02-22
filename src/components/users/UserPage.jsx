@@ -9,7 +9,7 @@ import { storage } from "../../firebase-config";
 import { UserContext } from "../../contexts/UserContext";
 import DisplayCategory from "./DisplayCategory";
 
-function UserPage(props){
+function UserPage(){
     const params = useParams();
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +51,6 @@ function UserPage(props){
             <p>{`@${user.username}`}</p>
             <h2>Description</h2>
             <p>{user.description}</p>
-            {signedInUser.user_id === params.user_id ? <StyledLink to={`/users/${params.user_id}/settings`}>User Settings</StyledLink> : null}
         </header>
         <DisplayCategory/>
     </>)

@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-import { Avatar, Button, FormControl, Input, TextField } from "@mui/material";
+import { Avatar, Button, FormControl, TextField } from "@mui/material";
 import { getUserById, patchUser } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../firebase-config";
 import Loading from "../../Loading";
-import { CloudUpload } from "@mui/icons-material";
-import VisuallyHiddenInput from "../../styling/VisuallyHiddenInput";
 import FileInput from "../../styling/FileInput";
+import wait from "../../../utils/wait";
 
 function UserDetails(){
     const params = useParams()
@@ -72,15 +71,17 @@ function UserDetails(){
 
     function handleSubmit(){
         navigate("/loading");
-        const newImageRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${profilePicture.name}`)
-        return uploadBytes(newImageRef, profilePicture).then(() => {
-            return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description}).then((user) => {
-                setSignedInUser(user);
-                navigate(`/users/${user.user_id}`)
-            }).catch((err) => {
-                navigate(`/users/${user.user_id}/settings`)
-                setPatchError("Error updating profile. Please try again later.")
-            })
+        return wait(2).then(() => {
+            const newImageRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${profilePicture.name}`);
+            return uploadBytes(newImageRef, profilePicture)
+        }).then(() => {
+            return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description})
+        }).then((user) => {
+            setSignedInUser(user);
+            navigate(`/`)
+        }).catch((err) => {
+            navigate(`/users/${user.user_id}/settings`)
+            setPatchError("Error updating profile. Please try again later.")
         })
     }
 

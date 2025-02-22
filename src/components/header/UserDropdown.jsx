@@ -36,6 +36,11 @@ function UserDropdown({setSignOutError}){
         navigate(`/users/${signedInUser.user_id}`)
     }
 
+    function handleUserSettings(){
+        setDisplayUserList(false);
+        navigate(`/users/${signedInUser.user_id}/settings`);
+    }
+
     function handleSignOut(){
         const previousLocationString = `${location.pathname}${location.search}`
         navigate("/loading")
@@ -67,6 +72,12 @@ function UserDropdown({setSignOutError}){
             <ListItem>
                 <ListItemButton onClick={handleViewProfile}>
                     <ListItemText primary="View Profile"/>
+                </ListItemButton>
+            </ListItem>
+            <Divider/>
+            <ListItem>
+                <ListItemButton onClick={handleUserSettings}>
+                    <ListItemText primary="Settings"/>
                 </ListItemButton>
             </ListItem>
             <Divider/>
