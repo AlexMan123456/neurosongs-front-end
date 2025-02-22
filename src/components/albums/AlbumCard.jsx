@@ -25,7 +25,7 @@ function AlbumCard({album}){
             <ListItemText primary={album.artist.artist_name}/>
             {!location.pathname.includes("users") ? 
             <ListItemText>
-                <StyledLink to={`/users/${album.user_id}`}>{album.artist.username}</StyledLink>
+                <StyledLink to={`/users/${album.user_id}`}>@{album.artist.username}</StyledLink>
             </ListItemText>
             : null}
         </ListItemButton>
