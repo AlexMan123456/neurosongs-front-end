@@ -1,8 +1,9 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import AlbumSongTitleButton from "./AlbumSongTitle.jsx"
 import StyledLink from "../styling/StyledLink";
+import { ListItemButton, ListItemText } from "@mui/material";
 
-function AlbumSongCard({song}){
+function AlbumSongCard({song, index}){
     const [searchParams, setSearchParams] = useSearchParams();
     const song_id = parseInt(searchParams.get("song_id"));
     const location = useLocation();
@@ -19,16 +20,16 @@ function AlbumSongCard({song}){
         navigate(`${location.pathname}?${searchParams.toString()}`);
     }
 
-    return (<li>
-        <fieldset>
-            <legend>
-                <p>
-                    <AlbumSongTitleButton onClick={handleClick} song={song}>{song.title}</AlbumSongTitleButton> - {song.artist.artist_name}
-                </p>
-            </legend>
-            {song_id === song.song_id ? <StyledLink to={`/songs/${song.song_id}`}>Go to song page</StyledLink> : null}
-        </fieldset>
-    </li>)
+    return (<ListItemButton
+            selected={song_id === song.song_id}
+            sx={{border: 0.5, borderRadius: 0.7}}
+            onClick={handleClick}
+        >
+        <ListItemText>
+            {index}. <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
+        </ListItemText>
+        <ListItemText primary={song.artist.artist_name}/>
+    </ListItemButton>)
 }
 
 export default AlbumSongCard

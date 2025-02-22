@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import wait from "../../utils/wait";
 import { signOut } from "firebase/auth";
-import { Avatar, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Avatar, Divider, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
@@ -20,7 +20,7 @@ function UserDropdown({setSignOutError}){
     useEffect(() => {
         if(isUserSignedIn){
             setIsLoading(true);
-            const profilePictureRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${signedInUser.profile_picture}`)
+            const profilePictureRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${signedInUser.profile_picture}`);
             getDownloadURL(profilePictureRef).then((profilePicture) => {
                 setIsLoading(false);
                 setProfilePicture(profilePicture);
@@ -60,12 +60,16 @@ function UserDropdown({setSignOutError}){
             style={{cursor: "pointer"}}
         /> : null}
         {displayUserList ? 
-        <List>
+        <List sx={{
+            width: "20vw",
+            border: 0.5
+        }}>
             <ListItem>
                 <ListItemButton onClick={handleViewProfile}>
                     <ListItemText primary="View Profile"/>
                 </ListItemButton>
             </ListItem>
+            <Divider/>
             <ListItem>
                 <ListItemButton onClick={handleSignOut}>
                     <ListItemText primary="Sign Out"/>

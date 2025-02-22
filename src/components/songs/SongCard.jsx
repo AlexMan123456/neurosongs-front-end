@@ -33,7 +33,7 @@ function SongCard({song}){
     return (<>
         <ListItemButton
             alignItems="center"
-            sx={{ width: '100%', maxWidth: 360, border: 0.5, borderRadius: 0.7 }}
+            sx={{ border: 0.5, borderRadius: 0.7 }}
             onClick={handleClick}
         >
             <ListItemText>

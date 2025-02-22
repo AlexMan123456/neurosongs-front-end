@@ -19,7 +19,7 @@ function NowPlaying(){
             setIsLoading(false);
             setError("Could not get song metadata. Please try again later.")
         })
-    }, [])
+    }, [song_id])
 
     if(isLoading){
         return <Loading/>

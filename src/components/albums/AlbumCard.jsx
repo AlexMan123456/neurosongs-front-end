@@ -1,22 +1,24 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import StyledLink from "../styling/StyledLink";
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
-import AlbumImages from "./AlbumImages";
+import AlbumImage from "./AlbumImage";
 
 function AlbumCard({album}){
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <ListItemButton
             sx={{
-                padding: "80px 40px",
+                padding: "35vw 30pvh",
                 float: 'left',
                 width: '25%',
-                border: 0.3,
+                border: 0.5,
                 borderRadius: 0.7
             }}
+            onClick={() => {navigate(`/albums/${album.album_id}`)}}
         >
-        <AlbumImages album={album}/>
+        <AlbumImage album={album}/>
             <ListItem
                 sx={{ fontWeight: "bold" }}
             >{album.title}</ListItem>
