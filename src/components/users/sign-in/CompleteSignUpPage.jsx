@@ -12,6 +12,7 @@ import SignUpSuccess from "./SignUpSuccess";
 import wait from "../../../utils/wait";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import verifyUserAge from "../../../utils/verify-user-age";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -21,7 +22,7 @@ function CompleteSignUpPage(){
     const [username, setUsername] = useState("");
     const [artist_name, setArtistName] = useState("");
     const [password, setPassword] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState(dayjs())
+    const [dateOfBirth, setDateOfBirth] = useState(dayjs());
     const [description, setDescription] = useState("");
     
     const [usernameError, setUsernameError] = useState("");
@@ -29,6 +30,8 @@ function CompleteSignUpPage(){
     const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
     const [displayPasswordRequirements, setDisplayPasswordRequirements] = useState(false);
     
+    const [dateOfBirthError, setDateOfBirthError] = useState("")
+
     const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
     const [profilePictureDisplay, setProfilePictureDisplay] = useState(null);
     const [profilePictureError, setProfilePictureError] = useState("");
@@ -79,9 +82,17 @@ function CompleteSignUpPage(){
         setIsLoading(true);
         setUsernameError("");
         setPasswordError("");
+        setDateOfBirthError("");
         const user = auth.currentUser
         if(username.includes(" ") || username.includes("@")){
-            setUsernameError("Username must not contain spaces or @")
+            setIsLoading(false);
+            setUsernameError("Username must not contain spaces or @");
+            return;
+        }
+
+        if(!verifyUserAge(new Date(dateOfBirth.format()), 13)){
+            setIsLoading(false);
+            setDateOfBirthError("You must be 13 years old or older to create an account on this site.");
             return;
         }
 
@@ -92,7 +103,8 @@ function CompleteSignUpPage(){
                 artist_name,
                 description,
                 profile_picture: profilePicture.name,
-                email: user.email
+                email: user.email,
+                date_of_birth: new Date(dateOfBirth.format())
             })
         }).then(() => {
             const profilePictureRef = ref(storage, `${user.uid}/images/profile-picture/${profilePicture.name}`)
@@ -186,11 +198,10 @@ function CompleteSignUpPage(){
             label="Date of birth"
             value={dateOfBirth}
             onChange={(newDateOfBirth) => {
-                console.log(newDateOfBirth.format())
                 setDateOfBirth(newDateOfBirth)
             }}
         />
-        {passwordError || usernameError ? <h3>Error creating your account. Please address the following.</h3> : null}
+        {passwordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
             <ul>
@@ -200,6 +211,7 @@ function CompleteSignUpPage(){
             </ul>
         </> : null}
         {usernameError ? <p>{usernameError}</p> : null}
+        {dateOfBirthError ? <p>{dateOfBirthError}</p> : null}
         <h3>Optional</h3>
         <p>This can be changed later</p>
         <TextField
