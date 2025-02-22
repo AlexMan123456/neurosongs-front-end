@@ -10,22 +10,26 @@ import FileInput from "../../styling/FileInput";
 import { ref, uploadBytes } from "firebase/storage";
 import SignUpSuccess from "./SignUpSuccess";
 import wait from "../../../utils/wait";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [formLoadError, setFormLoadError] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [artist_name, setArtistName] = useState("");
+    const [profilePicture, setProfilePicture] = useState("");
     const [username, setUsername] = useState("");
+    const [artist_name, setArtistName] = useState("");
+    const [password, setPassword] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState(dayjs())
     const [description, setDescription] = useState("");
+    
     const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
     const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
     const [displayPasswordRequirements, setDisplayPasswordRequirements] = useState(false);
-
+    
     const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
-    const [profilePicture, setProfilePicture] = useState("");
     const [profilePictureDisplay, setProfilePictureDisplay] = useState(null);
     const [profilePictureError, setProfilePictureError] = useState("");
 
@@ -178,6 +182,14 @@ function CompleteSignUpPage(){
             </ul>
         </FormHelperText>
         : null}
+        <DatePicker
+            label="Date of birth"
+            value={dateOfBirth}
+            onChange={(newDateOfBirth) => {
+                console.log(newDateOfBirth.format())
+                setDateOfBirth(newDateOfBirth)
+            }}
+        />
         {passwordError || usernameError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
