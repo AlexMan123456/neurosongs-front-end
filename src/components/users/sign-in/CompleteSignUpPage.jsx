@@ -22,6 +22,7 @@ function CompleteSignUpPage(){
     const [description, setDescription] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
+    const [displayPasswordRequirements, setDisplayPasswordRequirements] = useState(false);
 
     const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
@@ -72,6 +73,8 @@ function CompleteSignUpPage(){
 
     function handleSubmit(){
         setIsLoading(true);
+        setUsernameError("");
+        setPasswordError("");
         const user = auth.currentUser
         if(username.includes(" ") || username.includes("@")){
             setUsernameError("Username must not contain spaces or @")
@@ -102,6 +105,15 @@ function CompleteSignUpPage(){
             navigate("/sign_in");
         })
         .catch((err) => {
+            setIsLoading(false);
+            if(err.response){
+                if(err.response.data){
+                    if(err.response.data.message === "Unique constraint violation"){
+                        setUsernameError("There is already another user with this username. Please choose a different username.");
+                        return;
+                    }
+                }
+            }
             setPasswordError(err);
         })
     }
@@ -117,6 +129,13 @@ function CompleteSignUpPage(){
 
     if(signUpSuccess){
         return <SignUpSuccess/>
+    }
+
+    if(!displayForm){
+        return (<>
+            <h2>You're not supposed to be here!</h2>
+            <p>Only the recipient of the initial verification email should be able to access this page.</p>
+        </>)
     }
 
     return (<>
@@ -145,7 +164,20 @@ function CompleteSignUpPage(){
             type="password"
             value={password}
             onChange={(event) => {setPassword(event.target.value)}}
+            onFocus={() => {setDisplayPasswordRequirements(true)}}
+            onBlur={() => {setDisplayPasswordRequirements(false)}}
         />
+        {displayPasswordRequirements ? 
+        <FormHelperText>
+            <p>NOTE: Your password must meet the following criteria:</p>
+            <ul>
+                <li>Password must contain at least 10 characters</li>
+                <li>Password must contain an upper case character</li>
+                <li>Password must contain a numeric character</li>
+                <li>Password must contain a non-alphanumeric character</li>
+            </ul>
+        </FormHelperText>
+        : null}
         {passwordError || usernameError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
@@ -155,6 +187,7 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
+        {usernameError ? <p>{usernameError}</p> : null}
         <h3>Optional</h3>
         <p>This can be changed later</p>
         <TextField
@@ -163,7 +196,6 @@ function CompleteSignUpPage(){
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
         />
-        {usernameError ? <p>{usernameError}</p> : null}
         <Button onClick={handleSubmit}>Submit</Button>
     </FormControl>
     </>)
