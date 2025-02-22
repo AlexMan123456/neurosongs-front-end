@@ -4,6 +4,7 @@ import { useState } from "react"
 import { auth } from "../../../firebase-config";
 import Loading from "../../Loading";
 import StyledLink from "../../styling/StyledLink";
+import { getUsers } from "../../../../api";
 
 function GetEmailForSignUpPage(){
     const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ function GetEmailForSignUpPage(){
     }
 
     function handleSubmit(event){
+        setIsLoading(true);
         getUsers().then((users) => {
             const userEmails = users.map((user) => {
                 return user.email;
@@ -30,8 +32,10 @@ function GetEmailForSignUpPage(){
             return sendSignInLinkToEmail(auth, email, actionCodeSettings)
         }).then(() => {
             localStorage.setItem("email", email);
+            setIsLoading(false);
             setEmailSent(true);
         }).catch((err) => {
+            setIsLoading(false);
             if(err.code === "Email already exists"){
                 setShowEmailExistsMessage(true);
                 return;
