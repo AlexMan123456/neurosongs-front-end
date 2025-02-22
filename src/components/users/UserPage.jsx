@@ -30,7 +30,7 @@ function UserPage(props){
             setIsLoading(false);
             setError("Could not fetch user. Please try again later.");
         })
-    }, [])
+    }, [params.user_id])
 
     if(isLoading){
         return <Loading/>
