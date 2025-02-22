@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom"
 import { getAlbumById } from "../../../api";
-import SongCard from "../songs/SongCard";
 import AlbumSongCard from "./AlbumSongCard";
 import StyledLink from "../styling/StyledLink";
-import H5AudioPlayer from "react-h5-audio-player";
 import AlbumSongPlayer from "./AlbumSongPlayer";
 import NowPlaying from "./NowPlaying";
 import Loading from "../Loading";
