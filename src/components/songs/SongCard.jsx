@@ -3,7 +3,7 @@ import StyledLink from "../styling/StyledLink"
 import H5AudioPlayer from "react-h5-audio-player";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 
 function SongCard({song}){
     const [showSongPlayer, setShowSongPlayer] = useState(false);
@@ -31,7 +31,7 @@ function SongCard({song}){
     }
 
     return (<>
-        <ListItemButton
+        <ListItem
             alignItems="center"
             sx={{ border: 0.5, borderRadius: 0.7 }}
             onClick={handleClick}
@@ -46,13 +46,7 @@ function SongCard({song}){
             </ListItemText>
             : null
             }
-        </ListItemButton>
-        {showSongPlayer
-        ?
-        <>
-            <H5AudioPlayer src={songURL}/>
-        </>
-        : null}
+        </ListItem>
     </>)
 }
 

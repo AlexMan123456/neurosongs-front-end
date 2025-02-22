@@ -65,7 +65,7 @@ function AlbumPage(){
             }}
             alt={`${album.name}'s ${displayFront ? "front" : "back"} cover`}></img>
         <br/>
-        {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "front" : "back"} cover</Button> : null}
+        {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         {song_id
         ? <div>
             <NowPlaying/>    
