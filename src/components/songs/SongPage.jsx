@@ -8,7 +8,7 @@ import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
 import Loading from "../Loading";
 
-function SongPlayer(){
+function SongPage(){
     const {song_id} = useParams()
     const [song, setSong] = useState(null);
     const [songData, setSongData] = useState({})
@@ -40,9 +40,9 @@ function SongPlayer(){
 
     return (<section>
         <h2>{songData.title}</h2>
-        <StyledLink to={`/users/${songData.user_id}`}>{songData.artist.artist_name}</StyledLink>
+        <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
         <H5AudioPlayer src={song}/>
     </section>)
 }
 
-export default SongPlayer
+export default SongPage

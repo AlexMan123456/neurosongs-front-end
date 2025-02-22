@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { getSongs } from "../../../api";
 import SongCard from "./SongCard";
-import { CircularProgress } from "@mui/material";
 import Loading from "../Loading";
 
-function SongsPage(){
+function SongsList(){
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
@@ -36,4 +35,4 @@ function SongsPage(){
     </section>)
 }
 
-export default SongsPage
+export default SongsList
