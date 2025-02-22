@@ -1,22 +1,50 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { Avatar, Button, FormControl, Input, TextField } from "@mui/material";
-import { patchUser } from "../../../../api";
+import { getUserById, patchUser } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../firebase-config";
+import Loading from "../../Loading";
+import { CloudUpload } from "@mui/icons-material";
+import VisuallyHiddenInput from "../../styling/VisuallyHiddenInput";
 
 function UserDetails(){
     const params = useParams()
     const {signedInUser, setSignedInUser} = useContext(UserContext);
-    const [username, setUsername] = useState(signedInUser.username);
-    const [artist_name, setArtistName] = useState(signedInUser.artist_name);
-    const [description, setDescription] = useState(signedInUser.description);
-    const [profilePicture, setProfilePicture] = useState(signedInUser.profile_picture);
-    const [profilePictureDisplay, setProfilePictureDisplay] = useState(signedInUser.profile_picture);
-    const [profilePictureError, setProfilePictureError] = useState("")
-    const [patchError, setPatchError] = useState("")
+    const [username, setUsername] = useState("");
+    const [artist_name, setArtistName] = useState("");
+    const [description, setDescription] = useState("");
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [profilePictureDisplay, setProfilePictureDisplay] = useState(null);
+
+    const [isFetchLoading, setIsFetchLoading] = useState(true);
+    const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
+    const [isPatchLoading, setIsPatchLoading] = useState(false);
+
+    const [fetchError, setFetchError] = useState("");
+    const [profilePictureError, setProfilePictureError] = useState("");
+    const [patchError, setPatchError] = useState("");
     const navigate = useNavigate()
+    
+    useEffect(() => {
+        setIsFetchLoading(true);
+        getUserById(params.user_id).then((user) => {
+            setUsername(user.username);
+            setArtistName(user.artist_name);
+            setDescription(user.description);
+            setProfilePicture(user.profile_picture);
+            const profilePictureRef = ref(storage, `${user.user_id}/images/profile-picture/${user.profile_picture}`);
+            return getDownloadURL(profilePictureRef);
+        }).then((profilePictureURL) => {
+            setIsFetchLoading(false);
+            setProfilePictureDisplay(profilePictureURL);
+        }).catch((err) => {
+            console.log(err)
+            setIsFetchLoading(false);
+            setFetchError("Could not fetch user data. Please try again later.");
+        })
+    }, [])
 
     function handleAvatarDisplay(profilePicture){
         setProfilePicture(profilePicture)
@@ -59,18 +87,33 @@ function UserDetails(){
             </section>)
     }
 
+    if(isFetchLoading){
+        return <Loading/>
+    }
+
+    if(fetchError){
+        return <p>{fetchError}</p>
+    }
+
     return (<section>
         <h2>Edit user details</h2>
         <FormControl>
-            <Avatar src={profilePictureDisplay}/>
-            {profilePictureError ? <p>{profilePictureError}</p> : null}
-            <label htmlFor="user-profile-picture-input">Change profile picture</label>
-            <Input 
-                id="user-profile-picture-input"
-                accept="image/*"
-                type="file"
-                onChange={(event) => {handleAvatarDisplay(event.target.files[0])}}
-            />
+            {!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>}
+            <Button
+                component="label"
+                role={undefined}
+                variant="outlined"
+                tabIndex={-1}
+                startIcon={<CloudUpload/>}
+            >
+                Upload files
+                <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {handleAvatarDisplay(event.target.files[0])}}
+                    multiple
+                />
+            </Button>
             <TextField
                 label="Username"
                 value={username}
