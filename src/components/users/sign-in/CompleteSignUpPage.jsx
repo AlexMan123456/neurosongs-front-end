@@ -22,6 +22,7 @@ function CompleteSignUpPage(){
     const [description, setDescription] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
+    const [displayPasswordRequirements, setDisplayPasswordRequirements] = useState(false);
 
     const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
     const [profilePicture, setProfilePicture] = useState("");
@@ -163,7 +164,20 @@ function CompleteSignUpPage(){
             type="password"
             value={password}
             onChange={(event) => {setPassword(event.target.value)}}
+            onFocus={() => {setDisplayPasswordRequirements(true)}}
+            onBlur={() => {setDisplayPasswordRequirements(false)}}
         />
+        {displayPasswordRequirements ? 
+        <FormHelperText>
+            <p>NOTE: Your password must meet the following criteria:</p>
+            <ul>
+                <li>Password must contain at least 10 characters</li>
+                <li>Password must contain an upper case character</li>
+                <li>Password must contain a numeric character</li>
+                <li>Password must contain a non-alphanumeric character</li>
+            </ul>
+        </FormHelperText>
+        : null}
         {passwordError || usernameError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
