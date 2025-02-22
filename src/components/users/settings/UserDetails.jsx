@@ -106,7 +106,7 @@ function UserDetails(){
                 tabIndex={-1}
                 startIcon={<CloudUpload/>}
             >
-                Upload files
+                Change Profile Picture
                 <VisuallyHiddenInput
                     type="file"
                     accept="image/*"
