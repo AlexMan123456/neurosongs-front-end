@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import StyledLink from "../styling/StyledLink"
 import H5AudioPlayer from "react-h5-audio-player";
-import { getSongById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
-import { useLocation } from "react-router-dom";
+import { ListItemButton, ListItemText } from "@mui/material";
 
 function SongCard({song}){
     const [showSongPlayer, setShowSongPlayer] = useState(false);
@@ -12,7 +11,7 @@ function SongCard({song}){
     const [error, setError] = useState("")
 
     useEffect(() => {
-        const songRef = ref(storage, `${song.user_id}/albums/${song.album_id}/${song.reference}`)
+        const songRef = ref(storage, `${song.user_id}/albums/${song.album_id}/songs/${song.reference}`)
         getDownloadURL(songRef).then((songURL) => {
             setSongURL(songURL)
         }).catch((err) => {
@@ -31,21 +30,30 @@ function SongCard({song}){
         return <p>{error}</p>
     }
 
-    return (<li>
-        <fieldset>
-            <legend>
-                {location.pathname.includes("users") ? <p>{song.artist.artist_name}</p> : <StyledLink to={`/users/${song.user_id}`}><p>{song.artist.artist_name}</p></StyledLink>}
-            </legend>
+    return (<>
+        <ListItemButton
+            alignItems="center"
+            sx={{ width: '100%', maxWidth: 360, border: 0.5, borderRadius: 0.7 }}
+            onClick={handleClick}
+        >
+            <ListItemText>
                 <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
-                <button onClick={handleClick}>Show song player</button>
-                {showSongPlayer 
-                ?
-                <>
-                    <H5AudioPlayer src={songURL}/>
-                </>
-                : null}
-        </fieldset>
-    </li>)
+            </ListItemText>
+            <ListItemText>{song.artist.artist_name}</ListItemText>
+            {!location.pathname.includes("users") ?
+            <ListItemText>
+                <StyledLink to={`/users/${song.user_id}`}>@{song.artist.username}</StyledLink>
+            </ListItemText>
+            : null
+            }
+        </ListItemButton>
+        {showSongPlayer
+        ?
+        <>
+            <H5AudioPlayer src={songURL}/>
+        </>
+        : null}
+    </>)
 }
 
 export default SongCard

@@ -19,7 +19,7 @@ function SongPlayer(){
         setIsLoading(true);
         getSongById(song_id).then((songData) => {
             setSongData(songData)
-            const songRef = ref(storage, `${songData.user_id}/albums/${songData.album_id}/${songData.reference}`);
+            const songRef = ref(storage, `${songData.user_id}/albums/${songData.album_id}/songs/${songData.reference}`);
             return getDownloadURL(songRef);
         }).then((songURL) => {
             setIsLoading(false);

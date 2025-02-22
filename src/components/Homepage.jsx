@@ -3,6 +3,7 @@ import { getAlbums, getSongs } from "../../api";
 import SongCard from "./songs/SongCard";
 import AlbumCard from "./albums/AlbumCard";
 import Loading from "./Loading";
+import { List } from "@mui/material";
 
 function Homepage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
@@ -18,8 +19,7 @@ function Homepage(){
         }).then((albums) => {
             setIsLoading(false);
             setFeaturedAlbums(albums);
-        })
-        .catch((err) => {
+        }).catch((err) => {
             setIsLoading(false);
             setError("Usually we'd display a list of featured songs, but we're having problems at the moment...");
         })
@@ -31,18 +31,23 @@ function Homepage(){
         <>
             <h3>Featured Albums</h3>
             {isLoading ? <Loading/> : 
-            <ol>
+            <List 
+                sx={{
+                    width: "100%",
+                    display: "inline-block"
+              }}
+            >
                 {featuredAlbums.map((album) => {
                     return <AlbumCard key={`album-card-${album.album_id}`} album={album}/>
                 })}
-            </ol>}
+            </List>}
             <h3>Featured Songs</h3>
             {isLoading ? <Loading/> : 
-            <ol>
+            <List>
                 {featuredSongs.map((song) => {
                     return (<SongCard key={`song-card-${song.song_id}`} song={song}/>)
                 })}
-            </ol>}
+            </List>}
         </>}
     </section>)
 }
