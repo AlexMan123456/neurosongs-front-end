@@ -3,6 +3,8 @@ import Navigation from "../Navigation"
 import UserDropdown from "./UserDropdown";
 import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
+import { isSignInWithEmailLink } from "firebase/auth";
+import { auth } from "../../firebase-config";
 
 function Header(){
     const {signedInUser} = useContext(UserContext);
@@ -13,7 +15,7 @@ function Header(){
         {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
         {signOutError ? <p>{signOutError}</p> : null}
         <h1>Neurosongs</h1>
-        <Navigation/>
+        {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }
 //<StyledLink to={`users/${signedInUser.user_id}`}>View Profile</StyledLink>
