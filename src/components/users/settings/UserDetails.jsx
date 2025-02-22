@@ -99,6 +99,10 @@ function UserDetails(){
         return <p>{fetchError}</p>
     }
 
+    if(patchError){
+        return <p>{patchError}</p>
+    }
+
     return (<section>
         <h2>Edit user details</h2>
         <FormControl>
