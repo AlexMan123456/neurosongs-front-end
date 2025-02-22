@@ -72,6 +72,8 @@ function CompleteSignUpPage(){
 
     function handleSubmit(){
         setIsLoading(true);
+        setUsernameError("");
+        setPasswordError("");
         const user = auth.currentUser
         if(username.includes(" ") || username.includes("@")){
             setUsernameError("Username must not contain spaces or @")
@@ -102,6 +104,15 @@ function CompleteSignUpPage(){
             navigate("/sign_in");
         })
         .catch((err) => {
+            setIsLoading(false);
+            if(err.response){
+                if(err.response.data){
+                    if(err.response.data.message === "Unique constraint violation"){
+                        setUsernameError("There is already another user with this username. Please choose a different username.");
+                        return;
+                    }
+                }
+            }
             setPasswordError(err);
         })
     }
@@ -117,6 +128,13 @@ function CompleteSignUpPage(){
 
     if(signUpSuccess){
         return <SignUpSuccess/>
+    }
+
+    if(!displayForm){
+        return (<>
+            <h2>You're not supposed to be here!</h2>
+            <p>Only the recipient of the initial verification email should be able to access this page.</p>
+        </>)
     }
 
     return (<>
@@ -155,6 +173,7 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
+        {usernameError ? <p>{usernameError}</p> : null}
         <h3>Optional</h3>
         <p>This can be changed later</p>
         <TextField
@@ -163,7 +182,6 @@ function CompleteSignUpPage(){
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
         />
-        {usernameError ? <p>{usernameError}</p> : null}
         <Button onClick={handleSubmit}>Submit</Button>
     </FormControl>
     </>)
