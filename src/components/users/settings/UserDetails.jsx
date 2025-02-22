@@ -8,6 +8,7 @@ import { storage } from "../../../firebase-config";
 import Loading from "../../Loading";
 import { CloudUpload } from "@mui/icons-material";
 import VisuallyHiddenInput from "../../styling/VisuallyHiddenInput";
+import FileInput from "../../styling/FileInput";
 
 function UserDetails(){
     const params = useParams()
@@ -99,21 +100,7 @@ function UserDetails(){
         <h2>Edit user details</h2>
         <FormControl>
             {!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>}
-            <Button
-                component="label"
-                role={undefined}
-                variant="outlined"
-                tabIndex={-1}
-                startIcon={<CloudUpload/>}
-            >
-                Change Profile Picture
-                <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    onChange={(event) => {handleAvatarDisplay(event.target.files[0])}}
-                    multiple
-                />
-            </Button>
+            <FileInput setFile={handleAvatarDisplay}>Change Profile Picture</FileInput>
             <TextField
                 label="Username"
                 value={username}
@@ -134,5 +121,21 @@ function UserDetails(){
         </FormControl>
     </section>)
 }
+
+/*<Button
+                component="label"
+                role={undefined}
+                variant="outlined"
+                tabIndex={-1}
+                startIcon={<CloudUpload/>}
+            >
+                Change Profile Picture
+                <VisuallyHiddenInput
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {handleAvatarDisplay(event.target.files[0])}}
+                    multiple
+                />
+            </Button>*/
 
 export default UserDetails
