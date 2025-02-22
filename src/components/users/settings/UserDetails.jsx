@@ -21,7 +21,6 @@ function UserDetails(){
 
     const [isFetchLoading, setIsFetchLoading] = useState(true);
     const [isProfilePictureLoading, setIsProfilePictureLoading] = useState(false);
-    const [isPatchLoading, setIsPatchLoading] = useState(false);
 
     const [fetchError, setFetchError] = useState("");
     const [profilePictureError, setProfilePictureError] = useState("");
@@ -47,11 +46,13 @@ function UserDetails(){
         })
     }, [])
 
-    function handleAvatarDisplay(profilePicture){
-        setProfilePicture(profilePicture)
+    function handleAvatarDisplay(file){
+        setIsProfilePictureLoading(true);
+        const previousProfilePicture = profilePicture
+        setProfilePicture(file)
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
-            reader.readAsDataURL(profilePicture);
+            reader.readAsDataURL(file);
             reader.onload = () => {
                 resolve(reader.result);
             }
@@ -59,11 +60,13 @@ function UserDetails(){
                 reject(err);
             }
         }).then((dataURL) => {
-            setProfilePictureDisplay(dataURL)
+            setIsProfilePictureLoading(false);
+            setProfilePictureDisplay(dataURL);
         }).catch((err) => {
-            setProfilePictureError("Error changing profile picture. Please try again later.")
-            setProfilePicture(signedInUser.profile_picture)
-            setProfilePictureDisplay(signedInUser.profile_picture)
+            setIsProfilePictureLoading(false);
+            setProfilePictureError("Error changing profile picture. Please try again later.");
+            setProfilePicture(previousProfilePicture);
+            setProfilePictureDisplay(previousProfilePicture);
         })
     }
 
@@ -71,7 +74,7 @@ function UserDetails(){
         navigate("/loading");
         const newImageRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${profilePicture.name}`)
         return uploadBytes(newImageRef, profilePicture).then(() => {
-            return patchUser(signedInUser.user_id, {username, artist_name, profile_picture: profilePicture.name, description}).then((user) => {
+            return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description}).then((user) => {
                 setSignedInUser(user);
                 navigate(`/users/${user.user_id}`)
             }).catch((err) => {
@@ -99,7 +102,7 @@ function UserDetails(){
     return (<section>
         <h2>Edit user details</h2>
         <FormControl>
-            {!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>}
+            {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
             <FileInput setFile={handleAvatarDisplay}>Change Profile Picture</FileInput>
             <TextField
                 label="Username"
@@ -121,21 +124,5 @@ function UserDetails(){
         </FormControl>
     </section>)
 }
-
-/*<Button
-                component="label"
-                role={undefined}
-                variant="outlined"
-                tabIndex={-1}
-                startIcon={<CloudUpload/>}
-            >
-                Change Profile Picture
-                <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    onChange={(event) => {handleAvatarDisplay(event.target.files[0])}}
-                    multiple
-                />
-            </Button>*/
 
 export default UserDetails
