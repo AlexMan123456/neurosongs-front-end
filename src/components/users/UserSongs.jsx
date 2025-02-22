@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getSongsFromUser } from "../../../api";
 import SongCard from "../songs/SongCard";
 import Loading from "../Loading";
+import { List } from "@mui/material";
 
-function UserSongs(props){
-    const {user_id} = props;
+function UserSongs({user_id}){
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
@@ -28,11 +28,11 @@ function UserSongs(props){
         return <p>{error}</p>
     }
 
-    return (<ul style={{listStyle: "none"}}>
+    return (<List style={{listStyle: "none"}}>
         {songs.map((song) => {
             return <SongCard key={`song-card-${song.song_id}`} song={song}/>
         })}
-    </ul>)
+    </List>)
 }
 
 export default UserSongs

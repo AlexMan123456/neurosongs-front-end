@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { getUserById } from "../../../api";
-import UserSongs from "./UserSongs";
 import Loading from "../Loading";
 import StyledLink from "../styling/StyledLink";
+import { Avatar } from "@mui/material";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../../firebase-config";
+import { UserContext } from "../../contexts/UserContext";
+import DisplayCategory from "./DisplayCategory";
 
 function UserPage(props){
-    const {user_id} = useParams();
-    const [user, setUser] = useState({})
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState("")
+    const params = useParams();
+    const [user, setUser] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [profilePictureURL, setProfilePictureURL] = useState(null);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true)
-        getUserById(user_id).then((user) => {
-            setIsLoading(false);
+        getUserById(params.user_id).then((user) => {
             setUser(user);
+            const profilePictureRef = ref(storage, `${user.user_id}/images/profile-picture/${user.profile_picture}`);
+            return getDownloadURL(profilePictureRef);
+        }).then((profilePictureURL) => {
+            setIsLoading(false);
+            setProfilePictureURL(profilePictureURL)
         }).catch((err) => {
             setIsLoading(false);
             setError("Could not fetch user. Please try again later.");
@@ -30,13 +40,21 @@ function UserPage(props){
         return <p>{error}</p>
     }
 
-    return (<section>
-        <h2>{user.artist_name}</h2>
-        <p>{`@${user.username}`}</p>
-        <StyledLink to={`/users/${user_id}/settings`}>User Settings</StyledLink>
-        <h3>Songs</h3>
-        <UserSongs user_id={user_id}/>
-    </section>)
+    return (<>
+        <header>
+            <Avatar
+                src={profilePictureURL}
+                alt={`${user.username}'s profile picture`}
+                sx={{ width: 100, height: 100 }}
+            />
+            <h2>{user.artist_name}</h2>
+            <p>{`@${user.username}`}</p>
+            <h2>Description</h2>
+            <p>{user.description}</p>
+            {signedInUser.user_id === params.user_id ? <StyledLink to={`/users/${params.user_id}/settings`}>User Settings</StyledLink> : null}
+        </header>
+        <DisplayCategory/>
+    </>)
 }
 
 export default UserPage
