@@ -25,6 +25,10 @@ function CompleteSignUpPage(){
     const [password, setPassword] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState(dayjs());
     const [description, setDescription] = useState("");
+
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [displayConfirmPasswordHelperText, setDisplayConfirmPasswordHelperText] = useState(false);
     
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -94,6 +98,12 @@ function CompleteSignUpPage(){
         if(!verifyUserAge(new Date(dateOfBirth.format()), 13)){
             setIsLoading(false);
             setDateOfBirthError("You must be 13 years old or older to create an account on this site.");
+            return;
+        }
+
+        if(password !== confirmPassword){
+            setIsLoading(false);
+            setConfirmPasswordError("Passwords do not match. Please try again.");
             return;
         }
 
@@ -195,12 +205,22 @@ function CompleteSignUpPage(){
             </ul>
         </FormHelperText>
         : null}
+        <TextField
+            required
+            label="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(event) => {setConfirmPassword(event.target.value)}}
+            onFocus={() => {setDisplayConfirmPasswordHelperText(true)}}  
+            onBlur={() => {setDisplayConfirmPasswordHelperText(false)}}
+        />
+        {displayConfirmPasswordHelperText ? <FormHelperText>Enter your password again to confirm.</FormHelperText> : null}
         <DatePicker
             label="Date of birth"
             value={dateOfBirth}
             onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
         />
-        {passwordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
+        {passwordError || confirmPasswordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
             <ul>
@@ -209,6 +229,7 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
+        {confirmPasswordError ? <p>{confirmPasswordError}</p> : null}
         {usernameError ? <p>{usernameError}</p> : null}
         {dateOfBirthError ? <p>{dateOfBirthError}</p> : null}
         <h3>Optional</h3>
