@@ -37,7 +37,7 @@ function UserDropdown({setSignOutError}){
 
     function handleUserSettings(){
         setDisplayUserList(false);
-        navigate(`/users/${signedInUser.user_id}/settings`);
+        navigate(`/users/settings`);
     }
 
     function handleSignOut(){

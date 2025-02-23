@@ -10,7 +10,7 @@ import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
 import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
 
-function UserDetails(){
+function UserDisplayInfoEditPage(){
     const params = useParams()
     const {signedInUser, setSignedInUser} = useContext(UserContext);
     const [username, setUsername] = useState("");
@@ -24,6 +24,7 @@ function UserDetails(){
 
     const [fetchError, setFetchError] = useState("");
     const [profilePictureError, setProfilePictureError] = useState("");
+    const [isPatchLoading, setIsPatchLoading] = useState(false);
     const [patchError, setPatchError] = useState("");
     const navigate = useNavigate()
     
@@ -71,18 +72,19 @@ function UserDetails(){
     }
 
     function handleSubmit(){
-        navigate("/loading");
+        setIsPatchLoading(true);
         return wait(2).then(() => {
             const newImageRef = ref(storage, getProfilePictureDirectory({user_id: params.user_id, profile_picture: profilePicture.name}));
             return uploadBytes(newImageRef, profilePicture)
         }).then(() => {
             return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description})
         }).then((user) => {
+            setIsPatchLoading(false);
             setSignedInUser(user);
             navigate(`/`)
         }).catch((err) => {
-            navigate(`/users/${user.user_id}/settings`)
-            setPatchError("Error updating profile. Please try again later.")
+            setIsPatchLoading(false);
+            setPatchError("Error updating profile. Please try again later.");
         })
     }
 
@@ -93,7 +95,7 @@ function UserDetails(){
             </section>)
     }
 
-    if(isFetchLoading){
+    if(isFetchLoading || isPatchLoading){
         return <Loading/>
     }
 
@@ -131,4 +133,4 @@ function UserDetails(){
     </section>)
 }
 
-export default UserDetails
+export default UserDisplayInfoEditPage
