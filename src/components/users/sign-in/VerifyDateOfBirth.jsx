@@ -1,3 +1,8 @@
+// I tried implementing a page to let the user set their date of birth with Google signup so that we can verify age.
+// However, there were issues with the navigation afterwards as it'd keep redirecting the user back to the verification page after success, when it should navigate back to the root directory.
+// This page is not being used as of now, but I may return to this at some point in the future to get it to work again.
+// If any open-source contributor would like to try fixing this issue in the meantime, though, this is the page where the user is meant to verify their date of birth.
+
 import { useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";

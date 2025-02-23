@@ -41,6 +41,7 @@ function UserDropdown({setSignOutError}){
     }
 
     function handleSignOut(){
+        setDisplayUserList(false);
         const previousLocationString = `${location.pathname}${location.search}`
         navigate("/loading")
         return wait(2).then(() => {
@@ -51,7 +52,6 @@ function UserDropdown({setSignOutError}){
             console.log(err)
             setSignOutError("Error signing out. Please try again later.");
         }).finally(() => {
-            setDisplayUserList(false);
             navigate(previousLocationString);
         })
     }

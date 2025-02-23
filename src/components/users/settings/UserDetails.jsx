@@ -34,7 +34,7 @@ function UserDetails(){
             setArtistName(user.artist_name);
             setDescription(user.description);
             setProfilePicture(user.profile_picture);
-            const profilePictureRef = ref(storage, `${user.user_id}/images/profile-picture/${user.profile_picture}`);
+            const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
             return getDownloadURL(profilePictureRef);
         }).then((profilePictureURL) => {
             setIsFetchLoading(false);
@@ -73,7 +73,7 @@ function UserDetails(){
     function handleSubmit(){
         navigate("/loading");
         return wait(2).then(() => {
-            const newImageRef = ref(storage, getProfilePictureDirectory(user));
+            const newImageRef = ref(storage, getProfilePictureDirectory({user_id: params.user_id, profile_picture: profilePicture.name}));
             return uploadBytes(newImageRef, profilePicture)
         }).then(() => {
             return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description})
