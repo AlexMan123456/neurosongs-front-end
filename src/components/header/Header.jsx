@@ -19,6 +19,5 @@ function Header(){
         {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }
-//<StyledLink to={`users/${signedInUser.user_id}`}>View Profile</StyledLink>
 
 export default Header
