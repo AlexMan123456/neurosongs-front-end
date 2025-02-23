@@ -30,7 +30,7 @@ function UserAlbums({user_id}){
 
     return (<List>
         {albums.map((album) => {
-            return <AlbumCard album={album}/>
+            return <AlbumCard key={`album-card-${album.album_id}`} album={album}/>
         })}
     </List>)
 }

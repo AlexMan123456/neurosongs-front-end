@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSongsFromUser } from "../../../api";
+import { getSongs } from "../../../api";
 import SongCard from "../songs/SongCard";
 import Loading from "../Loading";
 import { List } from "@mui/material";
@@ -11,7 +11,7 @@ function UserSongs({user_id}){
 
     useEffect(() => {
         setIsLoading(true);
-        getSongsFromUser(user_id).then((songs) => {
+        getSongs({user_id}).then((songs) => {
             setIsLoading(false);
             setSongs(songs);
         }).catch((err) => {
