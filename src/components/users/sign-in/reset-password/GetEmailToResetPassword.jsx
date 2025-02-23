@@ -12,7 +12,7 @@ function GetEmailToResetPassword(){
     const [error, setError] = useState("");
 
     const actionCodeSettings = {
-        url: `${import.meta.env.VITE_BASE_URL}/`,
+        url: `${import.meta.env.VITE_BASE_URL}/sign_in`,
         handleCodeInApp: true
     }
 
