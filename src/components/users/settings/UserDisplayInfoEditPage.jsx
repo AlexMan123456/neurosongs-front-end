@@ -8,7 +8,7 @@ import { storage } from "../../../firebase-config";
 import Loading from "../../Loading";
 import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
-import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
+import getProfilePictureDirectory from "../../../references/get-profile-picture-directory";
 
 function UserDisplayInfoEditPage(){
     const params = useParams()

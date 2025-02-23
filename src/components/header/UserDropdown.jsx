@@ -7,7 +7,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
 import Loading from "../Loading";
-import getProfilePictureDirectory from "../../utils/get-profile-picture-directory";
+import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
 
 function UserDropdown({setSignOutError}){
     const {signedInUser, setSignedInUser, isUserSignedIn} = useContext(UserContext);

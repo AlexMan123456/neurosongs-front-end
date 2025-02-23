@@ -7,6 +7,9 @@ import 'react-h5-audio-player/lib/styles.css';
 import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
 import Loading from "../Loading";
+import getSongDirectory from "../../references/get-song-directory";
+import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
+import { Button } from "@mui/material";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -14,20 +17,55 @@ function SongPage(){
     const [songData, setSongData] = useState({})
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
+    const [displayFront, setDisplayFront] = useState(true);
+    const [frontCover, setFrontCover] = useState(null);
+    const [backCover, setBackCover] = useState(null);
 
     useEffect(() => {
-        setIsLoading(true);
-        getSongById(song_id).then((songData) => {
+        async function getAllData(){
+            try {
+                setIsLoading(true);
+    
+                const songData = await getSongById(song_id);
+                setSongData(songData);
+    
+                const songRef = ref(storage, getSongDirectory(songData));
+                setSong(await getDownloadURL(songRef));
+    
+                const frontCoverRef = ref(storage, getAlbumCoverDirectory({...songData.album, album_id: songData.album_id, user_id: songData.user_id}, "front"));
+                setFrontCover(await getDownloadURL(frontCoverRef));
+    
+                const backCoverRef = ref(storage, getAlbumCoverDirectory({...songData.album, album_id: songData.album_id, user_id: songData.user_id}, "back"));
+                setBackCover(await getDownloadURL(backCoverRef));
+    
+                setIsLoading(false);
+            } catch(err) {
+                setIsLoading(false);
+                setError("Error fetching data. Please try again later.")
+            }
+        }
+        getAllData()
+        /*getSongById(song_id).then((songData) => {
             setSongData(songData)
-            const songRef = ref(storage, `${songData.user_id}/albums/${songData.album_id}/songs/${songData.reference}`);
+            const songRef = ref(storage, getSongDirectory(songData));
             return getDownloadURL(songRef);
         }).then((songURL) => {
-            setIsLoading(false);
             setSong(songURL);
+            console.log(song)
+            const frontCoverRef = ref(storage, getAlbumCoverDirectory({...song.album, album_id: song.album_id, user_id: song.user_id}, "front"))
+            return getDownloadURL(frontCoverRef)
+        }).then((frontCoverURL) => {
+            setFrontCover(frontCoverURL);
+            const backCoverRef = ref(storage, getAlbumCoverDirectory({...song.album, album_id: song.album_id, user_id: song.user_id}, "back"))
+            return getDownloadURL(backCoverRef);
+        }).then((backCoverURL) => {
+            setIsLoading(false);
+            setBackCover(backCoverURL);
         })
         .catch((err) => {
+            setIsLoading(false);
             setError("Error fetching data. Please try again later.")
-        })
+        })*/
     }, [])
 
     if(isLoading){
@@ -38,7 +76,19 @@ function SongPage(){
         return <p>{error}</p>
     }
 
+    console.log(song)
+
     return (<section>
+        <img 
+            src={displayFront ? frontCover : backCover}
+            style={{
+                width: "25vw",
+                height: "auto"
+            }}
+            alt={`${songData.album.title}'s ${displayFront ? "front" : "back"} cover`}
+        />
+        <br/>
+        {songData.album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         <h2>{songData.title}</h2>
         <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
         <H5AudioPlayer src={song}/>

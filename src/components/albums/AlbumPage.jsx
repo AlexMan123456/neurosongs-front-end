@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import { Button, List } from "@mui/material";
+import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -27,13 +28,13 @@ function AlbumPage(){
                 setIsLoading(true);
                 const album = await getAlbumById(album_id)
                 setAlbum(album);
-                const frontCoverRef = ref(storage, `${album.user_id}/albums/${album_id}/images/${album.front_cover_reference}`);
+                const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
                 const frontCoverURL = await getDownloadURL(frontCoverRef);
                 setFrontCover(frontCoverURL);
                 if(!album.back_cover_reference){
                     return;
                 }
-                const backCoverRef = ref(storage, `${album.user_id}/albums/${album_id}/images/${album.back_cover_reference}`);
+                const backCoverRef = ref(storage, getAlbumCoverDirectory(album, "back"));
                 const backCoverURL = await getDownloadURL(backCoverRef);
                 setBackCover(backCoverURL);
                 setIsLoading(false);
@@ -63,7 +64,8 @@ function AlbumPage(){
                 width: "25vw",
                 height: "auto"
             }}
-            alt={`${album.name}'s ${displayFront ? "front" : "back"} cover`}></img>
+            alt={`${album.name}'s ${displayFront ? "front" : "back"} cover`}
+        />
         <br/>
         {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         {song_id

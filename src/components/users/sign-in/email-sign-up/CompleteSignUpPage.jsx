@@ -13,7 +13,7 @@ import wait from "../../../../utils/wait";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import verifyUserAge from "../../../../utils/verify-user-age";
-import getProfilePictureDirectory from "../../../../utils/get-profile-picture-directory";
+import getProfilePictureDirectory from "../../../../references/get-profile-picture-directory";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
