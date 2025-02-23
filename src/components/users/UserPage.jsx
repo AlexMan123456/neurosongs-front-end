@@ -8,7 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import { UserContext } from "../../contexts/UserContext";
 import DisplayCategory from "./DisplayCategory";
-import getProfilePictureDirectory from "../../utils/get-profile-picture-directory";
+import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
 
 function UserPage(){
     const params = useParams();

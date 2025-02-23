@@ -2,6 +2,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase-config";
 import Loading from "../Loading";
+import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 
 function AlbumImage({album}){
     const [frontCover, setFrontCover] = useState(null);
@@ -9,7 +10,7 @@ function AlbumImage({album}){
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const frontCoverRef = ref(storage, `${album.user_id}/albums/${album.album_id}/images/${album.front_cover_reference}`);
+        const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
         getDownloadURL(frontCoverRef).then((frontCoverURL) => {
             setIsLoading(false);
             setFrontCover(frontCoverURL);
