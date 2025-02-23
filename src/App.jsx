@@ -12,6 +12,7 @@ import SongPage from "./components/songs/SongPage"
 import SongsList from "./components/songs/SongsList"
 import UserDisplayInfoEditPage from "./components/users/settings/UserDisplayInfoEditPage"
 import EditDateOfBirthPage from "./components/users/settings/EditDateOfBirthPage"
+import GetEmailToResetPassword from "./components/users/sign-in/reset-password/GetEmailToResetPassword"
 
 function App() {
   return (<>
@@ -29,6 +30,7 @@ function App() {
       <Route path="/loading" element={<LoadingPage/>}/>
       <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage/>}/>
       <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
+      <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
     </Routes>
   </>)
 }
