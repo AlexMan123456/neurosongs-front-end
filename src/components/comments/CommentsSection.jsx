@@ -1,9 +1,9 @@
 import CommentCreator from "./CommentCreator"
 
-function CommentsSection(){
+function CommentsSection({content}){
     return (<section>
             <h2>Comments</h2>
-            <CommentCreator/>
+            <CommentCreator content={content}/>
         </section>)
 }
 
