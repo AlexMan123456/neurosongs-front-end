@@ -37,7 +37,7 @@ function EmailAndPasswordSignIn({setIsLoading, setSignInError}){
             type="password"
             onChange={(event) => {setPassword(event.target.value)}}
         />
-        <Button onClick={handleSubmit}>Sign in</Button>
+        <Button variant="contained" onClick={handleSubmit}>Sign in</Button>
     </FormControl>)
 }
 

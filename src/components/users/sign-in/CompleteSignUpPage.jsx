@@ -145,7 +145,7 @@ function CompleteSignUpPage(){
     }
 
     if(signUpSuccess){
-        return <SignUpSuccess/>
+        return <SignUpSuccess signedUpWith={"email"}/>
     }
 
     if(!displayForm){
@@ -198,9 +198,7 @@ function CompleteSignUpPage(){
         <DatePicker
             label="Date of birth"
             value={dateOfBirth}
-            onChange={(newDateOfBirth) => {
-                setDateOfBirth(newDateOfBirth)
-            }}
+            onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
         />
         {passwordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
