@@ -8,6 +8,7 @@ import { storage } from "../../../firebase-config";
 import Loading from "../../Loading";
 import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
+import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
 
 function UserDetails(){
     const params = useParams()
@@ -72,7 +73,7 @@ function UserDetails(){
     function handleSubmit(){
         navigate("/loading");
         return wait(2).then(() => {
-            const newImageRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${profilePicture.name}`);
+            const newImageRef = ref(storage, getProfilePictureDirectory(user));
             return uploadBytes(newImageRef, profilePicture)
         }).then(() => {
             return patchUser(params.user_id, {username, artist_name, profile_picture: profilePicture.name, description})

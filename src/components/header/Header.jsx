@@ -5,17 +5,18 @@ import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
 import { isSignInWithEmailLink } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { useSearchParams } from "react-router-dom";
 
 function Header(){
-    const {signedInUser} = useContext(UserContext);
+    const {isUserSignedIn} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
-    const isUserSignedIn = Object.keys(signedInUser).length !== 0;
+    const [searchParams, setSearchParams] = useSearchParams()
   
     return (<header>
         {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
         {signOutError ? <p>{signOutError}</p> : null}
         <h1>Neurosongs</h1>
-        {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
+        {!isSignInWithEmailLink(auth, window.location.href) && !searchParams.get("verify_dob_of_user") ? <Navigation/> : null}
     </header>)
 }
 //<StyledLink to={`users/${signedInUser.user_id}`}>View Profile</StyledLink>
