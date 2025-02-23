@@ -6,7 +6,6 @@ function SongCard({song}){
         <ListItem
             alignItems="center"
             sx={{ border: 0.5, borderRadius: 0.7 }}
-            onClick={handleClick}
         >
             <ListItemText>
                 <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>

@@ -13,6 +13,7 @@ import wait from "../../../utils/wait";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import verifyUserAge from "../../../utils/verify-user-age";
+import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -107,7 +108,7 @@ function CompleteSignUpPage(){
                 date_of_birth: new Date(dateOfBirth.format())
             })
         }).then(() => {
-            const profilePictureRef = ref(storage, `${user.uid}/images/profile-picture/${profilePicture.name}`)
+            const profilePictureRef = ref(storage, getProfilePictureDirectory({user_id: user.uid, profile_picture: profilePicture.name}))
             return uploadBytes(profilePictureRef, profilePicture)
         }).then(() => {
             return signOut(auth);

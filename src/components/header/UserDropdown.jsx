@@ -7,6 +7,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
 import Loading from "../Loading";
+import getProfilePictureDirectory from "../../utils/get-profile-picture-directory";
 
 function UserDropdown({setSignOutError}){
     const {signedInUser, setSignedInUser, isUserSignedIn} = useContext(UserContext);
@@ -19,10 +20,12 @@ function UserDropdown({setSignOutError}){
     useEffect(() => {
         if(isUserSignedIn){
             setIsLoading(true);
-            const profilePictureRef = ref(storage, `${signedInUser.user_id}/images/profile-picture/${signedInUser.profile_picture}`);
+            const profilePictureRef = ref(storage, getProfilePictureDirectory(signedInUser));
             getDownloadURL(profilePictureRef).then((profilePicture) => {
                 setIsLoading(false);
                 setProfilePicture(profilePicture);
+            }).catch((err) => {
+                setIsLoading(false)
             })
         }
     }, [signedInUser])

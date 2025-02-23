@@ -8,6 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import { UserContext } from "../../contexts/UserContext";
 import DisplayCategory from "./DisplayCategory";
+import getProfilePictureDirectory from "../../utils/get-profile-picture-directory";
 
 function UserPage(){
     const params = useParams();
@@ -21,7 +22,7 @@ function UserPage(){
         setIsLoading(true)
         getUserById(params.user_id).then((user) => {
             setUser(user);
-            const profilePictureRef = ref(storage, `${user.user_id}/images/profile-picture/${user.profile_picture}`);
+            const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
             return getDownloadURL(profilePictureRef);
         }).then((profilePictureURL) => {
             setIsLoading(false);

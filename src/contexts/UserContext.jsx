@@ -38,7 +38,7 @@ function UserProvider({children}){
         return <p>{error}</p>
     }
 
-    return <UserContext.Provider value={{signedInUser, setSignedInUser, isUserSignedIn: Object.keys(user).length !== 0}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{signedInUser, setSignedInUser, isUserSignedIn: Object.keys(signedInUser).length !== 0}}>{children}</UserContext.Provider>
 }
 
 export { UserContext, UserProvider }
