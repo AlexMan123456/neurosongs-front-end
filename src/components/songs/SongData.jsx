@@ -11,7 +11,7 @@ import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { Button } from "@mui/material";
 
-function SongMetadata(){
+function SongData(){
     const {song_id} = useParams()
     const [song, setSong] = useState(null);
     const [songData, setSongData] = useState({})
@@ -76,4 +76,4 @@ function SongMetadata(){
     </section>)
 }
 
-export default SongMetadata
+export default SongData

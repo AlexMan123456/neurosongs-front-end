@@ -1,9 +1,9 @@
 import CommentsSection from "../comments/CommentsSection"
-import SongMetadata from "./SongMetadata"
+import SongData from "./SongData"
 
 function SongPage(){
     return (<>
-        <SongMetadata/>
+        <SongData/>
         <CommentsSection/>
     </>)
 }
