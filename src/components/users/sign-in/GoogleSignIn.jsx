@@ -24,7 +24,7 @@ function GoogleSignIn({setUserToVerify, setIsLoading, setError}){
                 setIsLoading(false);
                 if(err.status === 404){
                     setUserToVerify(user);
-                    navigate(`${location.pathname}/verify_dob_of_user`);
+                    navigate(`${location.pathname}?verify_dob_of_user=${user.uid}`);
                     return;
                 }
                 setError("Google sign in error")

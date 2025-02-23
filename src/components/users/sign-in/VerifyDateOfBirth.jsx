@@ -35,9 +35,11 @@ function VerifyDateOfBirth({searchParams, user, setIsLoading, setError}){
             setSignUpSuccess(true);
             return wait(2);
         }).then(() => {
-            searchParams.delete("verify_dob_of_user")
+            return searchParams.delete("verify_dob_of_user")
+        }).then(() => {
             navigate("/")
-        }).catch((err) => {
+        })
+        .catch((err) => {
             setError("Error verifying your date of birth. Please try again later.")
         })
     }
