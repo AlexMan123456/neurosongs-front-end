@@ -54,7 +54,7 @@ function GetEmailForSignUpPage(){
 
     if(emailSent){
         return (<section>
-            <h2>An verification email has been sent to {email}</h2>
+            <h2>A verification email has been sent to {email}</h2>
             <p>Please check your email for a link to complete your signup.</p>
         </section>)
     }
