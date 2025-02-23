@@ -125,8 +125,7 @@ function CompleteSignUpPage(){
         }).then(() => {
             setIsLoading(false);
             setSignUpSuccess(true);
-            return Promise.resolve();
-        }).then(() => {
+            localStorage.removeItem("email")
             return wait(2);
         }).then(() => {
             navigate("/sign_in");
