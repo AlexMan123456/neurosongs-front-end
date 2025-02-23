@@ -2,14 +2,12 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth } from "../../../firebase-config"
 import { Button } from "@mui/material"
 import { getUserById, postUser } from "../../../../api"
-import { useLocation, useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useContext } from "react"
 import { UserContext } from "../../../contexts/UserContext"
-import VerifyDateOfBirth from "./VerifyDateOfBirth"
 
-function GoogleSignIn({setUserToVerify, setIsLoading, setError}){
+function GoogleSignIn({setIsLoading, setError}){
     const provider = new GoogleAuthProvider();
-    const location = useLocation()
     const navigate = useNavigate();
     const {setSignedInUser} = useContext(UserContext)
 
@@ -23,9 +21,15 @@ function GoogleSignIn({setUserToVerify, setIsLoading, setError}){
             }).catch((err) => {
                 setIsLoading(false);
                 if(err.status === 404){
-                    setUserToVerify(user);
-                    navigate(`${location.pathname}?verify_dob_of_user=${user.uid}`);
-                    return;
+                    postUser({
+                        user_id: user.uid,
+                        artist_name: user.displayName,
+                        username: user.uid,
+                        email: user.email
+                    }).then((userFromDatabase) => {
+                        setSignedInUser(userFromDatabase);
+                        navigate("/");
+                    })
                 }
                 setError("Google sign in error")
             })

@@ -7,18 +7,11 @@ import VerifyDateOfBirth from "./VerifyDateOfBirth";
 import { useSearchParams } from "react-router-dom";
 
 function SignInPage(){
-    const [searchParams, setSearchParams] = useSearchParams()
-    const verify_dob_of_user = searchParams.get("verify_dob_of_user")
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
-    const [userToVerify, setUserToVerify] = useState({})
 
     if(isLoading){
         return <Loading/>
-    }
-
-    if(verify_dob_of_user){
-        return <VerifyDateOfBirth searchParams={searchParams} user={userToVerify} setIsLoading={setIsLoading} setError={setError}/>
     }
 
     if(error){
@@ -33,7 +26,7 @@ function SignInPage(){
         {error === "auth/invalid-credential" ? <p>Invalid email and/or password. Please try again.</p> : null}
         <br/>
         <br/>
-        <GoogleSignIn setUserToVerify={setUserToVerify} setIsLoading={setIsLoading} setError={setError}/>
+        <GoogleSignIn setIsLoading={setIsLoading} setError={setError}/>
         {error === "Google sign in error" ? <p>Error signing in with Google. Please try again later.</p> : null}
         <p>New to this site? <StyledLink to="/create_account">Create an account</StyledLink></p>
     </section>)
