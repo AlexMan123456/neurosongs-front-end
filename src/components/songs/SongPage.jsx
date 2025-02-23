@@ -55,8 +55,6 @@ function SongPage(){
         return <p>{error}</p>
     }
 
-    console.log(song)
-
     return (<section>
         <img 
             src={displayFront ? frontCover : backCover}
@@ -70,6 +68,10 @@ function SongPage(){
         {songData.album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         <h2>{songData.title}</h2>
         <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
+        <h3>Description</h3>
+        {songData.description.split("\n").map((paragraph, index) => {
+            return <p key={`song-${songData.song_id}-paragraph-${index}`}>{paragraph}</p>
+        })}
         <H5AudioPlayer src={song}/>
     </section>)
 }

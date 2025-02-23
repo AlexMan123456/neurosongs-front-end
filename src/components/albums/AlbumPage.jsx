@@ -68,6 +68,10 @@ function AlbumPage(){
         />
         <br/>
         {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
+        <h3>Description</h3>
+        {album.description.split("\n").map((paragraph, index) => {
+            return <p key={`album-${album.album_id}-paragraph-${index}`}>{paragraph}</p>
+        })}
         {song_id
         ? <div>
             <NowPlaying/>    
