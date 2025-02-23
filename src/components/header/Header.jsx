@@ -16,7 +16,7 @@ function Header(){
         {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
         {signOutError ? <p>{signOutError}</p> : null}
         <h1>Neurosongs</h1>
-        {!isSignInWithEmailLink(auth, window.location.href) && !searchParams.get("verify_dob_of_user") ? <Navigation/> : null}
+        {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }
 //<StyledLink to={`users/${signedInUser.user_id}`}>View Profile</StyledLink>
