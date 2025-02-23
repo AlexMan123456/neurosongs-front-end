@@ -16,30 +16,6 @@ function AlbumData({album, backCover, frontCover}){
     const song_id = searchParams.get("song_id")
     const [displayFront, setDisplayFront] = useState(true);
 
-    /*useEffect(() => {
-        async function getAlbumData(){
-            try {
-                setIsLoading(true);
-                const album = await getAlbumById(album_id)
-                setAlbum(album);
-                const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
-                const frontCoverURL = await getDownloadURL(frontCoverRef);
-                setFrontCover(frontCoverURL);
-                if(!album.back_cover_reference){
-                    return;
-                }
-                const backCoverRef = ref(storage, getAlbumCoverDirectory(album, "back"));
-                const backCoverURL = await getDownloadURL(backCoverRef);
-                setBackCover(backCoverURL);
-                setIsLoading(false);
-            } catch(err) {
-                setIsLoading(false);
-                setError("Could not get album. Please try again later.")
-            }
-        }
-        getAlbumData()
-    }, [])*/
-
     return (<>
     <header>
         <h2>{album.title}</h2>
