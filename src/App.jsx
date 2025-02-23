@@ -10,6 +10,8 @@ import LoadingPage from "./components/LoadingPage"
 import Header from "./components/header/Header"
 import SongPage from "./components/songs/SongPage"
 import SongsList from "./components/songs/SongsList"
+import UserDisplayInfoEditPage from "./components/users/settings/UserDisplayInfoEditPage"
+import EditDateOfBirthPage from "./components/users/settings/EditDateOfBirthPage"
 
 function App() {
   return (<>
@@ -23,8 +25,10 @@ function App() {
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/create_account" element={<GetEmailForSignUpPage/>}/>
       <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
-      <Route path="/users/:user_id/settings" element={<UserSettingsPage/>}/>
+      <Route path="/users/settings" element={<UserSettingsPage/>}/>
       <Route path="/loading" element={<LoadingPage/>}/>
+      <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage/>}/>
+      <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
     </Routes>
   </>)
 }
