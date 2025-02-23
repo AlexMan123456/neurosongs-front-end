@@ -17,6 +17,9 @@ function SongCard({song}){
             </ListItemText>
             : null
             }
+            <ListItemText>
+                <StyledLink to={`/albums/${song.album_id}`}>{song.album.title}</StyledLink>
+            </ListItemText>
         </ListItem>
     </>)
 }
