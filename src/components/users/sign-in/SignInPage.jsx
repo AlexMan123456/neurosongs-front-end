@@ -3,8 +3,6 @@ import StyledLink from "../../styling/StyledLink"
 import EmailAndPasswordSignIn from "./EmailAndPasswordSignIn"
 import GoogleSignIn from "./GoogleSignIn"
 import Loading from "../../Loading";
-import VerifyDateOfBirth from "./VerifyDateOfBirth";
-import { useSearchParams } from "react-router-dom";
 
 function SignInPage(){
     const [isLoading, setIsLoading] = useState(false);
