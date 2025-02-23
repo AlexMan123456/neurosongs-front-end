@@ -1,9 +1,9 @@
 import { Button, FormControl, TextField } from "@mui/material"
 import { useContext, useState } from "react"
-import { auth } from "../../../firebase-config";
+import { auth } from "../../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { getUserById } from "../../../../api";
-import { UserContext } from "../../../contexts/UserContext";
+import { getUserById } from "../../../../../api";
+import { UserContext } from "../../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function EmailAndPasswordSignIn({setIsLoading, setSignInError}){

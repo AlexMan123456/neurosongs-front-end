@@ -1,19 +1,19 @@
 import { isSignInWithEmailLink, signInWithEmailLink, signOut, updatePassword } from "firebase/auth"
-import { auth, storage } from "../../../firebase-config"
+import { auth, storage } from "../../../../firebase-config"
 import { useEffect, useState } from "react";
-import Loading from "../../Loading";
+import Loading from "../../../Loading";
 import { Avatar, Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import getMissingPasswordRequirements from "../../../utils/get-missing-password-requirements";
-import { postUser } from "../../../../api";
-import FileInput from "../../styling/FileInput";
+import getMissingPasswordRequirements from "../../../../utils/get-missing-password-requirements";
+import { postUser } from "../../../../../api";
+import FileInput from "../../../styling/FileInput";
 import { ref, uploadBytes } from "firebase/storage";
-import SignUpSuccess from "./SignUpSuccess";
-import wait from "../../../utils/wait";
+import SignUpSuccess from "../SignUpSuccess";
+import wait from "../../../../utils/wait";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import verifyUserAge from "../../../utils/verify-user-age";
-import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
+import verifyUserAge from "../../../../utils/verify-user-age";
+import getProfilePictureDirectory from "../../../../utils/get-profile-picture-directory";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);

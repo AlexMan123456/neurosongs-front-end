@@ -1,10 +1,10 @@
 import { Button, FormControl, FormHelperText, TextField } from "@mui/material"
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { useState } from "react"
-import { auth } from "../../../firebase-config";
-import Loading from "../../Loading";
-import StyledLink from "../../styling/StyledLink";
-import { getUsers } from "../../../../api";
+import { auth } from "../../../../firebase-config";
+import Loading from "../../../Loading";
+import StyledLink from "../../../styling/StyledLink";
+import { getUsers } from "../../../../../api";
 
 function GetEmailForSignUpPage(){
     const [email, setEmail] = useState("");

@@ -7,12 +7,12 @@ import { useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";
 import { Button } from "@mui/material";
-import verifyUserAge from "../../../utils/verify-user-age";
-import { UserContext } from "../../../contexts/UserContext";
-import wait from "../../../utils/wait";
-import SignUpSuccess from "./SignUpSuccess";
+import verifyUserAge from "../../../../utils/verify-user-age";
+import { UserContext } from "../../../../contexts/UserContext";
+import wait from "../../../../utils/wait";
+import SignUpSuccess from "../SignUpSuccess";
 import dayjs from "dayjs";
-import { postUser } from "../../../../api";
+import { postUser } from "../../../../../api";
 
 function VerifyDateOfBirth({searchParams, user, setIsLoading, setError}){
     const {setSignedInUser} = useContext(UserContext);

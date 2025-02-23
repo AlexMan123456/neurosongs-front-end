@@ -1,10 +1,10 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { auth } from "../../../firebase-config"
+import { auth } from "../../../../firebase-config"
 import { Button } from "@mui/material"
-import { getUserById, postUser } from "../../../../api"
+import { getUserById, postUser } from "../../../../../api"
 import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
-import { UserContext } from "../../../contexts/UserContext"
+import { UserContext } from "../../../../contexts/UserContext"
 
 function GoogleSignIn({setIsLoading, setError}){
     const provider = new GoogleAuthProvider();
