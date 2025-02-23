@@ -45,27 +45,6 @@ function SongPage(){
             }
         }
         getAllData()
-        /*getSongById(song_id).then((songData) => {
-            setSongData(songData)
-            const songRef = ref(storage, getSongDirectory(songData));
-            return getDownloadURL(songRef);
-        }).then((songURL) => {
-            setSong(songURL);
-            console.log(song)
-            const frontCoverRef = ref(storage, getAlbumCoverDirectory({...song.album, album_id: song.album_id, user_id: song.user_id}, "front"))
-            return getDownloadURL(frontCoverRef)
-        }).then((frontCoverURL) => {
-            setFrontCover(frontCoverURL);
-            const backCoverRef = ref(storage, getAlbumCoverDirectory({...song.album, album_id: song.album_id, user_id: song.user_id}, "back"))
-            return getDownloadURL(backCoverRef);
-        }).then((backCoverURL) => {
-            setIsLoading(false);
-            setBackCover(backCoverURL);
-        })
-        .catch((err) => {
-            setIsLoading(false);
-            setError("Error fetching data. Please try again later.")
-        })*/
     }, [])
 
     if(isLoading){
