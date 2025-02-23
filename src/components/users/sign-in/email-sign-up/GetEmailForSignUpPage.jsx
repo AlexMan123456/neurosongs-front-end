@@ -68,7 +68,7 @@ function GetEmailForSignUpPage(){
             value={email}
             onChange={(event) => {setEmail(event.target.value)}}
         />
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button variant="contained" onClick={handleSubmit}>Submit</Button>
     </FormControl>
     {showEmailExistsMessage ? <p>
         Looks like an account with this email already exists. <StyledLink to="/sign_in">Return to sign-in page</StyledLink>.
