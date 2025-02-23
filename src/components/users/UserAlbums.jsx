@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAlbumsFromUser } from "../../../api";
+import { getAlbums } from "../../../api";
 import Loading from "../Loading";
 import { List } from "@mui/material";
 import AlbumCard from "../albums/AlbumCard";
@@ -11,7 +11,7 @@ function UserAlbums({user_id}){
 
     useEffect(() => {
         setIsLoading(true);
-        getAlbumsFromUser(user_id).then((albums) => {
+        getAlbums({user_id}).then((albums) => {
             setIsLoading(false);
             setAlbums(albums);
         }).catch((err) => {

@@ -34,12 +34,6 @@ function getAlbums(queries){
     })
 }
 
-function getAlbumsFromUser(user_id){
-    return api.get(`/api/users/${user_id}/albums`).then(({data}) => {
-        return data.albums
-    })
-}
-
 function getAlbumById(album_id){
     return api.get(`/api/albums/${album_id}`).then(({data}) => {
         return data.album
@@ -58,4 +52,4 @@ function patchUser(user_id, data){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumsFromUser, getAlbumById, postUser, patchUser }
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser }
