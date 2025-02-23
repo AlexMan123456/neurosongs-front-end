@@ -6,13 +6,12 @@ import { Avatar, Divider, List, ListItem, ListItemButton, ListItemText } from "@
 import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
+import Loading from "../Loading";
 
 function UserDropdown({setSignOutError}){
-    const {signedInUser, setSignedInUser} = useContext(UserContext);
+    const {signedInUser, setSignedInUser, isUserSignedIn} = useContext(UserContext);
     const [profilePicture, setProfilePicture] = useState(null);
-    const [profilePictureError, setProfilePictureError] = useState("")
     const [displayUserList, setDisplayUserList] = useState(false);
-    const isUserSignedIn = Object.keys(signedInUser).length !== 0;
     const location = useLocation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +23,6 @@ function UserDropdown({setSignOutError}){
             getDownloadURL(profilePictureRef).then((profilePicture) => {
                 setIsLoading(false);
                 setProfilePicture(profilePicture);
-            }).catch((err) => {
-                setIsLoading(false);
-                setProfilePictureError("Could not get profile picture.");
             })
         }
     }, [signedInUser])
@@ -57,13 +53,17 @@ function UserDropdown({setSignOutError}){
         })
     }
 
+    if(isLoading){
+        return <Loading/>
+    }
+
     return (<>
-        {!profilePictureError ? <Avatar 
+        <Avatar 
             src={profilePicture}
             alt={`${signedInUser.username}'s profile picture`}
             onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
             style={{cursor: "pointer"}}
-        /> : null}
+        />
         {displayUserList ? 
         <List sx={{
             width: "20vw",

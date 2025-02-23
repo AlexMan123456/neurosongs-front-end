@@ -7,9 +7,8 @@ import { isSignInWithEmailLink } from "firebase/auth";
 import { auth } from "../../firebase-config";
 
 function Header(){
-    const {signedInUser} = useContext(UserContext);
+    const {isUserSignedIn} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
-    const isUserSignedIn = Object.keys(signedInUser).length !== 0;
   
     return (<header>
         {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
