@@ -1,19 +1,19 @@
 import { isSignInWithEmailLink, signInWithEmailLink, signOut, updatePassword } from "firebase/auth"
-import { auth, storage } from "../../../firebase-config"
+import { auth, storage } from "../../../../firebase-config"
 import { useEffect, useState } from "react";
-import Loading from "../../Loading";
+import Loading from "../../../Loading";
 import { Avatar, Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import getMissingPasswordRequirements from "../../../utils/get-missing-password-requirements";
-import { postUser } from "../../../../api";
-import FileInput from "../../styling/FileInput";
+import getMissingPasswordRequirements from "../../../../utils/get-missing-password-requirements";
+import { postUser } from "../../../../../api";
+import FileInput from "../../../styling/FileInput";
 import { ref, uploadBytes } from "firebase/storage";
-import SignUpSuccess from "./SignUpSuccess";
-import wait from "../../../utils/wait";
+import SignUpSuccess from "../SignUpSuccess";
+import wait from "../../../../utils/wait";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import verifyUserAge from "../../../utils/verify-user-age";
-import getProfilePictureDirectory from "../../../utils/get-profile-picture-directory";
+import verifyUserAge from "../../../../utils/verify-user-age";
+import getProfilePictureDirectory from "../../../../utils/get-profile-picture-directory";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -25,6 +25,10 @@ function CompleteSignUpPage(){
     const [password, setPassword] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState(dayjs());
     const [description, setDescription] = useState("");
+
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [displayConfirmPasswordHelperText, setDisplayConfirmPasswordHelperText] = useState(false);
     
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -97,6 +101,12 @@ function CompleteSignUpPage(){
             return;
         }
 
+        if(password !== confirmPassword){
+            setIsLoading(false);
+            setConfirmPasswordError("Passwords do not match. Please try again.");
+            return;
+        }
+
         return updatePassword(user, password).then(() => {
             return postUser({
                 user_id: user.uid,
@@ -115,8 +125,7 @@ function CompleteSignUpPage(){
         }).then(() => {
             setIsLoading(false);
             setSignUpSuccess(true);
-            return Promise.resolve();
-        }).then(() => {
+            localStorage.removeItem("email")
             return wait(2);
         }).then(() => {
             navigate("/sign_in");
@@ -195,12 +204,22 @@ function CompleteSignUpPage(){
             </ul>
         </FormHelperText>
         : null}
+        <TextField
+            required
+            label="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(event) => {setConfirmPassword(event.target.value)}}
+            onFocus={() => {setDisplayConfirmPasswordHelperText(true)}}  
+            onBlur={() => {setDisplayConfirmPasswordHelperText(false)}}
+        />
+        {displayConfirmPasswordHelperText ? <FormHelperText>Enter your password again to confirm.</FormHelperText> : null}
         <DatePicker
             label="Date of birth"
             value={dateOfBirth}
             onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
         />
-        {passwordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
+        {passwordError || confirmPasswordError || usernameError || dateOfBirthError ? <h3>Error creating your account. Please address the following.</h3> : null}
         {passwordError.code === "auth/password-does-not-meet-requirements" ? <>
             <p>Your password does not match the following criteria:</p>
             <ul>
@@ -209,6 +228,7 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
+        {confirmPasswordError ? <p>{confirmPasswordError}</p> : null}
         {usernameError ? <p>{usernameError}</p> : null}
         {dateOfBirthError ? <p>{dateOfBirthError}</p> : null}
         <h3>Optional</h3>

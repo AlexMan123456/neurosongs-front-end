@@ -1,10 +1,10 @@
 import { Button, FormControl, FormHelperText, TextField } from "@mui/material"
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { useState } from "react"
-import { auth } from "../../../firebase-config";
-import Loading from "../../Loading";
-import StyledLink from "../../styling/StyledLink";
-import { getUsers } from "../../../../api";
+import { auth } from "../../../../firebase-config";
+import Loading from "../../../Loading";
+import StyledLink from "../../../styling/StyledLink";
+import { getUsers } from "../../../../../api";
 
 function GetEmailForSignUpPage(){
     const [email, setEmail] = useState("");
@@ -37,7 +37,11 @@ function GetEmailForSignUpPage(){
         }).catch((err) => {
             setIsLoading(false);
             if(err.code === "Email already exists"){
-                setShowEmailExistsMessage(true);
+                setError("An account with this email already exists.")
+                return;
+            }
+            if(err.code === "auth/invalid-email"){
+                setError("Invalid email. Please try again.")
                 return;
             }
             setError("Error sending verification email. Please try again later.")
@@ -48,13 +52,9 @@ function GetEmailForSignUpPage(){
         return <Loading/>
     }
 
-    if(error){
-        return <p>{error}</p>
-    }
-
     if(emailSent){
         return (<section>
-            <h2>An verification email has been sent to {email}</h2>
+            <h2>A verification email has been sent to {email}</h2>
             <p>Please check your email for a link to complete your signup.</p>
         </section>)
     }
@@ -68,11 +68,9 @@ function GetEmailForSignUpPage(){
             value={email}
             onChange={(event) => {setEmail(event.target.value)}}
         />
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button variant="contained" onClick={handleSubmit}>Submit</Button>
     </FormControl>
-    {showEmailExistsMessage ? <p>
-        Looks like an account with this email already exists. <StyledLink to="/sign_in">Return to sign-in page</StyledLink>.
-    </p> : null}
+    {error ? <p>{error}</p> : null}
     </section>)
 }
 
