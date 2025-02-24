@@ -3,6 +3,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
 import { Button } from "@mui/material";
+import formatDate from "../../utils/format-date";
 
 function SongData({song, songData, frontCover, backCover}){
     const [displayFront, setDisplayFront] = useState(true);
@@ -26,6 +27,7 @@ function SongData({song, songData, frontCover, backCover}){
             return <p key={`song-${songData.song_id}-paragraph-${index}`}>{paragraph}</p>
         })}
         <H5AudioPlayer src={song}/>
+        <p>Created: {formatDate(new Date(songData.created_at))}</p>
     </section>)
 }
 
