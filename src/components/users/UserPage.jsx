@@ -9,6 +9,7 @@ import { storage } from "../../firebase-config";
 import { UserContext } from "../../contexts/UserContext";
 import DisplayCategory from "./DisplayCategory";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
+import formatDate from "../../utils/format-date";
 
 function UserPage(){
     const params = useParams();
@@ -50,8 +51,6 @@ function UserPage(){
             />
             <h2>{user.artist_name}</h2>
             <p>{`@${user.username}`}</p>
-            <h2>Description</h2>
-            <p>{user.description}</p>
         </header>
         <DisplayCategory/>
     </>)

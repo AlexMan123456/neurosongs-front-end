@@ -3,6 +3,7 @@ import { useState } from "react"
 import UserSongs from "./UserSongs"
 import { useParams } from "react-router-dom"
 import UserAlbums from "./UserAlbums"
+import UserDescription from "./UserDescription"
 
 function DisplayCategory(){
     const {user_id} = useParams()
@@ -16,11 +17,13 @@ function DisplayCategory(){
         >
             <ToggleButton value="songs">Songs</ToggleButton>
             <ToggleButton value="albums">Albums</ToggleButton>
+            <ToggleButton value="description">Description</ToggleButton>
         </ToggleButtonGroup>
         {
             {
-                songs: <UserSongs user_id={user_id}/>, 
-                albums: <UserAlbums user_id={user_id}/>
+                songs: <UserSongs/>, 
+                albums: <UserAlbums/>,
+                description: <UserDescription/>
             }[category]
         }
     </section>)

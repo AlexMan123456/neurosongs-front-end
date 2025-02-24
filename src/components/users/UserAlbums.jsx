@@ -3,8 +3,10 @@ import { getAlbums } from "../../../api";
 import Loading from "../Loading";
 import { List } from "@mui/material";
 import AlbumCard from "../albums/AlbumCard";
+import { useParams } from "react-router-dom";
 
-function UserAlbums({user_id}){
+function UserAlbums(){
+    const {user_id} = useParams()
     const [albums, setAlbums] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
