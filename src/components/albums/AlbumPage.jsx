@@ -33,7 +33,6 @@ function AlbumPage(){
                 setBackCover(backCoverURL);
                 setIsLoading(false);
             } catch(err) {
-                console.log(err)
                 setIsLoading(false);
                 setError("Could not get album. Please try again later.")
             }
