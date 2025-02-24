@@ -1,18 +1,46 @@
 import { Box, Button, FormControl, Grid2, Input, Slider, TextField, Typography } from "@mui/material"
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { postComment } from "../../../api";
+import Loading from "../Loading";
+import wait from "../../utils/wait";
 
-function CommentCreator({content}){
-    const contentType = content.song_id ? "song" : "album";
-    const [comment, setComment] = useState("");
+function CommentCreator({contentType, content_id, setComments}){
+    const [body, setBody] = useState("");
+    const {signedInUser} = useContext(UserContext)
     
     const [isRating, setIsRating] = useState(false);
 
-    const [chosenRating, setChosenRating] = useState(1);
+    const [rating, setRating] = useState(1);
     const {isUserSignedIn} = useContext(UserContext);
 
-    function handleSubmit(){
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("")
 
+    function handleSubmit(){
+        setIsLoading(true);
+        const data = {body, user_id: signedInUser.user_id}
+        if(isRating){
+            data.rating = rating;
+        }
+        postComment(contentType, content_id, data).then((comment) => {
+            setComments((previousComments) => {
+                const newComments = [...previousComments]
+                newComments.unshift(comment);
+                return newComments;
+            })
+            setIsLoading(false);
+        }).catch((err) => {
+            setIsLoading(false);
+            setError("Error posting comment. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
+        })
+    }
+
+    if(isLoading){
+        return <Loading/>
     }
 
     return (<FormControl>
@@ -24,8 +52,8 @@ function CommentCreator({content}){
             minRows={5}
             multiline
             label={isUserSignedIn ? "Leave a comment" : "Sign in to leave a comment"}
-            value={comment}
-            onChange={(event) => {setComment(event.target.value)}}
+            value={body}
+            onChange={(event) => {setBody(event.target.value)}}
             disabled={!isUserSignedIn}
         />
         {isUserSignedIn ? <div>
@@ -38,18 +66,18 @@ function CommentCreator({content}){
                             step={0.1}
                             min={1}
                             max={10}
-                            value={chosenRating}
-                            onChange={(event, newValue) => {setChosenRating(newValue)}}
+                            value={rating}
+                            onChange={(event, newValue) => {setRating(newValue)}}
                             valueLabelDisplay="auto"
-                            color={chosenRating < 4.5 ? "error" : (chosenRating < 7 ? "warning" : "success")}
+                            color={rating < 4.5 ? "error" : (rating < 7 ? "warning" : "success")}
                             aria-labelledby="rating-slider"
                             sx={{width: 250}}
                         />
                     </Grid2>
                     <Grid2 item>
                         <Input
-                            value={chosenRating}
-                            onChange={(event) => {setChosenRating(event.target.valueAsNumber)}}
+                            value={rating}
+                            onChange={(event) => {setRating(event.target.valueAsNumber)}}
                             inputProps={{
                                 step: 0.1,
                                 min: 1,
@@ -65,6 +93,7 @@ function CommentCreator({content}){
         }
         <br/>
         <Button disabled={!isUserSignedIn} variant="contained" onClick={handleSubmit}>Submit</Button>
+        {error ? <p>{error}</p> : null}
     </FormControl>)
 }
 
