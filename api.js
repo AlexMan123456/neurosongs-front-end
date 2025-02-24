@@ -52,4 +52,16 @@ function patchUser(user_id, data){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser }
+function getComments(contentType, content_id){
+    return api.get(`/api/${contentType}/${content_id}/comments`).then(({data}) => {
+        return data.comments;
+    })
+}
+
+function postComment(contentType, content_id, data){
+    return api.post(`/api/${contentType}/${content_id}/comments`, data).then(({data}) => {
+        return data.comment;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment }
