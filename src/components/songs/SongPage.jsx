@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
-import { getSongById } from "../../../api";
 import { useParams } from "react-router-dom";
+import CommentsSection from "../comments/CommentsSection"
+import SongData from "./SongData"
+import { useEffect, useState } from "react";
+import Loading from "../Loading";
+import { getSongById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
-import 'react-h5-audio-player/lib/styles.css';
-import H5AudioPlayer from "react-h5-audio-player";
-import StyledLink from "../styling/StyledLink";
-import Loading from "../Loading";
 import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
-import { Button } from "@mui/material";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -17,7 +15,6 @@ function SongPage(){
     const [songData, setSongData] = useState({})
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
-    const [displayFront, setDisplayFront] = useState(true);
     const [frontCover, setFrontCover] = useState(null);
     const [backCover, setBackCover] = useState(null);
 
@@ -40,6 +37,7 @@ function SongPage(){
     
                 setIsLoading(false);
             } catch(err) {
+                console.log(err)
                 setIsLoading(false);
                 setError("Error fetching data. Please try again later.")
             }
@@ -55,25 +53,10 @@ function SongPage(){
         return <p>{error}</p>
     }
 
-    return (<section>
-        <img 
-            src={displayFront ? frontCover : backCover}
-            style={{
-                width: "25vw",
-                height: "auto"
-            }}
-            alt={`${songData.album.title}'s ${displayFront ? "front" : "back"} cover`}
-        />
-        <br/>
-        {songData.album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
-        <h2>{songData.title}</h2>
-        <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
-        <h3>Description</h3>
-        {songData.description.split("\n").map((paragraph, index) => {
-            return <p key={`song-${songData.song_id}-paragraph-${index}`}>{paragraph}</p>
-        })}
-        <H5AudioPlayer src={song}/>
-    </section>)
+    return (<>
+        <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
+        <CommentsSection content={songData}/>
+    </>)
 }
 
 export default SongPage

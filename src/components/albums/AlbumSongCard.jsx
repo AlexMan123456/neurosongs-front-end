@@ -24,9 +24,7 @@ function AlbumSongCard({song, index}){
             sx={{border: 0.5, borderRadius: 0.7}}
             onClick={handleClick}
         >
-        <ListItemText>
-            {index}. <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
-        </ListItemText>
+        <ListItemText primary={`${index}. ${song.title}`}/>
         <ListItemText primary={song.artist.artist_name}/>
     </ListItemButton>)
 }
