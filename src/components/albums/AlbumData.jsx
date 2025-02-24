@@ -10,6 +10,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import { Button, List } from "@mui/material";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
+import formatDate from "../../utils/format-date";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +35,7 @@ function AlbumData({album, backCover, frontCover}){
         {album.description.split("\n").map((paragraph, index) => {
             return <p key={`album-${album.album_id}-paragraph-${index}`}>{paragraph}</p>
         })}
+        <p>Created: {formatDate(new Date(album.created_at))}</p>
         {song_id
         ? <div>
             <NowPlaying/>    
