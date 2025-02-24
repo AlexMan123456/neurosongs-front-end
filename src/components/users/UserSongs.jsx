@@ -3,8 +3,10 @@ import { getSongs } from "../../../api";
 import SongCard from "../songs/SongCard";
 import Loading from "../Loading";
 import { List } from "@mui/material";
+import { useParams } from "react-router-dom";
 
-function UserSongs({user_id}){
+function UserSongs(){
+    const {user_id} = useParams()
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");

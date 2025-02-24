@@ -29,7 +29,7 @@ function AlbumImage({album}){
 
     return (<div>
         <img style={{
-            width: "10vw",
+            width: "15vw",
             height: "auto"
         }} src={frontCover} alt={`${album.title} front cover`}/>
     </div>)

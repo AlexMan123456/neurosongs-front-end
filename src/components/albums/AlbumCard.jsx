@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import StyledLink from "../styling/StyledLink";
-import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import AlbumImage from "./AlbumImage";
 
 function AlbumCard({album}){
@@ -8,7 +8,7 @@ function AlbumCard({album}){
     const navigate = useNavigate();
 
     return (
-        <ListItemButton
+        <Box
             sx={{
                 padding: "35vw 30pvh",
                 float: 'left',
@@ -16,19 +16,22 @@ function AlbumCard({album}){
                 border: 0.5,
                 borderRadius: 0.7
             }}
-            onClick={() => {navigate(`/albums/${album.album_id}`)}}
         >
         <AlbumImage album={album}/>
             <ListItem
                 sx={{ fontWeight: "bold" }}
-            >{album.title}</ListItem>
+            >
+                <StyledLink to={`/albums/${album.album_id}`}>
+                    {album.title}
+                </StyledLink>
+            </ListItem>
             <ListItemText primary={album.artist.artist_name}/>
             {!location.pathname.includes("users") ? 
             <ListItemText>
                 <StyledLink to={`/users/${album.user_id}`}>@{album.artist.username}</StyledLink>
             </ListItemText>
             : null}
-        </ListItemButton>
+        </Box>
     )
 }
 
