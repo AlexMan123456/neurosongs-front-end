@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { getSongById } from "../../../api";
 import Loading from "../Loading";
+import StyledLink from "../styling/StyledLink";
 
 function NowPlaying(){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +32,7 @@ function NowPlaying(){
 
     return (<>
         <h3>Now Playing</h3>
-        <p>{songData.title} - {songData.artist.artist_name}</p>
+        <p><StyledLink to={`/songs/${songData.song_id}`}>{songData.title}</StyledLink> - {songData.artist.artist_name}</p>
     </>)
 }
 
