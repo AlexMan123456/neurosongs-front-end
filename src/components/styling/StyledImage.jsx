@@ -8,3 +8,5 @@ function StyledImage({src, alt}){
         alt={alt}
     />
 }
+
+export default StyledImage
