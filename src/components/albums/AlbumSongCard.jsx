@@ -19,7 +19,7 @@ function AlbumSongCard({song, index}){
         navigate(`${location.pathname}?${searchParams.toString()}`);
     }
 
-    return (<ListItemButton
+    return (<ListItemButton component="li"
             selected={song_id === song.song_id}
             sx={{border: 0.5, borderRadius: 0.7}}
             onClick={handleClick}
