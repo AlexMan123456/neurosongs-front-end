@@ -11,7 +11,6 @@ function Header(){
     const {isUserSignedIn} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
     const location = useLocation()
-    console.log(location.pathname)
   
     return (<header>
         {location.pathname !== "/" ? <StyledLink to="/">Back to homepage</StyledLink> : null}
