@@ -8,6 +8,7 @@ import Loading from "../Loading";
 import StyledLink from "../styling/StyledLink";
 import { UserContext } from "../../contexts/UserContext";
 import CommentEditor from "./CommentEditor";
+import formatDateAndTime from "../../utils/format-date-and-time";
 
 function CommentCard({comment: givenComment}){
     const [comment, setComment] = useState(givenComment);
@@ -46,7 +47,7 @@ function CommentCard({comment: givenComment}){
         <ListItemText 
             primary={<>
                 {comment.author.artist_name}
-                <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {comment.created_at}</Typography>
+                <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {formatDateAndTime(new Date(comment.created_at))}</Typography>
             </>}
             secondary={<>
                 
