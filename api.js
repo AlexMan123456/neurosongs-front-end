@@ -70,4 +70,8 @@ function patchComment(comment_id, data){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment }
+function deleteComment(comment_id){
+    return api.delete(`/api/comments/${comment_id}`);
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment }

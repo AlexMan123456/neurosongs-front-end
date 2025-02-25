@@ -12,7 +12,7 @@ function CommentCreator({contentType, content_id, setComments}){
     
     const [isRating, setIsRating] = useState(false);
 
-    const [rating, setRating] = useState(1);
+    const [rating, setRating] = useState(null);
     const {isUserSignedIn} = useContext(UserContext);
 
     const [isLoading, setIsLoading] = useState(false);

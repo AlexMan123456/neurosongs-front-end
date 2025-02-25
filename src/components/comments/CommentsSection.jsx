@@ -19,7 +19,7 @@ function CommentsSection({content}){
     return (<section>
             <h2>Comments</h2>
             <CommentCreator contentType={content.song_id ? "songs" : "albums"} content_id={content.song_id ?? content.album_id} setComments={setComments}/>
-            <CommentsList comments={comments}/>
+            <CommentsList comments={comments} setComments={setComments}/>
         </section>)
 }
 
