@@ -21,7 +21,7 @@ function CommentsSection({content}){
     }, [])
 
     return (<section>
-            <h2>{content.album_id ? "Album " : ""}Comments</h2>
+            <h2>{!content.song_id ? "Album " : ""}Comments</h2>
             {isLoading ? <Loading/> : (error ? <p>{error}</p> : <>
                 <CommentCreator contentType={content.song_id ? "songs" : "albums"} content_id={content.song_id ?? content.album_id} setComments={setComments}/>
                 <CommentsList comments={comments} setComments={setComments}/>

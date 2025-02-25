@@ -4,3 +4,5 @@ function ForbiddenAccess(){
         <p>You're not supposed to be here!</p>
     </section>)
 }
+
+export default ForbiddenAccess

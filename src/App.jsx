@@ -17,6 +17,8 @@ import Homepage from "./components/Homepage"
 import AlbumCreator from "./components/albums/album-creation/AlbumCreator"
 import AlbumCoverEditor from "./components/albums/album-creation/AlbumCoverEditor"
 import AlbumSongAdderPage from "./components/albums/album-creation/AlbumSongAdderPage"
+import AlbumSelector from "./components/songs/song-creation/AlbumSelector"
+import SongAdder from "./components/songs/song-creation/SongAdder"
 
 function App() {
   return (<>
@@ -37,6 +39,8 @@ function App() {
       <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
       <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
       <Route path="/users/:user_id/albums/create" element={<AlbumCreator/>}/>
+      <Route path="/users/:user_id/songs/create" element={<AlbumSelector/>}/>
+      <Route path="/users/:user_id/albums/:album_id/songs/create" element={<SongAdder/>}/>
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
     </Routes>

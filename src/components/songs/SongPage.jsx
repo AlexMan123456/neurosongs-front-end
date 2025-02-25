@@ -24,6 +24,7 @@ function SongPage(){
                 setIsLoading(true);
     
                 const songData = await getSongById(song_id);
+                console.log(songData)
                 setSongData(songData);
     
                 const songRef = ref(storage, getSongDirectory(songData));
@@ -31,9 +32,11 @@ function SongPage(){
     
                 const frontCoverRef = ref(storage, getAlbumCoverDirectory({...songData.album, album_id: songData.album_id, user_id: songData.user_id}, "front"));
                 setFrontCover(await getDownloadURL(frontCoverRef));
-    
-                const backCoverRef = ref(storage, getAlbumCoverDirectory({...songData.album, album_id: songData.album_id, user_id: songData.user_id}, "back"));
-                setBackCover(await getDownloadURL(backCoverRef));
+                
+                if(songData.album.back_cover_reference){
+                    const backCoverRef = ref(storage, getAlbumCoverDirectory({...songData.album, album_id: songData.album_id, user_id: songData.user_id}, "back"));
+                    setBackCover(await getDownloadURL(backCoverRef));
+                }
     
                 setIsLoading(false);
             } catch(err) {

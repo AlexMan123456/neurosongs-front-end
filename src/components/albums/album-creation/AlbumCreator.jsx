@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 import { postAlbum } from "../../../../api";
 import Loading from "../../Loading";
 import wait from "../../../utils/wait";
+import ForbiddenAccess from "../../errors/ForbiddenAccess";
 
 function AlbumCreator(){
     const {user_id} = useParams()
@@ -41,16 +42,14 @@ function AlbumCreator(){
         return <Loading/>
     }
 
+    if(signedInUser.user_id !== user_id){
+        return <ForbiddenAccess/>
+    }
+
     if(error){
         return <p>{error}</p>
     }
 
-    if(signedInUser.user_id !== user_id){
-        return (<section>
-                <h2>Wrong account!</h2>
-                <p>Looks like you're on the wrong album creation page...</p>
-            </section>)
-    }
 
     return (<section>
         <h2>Create an album</h2>
@@ -63,6 +62,11 @@ function AlbumCreator(){
                     onChange={(event) => {setTitle(event.target.value)}}
                 />
                 <TextField
+                    multiline
+                    sx={{
+                        minWidth: "30vw",
+                    }}
+                    minRows={5}
                     label="Description"
                     value={description}
                     onChange={(event) => {setDescription(event.target.value)}}

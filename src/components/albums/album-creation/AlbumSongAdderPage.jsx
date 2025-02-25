@@ -9,8 +9,9 @@ import { UserContext } from "../../../contexts/UserContext";
 import { getAlbumById, postSong } from "../../../../api";
 import Loading from "../../Loading";
 import { Button, FormControl, Input, List, Typography } from "@mui/material";
-import SongAdder from "./SongAdder";
+import AlbumSongAdder from "./AlbumSongAdder";
 import wait from "../../../utils/wait";
+import ForbiddenAccess from "../../errors/ForbiddenAccess";
 
 function AlbumSongAdderPage(){
     const {user_id, album_id} = useParams();
@@ -28,7 +29,10 @@ function AlbumSongAdderPage(){
             setAlbum(album);
         }).catch((err) => {
             setIsLoading(false);
-            setError("Error getting album data. Please try again later.");
+            setError("Error getting album data. Please try again later.")
+            return wait(4).then(() => {
+                setError("")
+            })
         })
     }, [])
 
@@ -94,7 +98,7 @@ function AlbumSongAdderPage(){
         </FormControl>
         <List>
             {songs.map((song, index) => {
-                return (<SongAdder
+                return (<AlbumSongAdder
                     key={`song-adder-${index}`}
                     index={index}
                     song={song}

@@ -25,12 +25,11 @@ function AlbumPage(){
                 const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
                 const frontCoverURL = await getDownloadURL(frontCoverRef);
                 setFrontCover(frontCoverURL);
-                if(!album.back_cover_reference){
-                    return;
+                if(album.back_cover_reference){
+                    const backCoverRef = ref(storage, getAlbumCoverDirectory(album, "back"));
+                    const backCoverURL = await getDownloadURL(backCoverRef);
+                    setBackCover(backCoverURL);
                 }
-                const backCoverRef = ref(storage, getAlbumCoverDirectory(album, "back"));
-                const backCoverURL = await getDownloadURL(backCoverRef);
-                setBackCover(backCoverURL);
                 setIsLoading(false);
             } catch(err) {
                 setIsLoading(false);

@@ -5,8 +5,9 @@ import FileInput from "../../styling/FileInput"
 import { useState } from "react"
 import Loading from "../../Loading";
 import H5AudioPlayer from "react-h5-audio-player";
+import wait from "../../../utils/wait";
 
-function SongAdder({index, song, onTitleChange, onDescriptionChange}){
+function AlbumSongAdder({index, song, onTitleChange, onDescriptionChange}){
     const [isLoading, setIsLoading] = useState(false);
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
@@ -29,7 +30,10 @@ function SongAdder({index, song, onTitleChange, onDescriptionChange}){
             setIsLoading(false);
         }).catch((err) => {
             setIsLoading(false);
-            setError("Error fetching audio file. Please try again later.");
+            setError("Error fetching audio file. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
         })
     }
 
@@ -71,4 +75,4 @@ function SongAdder({index, song, onTitleChange, onDescriptionChange}){
     </ListItem>)
 }
 
-export default SongAdder
+export default AlbumSongAdder
