@@ -16,7 +16,7 @@ import GetEmailToResetPassword from "./components/users/sign-in/reset-password/G
 import Homepage from "./components/Homepage"
 import AlbumCreator from "./components/albums/album-creation/AlbumCreator"
 import AlbumCoverEditor from "./components/albums/album-creation/AlbumCoverEditor"
-import AlbumSongAdder from "./components/albums/album-creation/AlbumSongAdder"
+import AlbumSongAdderPage from "./components/albums/album-creation/AlbumSongAdderPage"
 
 function App() {
   return (<>
@@ -38,7 +38,7 @@ function App() {
       <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
       <Route path="/users/:user_id/albums/create" element={<AlbumCreator/>}/>
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
-      <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdder/>}/>
+      <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
     </Routes>
   </>)
 }

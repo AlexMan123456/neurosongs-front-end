@@ -26,7 +26,8 @@ function AlbumCreator(){
         return postAlbum(data).then((album) => {
             setIsLoading(false);
             //navigate(`${location.pathname}/set_album_covers/${album.album_id}`)
-            navigate(`${location.pathname}/add_songs/${album.album_id}`)
+            //navigate(`${location.pathname}/add_songs/${album.album_id}`)
+            navigate(`/users/${user_id}`)
         }).catch((err) => {
             setIsLoading(false);
             setError("Error creating album. Please try again later.");
