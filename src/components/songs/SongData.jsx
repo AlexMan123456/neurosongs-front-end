@@ -23,9 +23,9 @@ function SongData({song, songData, frontCover, backCover}){
         <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
         <p>Album: <StyledLink to={`/albums/${songData.album_id}`}>{songData.album.title}</StyledLink></p>
         <h3>Description</h3>
-        {songData.description.split("\n").map((paragraph, index) => {
+        {songData.description ? songData.description.split("\n").map((paragraph, index) => {
             return <p key={`song-${songData.song_id}-paragraph-${index}`}>{paragraph}</p>
-        })}
+        }) : null}
         <H5AudioPlayer src={song}/>
         <p>Created: {formatDate(new Date(songData.created_at))}</p>
     </section>)
