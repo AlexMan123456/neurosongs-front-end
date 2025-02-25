@@ -1,11 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import StyledLink from "../styling/StyledLink";
-import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Box, ListItem, ListItemText } from "@mui/material";
 import AlbumImage from "./AlbumImage";
 
 function AlbumCard({album}){
     const location = useLocation();
-    const navigate = useNavigate();
 
     return (
         <Box
