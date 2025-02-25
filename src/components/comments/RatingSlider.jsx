@@ -1,4 +1,5 @@
 import { Box, Grid2, Input, Slider } from "@mui/material"
+import getRatingColour from "../../utils/get-rating-colour"
 
 function RatingSlider({rating, setRating}){
     return (<Box>
@@ -12,7 +13,7 @@ function RatingSlider({rating, setRating}){
                     value={rating}
                     onChange={(event, newValue) => {setRating(newValue)}}
                     valueLabelDisplay="auto"
-                    color={rating < 4.5 ? "error" : (rating < 7 ? "warning" : "success")}
+                    color={getRatingColour(rating)}
                     aria-labelledby="rating-slider"
                     sx={{width: 250}}
                 />
