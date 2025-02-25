@@ -6,7 +6,6 @@ import UserAlbums from "./UserAlbums"
 import UserDescription from "./UserDescription"
 
 function DisplayCategory(){
-    const {user_id} = useParams()
     const [category, setCategory] = useState("songs")
     return (<section>
         <ToggleButtonGroup
