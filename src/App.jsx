@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import Homepage from "./components/Homepage"
+import FeaturedPage from "./components/FeaturedPage"
 import UserPage from "./components/users/UserPage"
 import AlbumPage from "./components/albums/AlbumPage"
 import GetEmailForSignUpPage from "./components/users/sign-in/email-sign-up/GetEmailForSignUpPage"
@@ -13,12 +13,14 @@ import SongsList from "./components/songs/SongsList"
 import UserDisplayInfoEditPage from "./components/users/settings/UserDisplayInfoEditPage"
 import EditDateOfBirthPage from "./components/users/settings/EditDateOfBirthPage"
 import GetEmailToResetPassword from "./components/users/sign-in/reset-password/GetEmailToResetPassword"
+import Homepage from "./components/Homepage"
 
 function App() {
   return (<>
     <Header/>
     <Routes>
-      <Route path="" element={<Homepage/>}/>
+      <Route path="/" element={<Homepage/>}/>
+      <Route path="/featured" element={<FeaturedPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
       <Route path="/search" element={<SongsList/>}/>
