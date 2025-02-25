@@ -45,6 +45,7 @@ function App() {
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
     </Routes>
+    <br/>
     <Footer/>
   </>)
 }
