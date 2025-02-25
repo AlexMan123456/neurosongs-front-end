@@ -100,7 +100,7 @@ function CommentCard({comment: givenComment, setComments}){
                     <br/>
                     <Typography component="span" sx={{color: "text.primary"}}>{comment.body}</Typography>
                     <br/>
-                    <Typography component="span" color={getRatingColour(comment.rating)} sx={{fontSize: "14px"}}>Rating: {comment.rating}</Typography>
+                    {comment.rating ? <Typography component="span" color={getRatingColour(comment.rating)} sx={{fontSize: "14px"}}>Rating: {comment.rating}</Typography> : null}
                 </>}
             </>}
         />
