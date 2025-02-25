@@ -29,7 +29,7 @@ function App() {
       <Route path="/featured" element={<FeaturedPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
-      <Route path="/search" element={<SongsList/>}/>
+      <Route path="/all_songs" element={<SongsList/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>
@@ -45,6 +45,7 @@ function App() {
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
     </Routes>
+    <br/>
     <Footer/>
   </>)
 }
