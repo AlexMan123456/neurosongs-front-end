@@ -30,6 +30,7 @@ function CommentCreator({contentType, content_id, setComments}){
                 newComments.unshift(comment);
                 return newComments;
             })
+            setBody("");
             setIsLoading(false);
         }).catch((err) => {
             setIsLoading(false);

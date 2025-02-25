@@ -6,7 +6,7 @@ function Homepage(){
             <h2>Welcome to Neurosongs!</h2>
             <p>By: Alex Man</p>
         </header>
-            <p>Welcome to my latest project. This is a website created Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube and Spotify, in that it has the streaming capabilities of Spotify, mixed with the community aspects of YouTube.</p>
+            <p>Welcome to my latest project. This is a website I created called Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube and Spotify, in that it has the streaming capabilities of Spotify, mixed with the community aspects of YouTube.</p>
 
             <p>You can either experience this site as a signed out user, or a signed in user. As a signed out user, you'll only be able to explore the songs and albums, and see other people's comments. It's a serviceable experience, but nothing special.</p>
 

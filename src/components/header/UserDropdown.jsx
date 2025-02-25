@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import wait from "../../utils/wait";
 import { signOut } from "firebase/auth";
-import { Avatar, Divider, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Avatar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
@@ -32,12 +32,10 @@ function UserDropdown({setSignOutError}){
 
     function handleViewProfile(){
         setDisplayUserList(false);
-        navigate(`/users/${signedInUser.user_id}`)
     }
 
     function handleUserSettings(){
         setDisplayUserList(false);
-        navigate(`/users/settings`);
     }
 
     function handleSignOut(){
@@ -60,37 +58,58 @@ function UserDropdown({setSignOutError}){
         return <Loading/>
     }
 
-    return (<>
-        <Avatar 
-            src={profilePicture}
-            alt={`${signedInUser.username}'s profile picture`}
-            onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
-            style={{cursor: "pointer"}}
-        />
-        {displayUserList ? 
-        <List sx={{
-            width: "20vw",
-            border: 0.5
-        }}>
-            <ListItem>
-                <ListItemButton onClick={handleViewProfile}>
-                    <ListItemText primary="View Profile"/>
-                </ListItemButton>
-            </ListItem>
-            <Divider/>
-            <ListItem>
-                <ListItemButton onClick={handleUserSettings}>
-                    <ListItemText primary="Settings"/>
-                </ListItemButton>
-            </ListItem>
-            <Divider/>
-            <ListItem>
-                <ListItemButton onClick={handleSignOut}>
-                    <ListItemText primary="Sign Out"/>
-                </ListItemButton>
-            </ListItem>
-        </List> : null}
-    </>)
+    return (
+            <Box 
+                sx={{
+                    position: "fixed",
+                    textAlign: "right",
+                    right: "0px",
+                    top: "0px"
+                }}
+            >
+                <IconButton
+                    aria-label="Open user dropdown" 
+                    onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
+                >
+                    <Avatar
+                        src={profilePicture}
+                        alt={`${signedInUser.username}'s profile picture`}
+                    />
+                </IconButton>
+                {displayUserList ? 
+                <List sx={{
+                    width: "20vw",
+                    border: 0.5,
+                    right: "0px",
+                    backgroundColor: "white"
+                }}>
+                    <ListItem>
+                        <ListItemButton
+                            component={Link}
+                            to={`/users/${signedInUser.user_id}`}
+                            onClick={handleViewProfile}
+                        >
+                            <ListItemText primary="View Profile"/>
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider/>
+                    <ListItem>
+                        <ListItemButton 
+                            component={Link}
+                            to="/users/settings"
+                            onClick={handleUserSettings}>
+                            <ListItemText primary="Settings"/>
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider/>
+                    <ListItem>
+                        <ListItemButton onClick={handleSignOut}>
+                            <ListItemText primary="Sign Out"/>
+                        </ListItemButton>
+                    </ListItem>
+                </List> : null}
+            </Box>
+    )
 }
 
 export default UserDropdown

@@ -124,6 +124,10 @@ function UserDisplayInfoEditPage(){
             />
             <TextField
                 multiline
+                sx={{
+                    minWidth: "30vw",
+                }}
+                minRows={5}
                 label="Description"
                 value={description}
                 onChange={(event) => {setDescription(event.target.value)}}
