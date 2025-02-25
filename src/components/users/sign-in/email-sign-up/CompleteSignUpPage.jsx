@@ -168,7 +168,7 @@ function CompleteSignUpPage(){
     <h2>Please enter the following details</h2>
     <FormControl>
         {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
-        <FileInput setFile={handleAvatarDisplay} accept="image/*">Set Profile Picture</FileInput>
+        <FileInput onChange={handleAvatarDisplay} accept="image/*">Set Profile Picture</FileInput>
         <TextField
             required
             label="Artist name"

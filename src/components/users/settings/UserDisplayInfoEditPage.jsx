@@ -111,7 +111,7 @@ function UserDisplayInfoEditPage(){
         <h2>Edit user details</h2>
         <FormControl>
             {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
-            <FileInput setFile={handleAvatarDisplay} accept="image/*">Change Profile Picture</FileInput>
+            <FileInput onChange={handleAvatarDisplay} accept="image/*">Change Profile Picture</FileInput>
             <TextField
                 label="Username"
                 value={username}
