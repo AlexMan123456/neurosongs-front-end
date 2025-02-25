@@ -14,7 +14,7 @@ function CommentsSection({content}){
         }).catch((err) => {
             setError("Error fetching comments. Please try again later.")
         })
-    })
+    }, [])
 
     return (<section>
             <h2>Comments</h2>
