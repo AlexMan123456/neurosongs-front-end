@@ -10,6 +10,7 @@ import { UserContext } from "../../contexts/UserContext";
 import CommentEditor from "./CommentEditor";
 import formatDateAndTime from "../../utils/format-date-and-time";
 import wait from "../../utils/wait";
+import getRatingColour from "../../utils/get-rating-colour";
 
 function CommentCard({comment: givenComment, setComments}){
     const [comment, setComment] = useState(givenComment);
@@ -98,6 +99,8 @@ function CommentCard({comment: givenComment, setComments}){
                 <>
                     <br/>
                     <Typography component="span" sx={{color: "text.primary"}}>{comment.body}</Typography>
+                    <br/>
+                    <Typography component="span" color={getRatingColour(comment.rating)} sx={{fontSize: "14px"}}>Rating: {comment.rating}</Typography>
                 </>}
             </>}
         />
