@@ -1,27 +1,30 @@
 import { Divider, List, ListItemButton, ListItemText } from "@mui/material"
-import UserDisplayInfoEditPage from "./UserDisplayInfoEditPage"
-import StyledLink from "../../styling/StyledLink"
 import { useContext } from "react"
 import { UserContext } from "../../../contexts/UserContext"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 function UserSettingsPage(){
     const {signedInUser} = useContext(UserContext);
-    const navigate = useNavigate()
 
     return (<>
     <List sx={{
-            width: "20vw",
-            border: 0.5
+            border: 0.5,
+            borderRadius: 0.7
         }}
     >
-        <ListItemButton onClick={() => {navigate(`/users/settings/${signedInUser.user_id}/edit_display`)}}>
-            <StyledLink to={`/users/settings/${signedInUser.user_id}/edit_display`}>Edit Display Information</StyledLink>
+        <ListItemButton
+            component={Link}
+            to={`/users/settings/${signedInUser.user_id}/edit_display`}
+        >
+            <ListItemText primary="Edit Display Information"/>
         </ListItemButton>
         <Divider/>
-        <ListItemButton onClick={() => {navigate(`/users/settings/${signedInUser.user_id}/edit_date_of_birth`)}}>
-            <StyledLink to={`/users/settings/${signedInUser.user_id}/edit_date_of_birth`}>Edit Date of Birth</StyledLink>
+        <ListItemButton
+            component={Link}
+            to={`/users/settings/${signedInUser.user_id}/edit_date_of_birth`} 
+        >
+            <ListItemText primary="Edit Date of Birth"/>
         </ListItemButton>
     </List>
     </>)
