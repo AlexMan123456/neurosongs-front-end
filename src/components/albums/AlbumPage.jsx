@@ -21,7 +21,6 @@ function AlbumPage(){
             try {
                 setIsLoading(true);
                 const album = await getAlbumById(album_id)
-                setAlbum(album);
                 const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
                 const frontCoverURL = await getDownloadURL(frontCoverRef);
                 setFrontCover(frontCoverURL);
@@ -30,6 +29,7 @@ function AlbumPage(){
                     const backCoverURL = await getDownloadURL(backCoverRef);
                     setBackCover(backCoverURL);
                 }
+                setAlbum(album);
                 setIsLoading(false);
             } catch(err) {
                 setIsLoading(false);
