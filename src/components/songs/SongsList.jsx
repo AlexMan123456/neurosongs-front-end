@@ -30,6 +30,7 @@ function SongsList(){
 
     return (<section>
         <h2>Most recent songs</h2>
+        <p>Search feature coming soon!</p>
         <List>
             {songs.map((song) => {
                 return <SongCard key={`song-card-${song.song_id}`} song={song}/>
