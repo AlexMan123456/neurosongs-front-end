@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import wait from "../../utils/wait";
 import { signOut } from "firebase/auth";
 import { Avatar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
@@ -32,12 +32,10 @@ function UserDropdown({setSignOutError}){
 
     function handleViewProfile(){
         setDisplayUserList(false);
-        navigate(`/users/${signedInUser.user_id}`)
     }
 
     function handleUserSettings(){
         setDisplayUserList(false);
-        navigate(`/users/settings`);
     }
 
     function handleSignOut(){
@@ -69,7 +67,10 @@ function UserDropdown({setSignOutError}){
                     top: "0px"
                 }}
             >
-                <IconButton onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}>
+                <IconButton
+                    aria-label="Open user dropdown" 
+                    onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
+                >
                     <Avatar
                         src={profilePicture}
                         alt={`${signedInUser.username}'s profile picture`}
@@ -83,13 +84,20 @@ function UserDropdown({setSignOutError}){
                     backgroundColor: "white"
                 }}>
                     <ListItem>
-                        <ListItemButton onClick={handleViewProfile}>
+                        <ListItemButton
+                            component={Link}
+                            to={`/users/${signedInUser.user_id}`}
+                            onClick={handleViewProfile}
+                        >
                             <ListItemText primary="View Profile"/>
                         </ListItemButton>
                     </ListItem>
                     <Divider/>
                     <ListItem>
-                        <ListItemButton onClick={handleUserSettings}>
+                        <ListItemButton 
+                            component={Link}
+                            to="/users/settings"
+                            onClick={handleUserSettings}>
                             <ListItemText primary="Settings"/>
                         </ListItemButton>
                     </ListItem>
