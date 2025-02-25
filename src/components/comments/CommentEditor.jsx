@@ -40,11 +40,12 @@ function CommentEditor({comment, setComment, setIsEditing}){
             onChange={(event) => {setBody(event.target.value)}}
             disabled={error ? true : false}
             />
-        {editRating ? <RatingSlider rating={rating} setRating={setRating}/> : null}
         {error ? <p>{error}</p> : null}
+        <br/>
         <Button disabled={error ? true : false} variant="contained" onClick={handleEdit}>Confirm</Button>
         <Button disabled={error ? true : false} onClick={() => {setEditRating((editRating) => {return !editRating})}}>Edit rating</Button>
         <Button disabled={error ? true : false} color="error" onClick={() => {setIsEditing(false)}}>Cancel</Button>
+        {editRating ? <RatingSlider rating={rating} setRating={setRating}/> : null}
     </>)
 }
 
