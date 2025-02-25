@@ -64,4 +64,10 @@ function postComment(contentType, content_id, data){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment }
+function patchComment(comment_id, data){
+    return api.patch(`/api/comments/${comment_id}`, data).then(({data}) => {
+        return data.comment;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment }

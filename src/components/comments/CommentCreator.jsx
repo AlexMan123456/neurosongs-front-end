@@ -4,6 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { postComment } from "../../../api";
 import Loading from "../Loading";
 import wait from "../../utils/wait";
+import RatingSlider from "./RatingSlider";
 
 function CommentCreator({contentType, content_id, setComments}){
     const [body, setBody] = useState("");
@@ -58,37 +59,7 @@ function CommentCreator({contentType, content_id, setComments}){
         />
         {isUserSignedIn ? <div>
             <Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this song from 1 to 10</Button>
-            {isRating ? <Box>
-                <Grid2 container spacing={2} sx={{ alignItems: 'center' }}>
-                    <Grid2 item>
-                        <Slider
-                            id="rating-slider"
-                            step={0.1}
-                            min={1}
-                            max={10}
-                            value={rating}
-                            onChange={(event, newValue) => {setRating(newValue)}}
-                            valueLabelDisplay="auto"
-                            color={rating < 4.5 ? "error" : (rating < 7 ? "warning" : "success")}
-                            aria-labelledby="rating-slider"
-                            sx={{width: 250}}
-                        />
-                    </Grid2>
-                    <Grid2 item>
-                        <Input
-                            value={rating}
-                            onChange={(event) => {setRating(event.target.valueAsNumber)}}
-                            inputProps={{
-                                step: 0.1,
-                                min: 1,
-                                max: 10,
-                                type: 'number',
-                                "aria-labelledby": "rating-slider"
-                            }}
-                        />
-                    </Grid2>
-                </Grid2>
-            </Box> : null}
+            {isRating ? <RatingSlider rating={rating} setRating={setRating}/> : null}
         </div> : null
         }
         <br/>
