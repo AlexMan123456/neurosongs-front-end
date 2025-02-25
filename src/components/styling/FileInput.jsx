@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import VisuallyHiddenInput from "./VisuallyHiddenInput"
 import { CloudUpload } from "@mui/icons-material"
 
-function FileInput({setFile, children}){
+function FileInput({onChange, accept, children}){
     return (<Button
         component="label"
         role={undefined}
@@ -13,8 +13,8 @@ function FileInput({setFile, children}){
         {children}
         <VisuallyHiddenInput
             type="file"
-            accept="image/*"
-            onChange={(event) => {setFile(event.target.files[0])}}
+            accept={accept}
+            onChange={(event) => {onChange(event.target.files[0])}}
             multiple
         />
     </Button>)

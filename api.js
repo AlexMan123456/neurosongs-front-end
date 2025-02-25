@@ -74,4 +74,10 @@ function deleteComment(comment_id){
     return api.delete(`/api/comments/${comment_id}`);
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment }
+function postAlbum(data){
+    return api.post(`/api/albums`, data).then(({data}) => {
+        return data.album;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum }

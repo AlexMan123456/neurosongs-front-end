@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { storage } from "../../firebase-config";
 import Loading from "../Loading";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
+import StyledImage from "../styling/StyledImage";
 
 function AlbumImage({album}){
     const [frontCover, setFrontCover] = useState(null);
@@ -28,10 +29,7 @@ function AlbumImage({album}){
     }
 
     return (<div>
-        <img style={{
-            width: "15vw",
-            height: "auto"
-        }} src={frontCover} alt={`${album.title} front cover`}/>
+        <StyledImage src={frontCover} alt={`${album.title} front cover`}/>
     </div>)
 }
 
