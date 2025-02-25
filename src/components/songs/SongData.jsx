@@ -2,8 +2,9 @@ import { useState } from "react";
 import 'react-h5-audio-player/lib/styles.css';
 import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import formatDate from "../../utils/format-date";
+import getRatingColour from "../../utils/get-rating-colour";
 
 function SongData({song, songData, frontCover, backCover}){
     const [displayFront, setDisplayFront] = useState(true);
@@ -28,6 +29,7 @@ function SongData({song, songData, frontCover, backCover}){
         }) : null}
         <H5AudioPlayer src={song}/>
         <p>Created: {formatDate(new Date(songData.created_at))}</p>
+        {songData.average_rating ? <Typography color={getRatingColour(songData.average_rating)} sx={{fontSize: "14px"}}>Average rating: {songData.average_rating}</Typography> : null}
     </section>)
 }
 
