@@ -37,7 +37,6 @@ function SongPage(){
     
                 setIsLoading(false);
             } catch(err) {
-                console.log(err)
                 setIsLoading(false);
                 setError("Error fetching data. Please try again later.")
             }
