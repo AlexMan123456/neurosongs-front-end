@@ -19,7 +19,7 @@ function AlbumSelector(){
 
     useEffect(() => {
         setIsLoading(true);
-        getAlbums().then((albums) => {
+        getAlbums({user_id}).then((albums) => {
             setIsLoading(false);
             setAlbums(albums);
         })
@@ -49,7 +49,7 @@ function AlbumSelector(){
     if(albums.length === 0){
         return (<section>
             <h2>You have no albums to add songs to.</h2>
-            <p>Get started by <StyledLink to={`/users/${user_id}/albums/create`}></StyledLink></p>
+            <p>Get started by <StyledLink to={`/users/${user_id}/albums/create`}>creating an album</StyledLink></p>
         </section>)
     }
 
