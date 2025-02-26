@@ -75,6 +75,27 @@ function SongAdder(){
 
     function handleSubmit(){
         setIsLoading(true);
+
+        if(!songFile){
+            return Promise.reject().catch((err) => {
+                setIsLoading(false);
+                setError("ERROR: Please provide an audio file.");
+                wait(4).then(() => {
+                    setError("");
+                })
+            })
+        }
+
+        if(!title){
+            return Promise.reject().catch((err) => {
+                setIsLoading(false);
+                setError("ERROR: Please enter a song title.");
+                wait(4).then(() => {
+                    setError("");
+                })
+            })
+        }
+
         const data = {
             user_id,
             title,
@@ -110,10 +131,6 @@ function SongAdder(){
         return <ForbiddenAccess/>
     }
 
-    if(error){
-        return <p>{error}</p>
-    }
-
     return (<section>
         <h2>Add a song to {album.title}</h2>
         <StyledImage src={frontCover} alt={`${album.title}'s front cover`}/>
@@ -142,6 +159,7 @@ function SongAdder(){
             >
                 Upload audio
             </FileInput>}
+            {error ? <p>{error}</p> : null}
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
         </FormControl>
         </section>)
