@@ -33,9 +33,9 @@ function AlbumData({album, backCover, frontCover}){
         <br/>
         {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         <h3>Description</h3>
-        {album.description.split("\n").map((paragraph, index) => {
+        {album.description ? album.description.split("\n").map((paragraph, index) => {
             return <p key={`album-${album.album_id}-paragraph-${index}`}>{paragraph}</p>
-        })}
+        }) : null}
         <p>Created: {formatDate(new Date(album.created_at))}</p>
         {album.average_rating ? <Typography color={getRatingColour(album.average_rating)} sx={{fontSize: "14px"}}>Average rating: {album.average_rating}</Typography> : null}
         {song_id
