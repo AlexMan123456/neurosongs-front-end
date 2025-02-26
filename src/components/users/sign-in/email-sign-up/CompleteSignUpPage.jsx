@@ -235,6 +235,10 @@ function CompleteSignUpPage(){
         <p>This can be changed later</p>
         <TextField
             multiline
+            sx={{
+                minWidth: "30vw",
+            }}
+            minRows={5}
             label="Description"
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
