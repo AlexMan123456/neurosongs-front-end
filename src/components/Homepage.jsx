@@ -12,6 +12,8 @@ function Homepage(){
 
             <p>However, as a signed in user, you'll also have the ability to leave comments and ratings on other people's music, as well as post some of your own songs for others to hear! You can also change your profile picture, set a user description, and really make your presence on this site unique to you.</p>
 
+            <p>Signing in is managed with the help of Firebase to help make the experience smooth and secure. You can either sign in with Google, or directly by email. If you sign in with email, you'll also need to provide a password, but don't worry - Firebase deals with this securely so I don't ever have access to it.</p>
+
             <p>If you want to hear some of my own songs that I've created, you can check out the featured page. There you'll find an album I've called Neural Anthems++, which is a remake of an album I made back in 2023, as well as a few suggested songs from the album that I'm most proud of.</p>
 
             <p>With all that said, have fun exploring the site! If you enjoyed your visit (and even if you didn't), please feel free to let me know your thoughts by filling out <StyledLink to="https://docs.google.com/forms/d/e/1FAIpQLScILg15VZOUU-JwXj9nh5amvmOP35VE_cGz4BIAMRzzA8Alkw/viewform?usp=dialog">this feedback form.</StyledLink> This will allow me to keep improving the experience and keep working to make this site the best it can be!</p>
