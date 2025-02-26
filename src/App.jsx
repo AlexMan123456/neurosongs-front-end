@@ -20,6 +20,7 @@ import AlbumSongAdderPage from "./components/albums/album-creation/AlbumSongAdde
 import AlbumSelector from "./components/songs/song-creation/AlbumSelector"
 import SongAdder from "./components/songs/song-creation/SongAdder"
 import Footer from "./components/Footer"
+import PageNotFound from "./components/errors/PageNotFound"
 
 function App() {
   return (<>
@@ -44,6 +45,7 @@ function App() {
       <Route path="/users/:user_id/albums/:album_id/songs/create" element={<SongAdder/>}/>
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
+      <Route path="/*" element={<PageNotFound/>}/>
     </Routes>
     <br/>
     <Footer/>
