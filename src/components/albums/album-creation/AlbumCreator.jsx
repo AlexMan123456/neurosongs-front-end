@@ -19,6 +19,12 @@ function AlbumCreator(){
     const [error, setError] = useState("")
 
     function handleSubmit(){
+        if(!title){
+            return Promise.reject().catch(() => {
+                setError("ERROR: Please enter an album title.")
+            })
+        }
+
         const data = {user_id, title};
         if(description){
             data.description = description;
@@ -46,10 +52,6 @@ function AlbumCreator(){
         return <ForbiddenAccess/>
     }
 
-    if(error){
-        return <p>{error}</p>
-    }
-
 
     return (<section>
         <h2>Create an album</h2>
@@ -72,6 +74,7 @@ function AlbumCreator(){
                     onChange={(event) => {setDescription(event.target.value)}}
                 />
                 <Button onClick={handleSubmit}>Next</Button>
+                {error ? <p>{error}</p> : null}
             </FormControl>
     </section>)
 }
