@@ -5,7 +5,8 @@ import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
 import { isSignInWithEmailLink } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Home, Login } from "@mui/icons-material";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -13,9 +14,27 @@ function Header(){
     const location = useLocation()
   
     return (<header>
-        {location.pathname !== "/" ? <StyledLink to="/">Back to homepage</StyledLink> : null}
-        {isUserSignedIn ? <UserDropdown setSignOutError={setSignOutError}/> : <StyledLink to="/sign_in">Sign In</StyledLink>}
-        {signOutError ? <p>{signOutError}</p> : null}
+        <Link to="/">
+            <Home/> 
+        </Link>
+        {isUserSignedIn
+        ? 
+        <UserDropdown setSignOutError={setSignOutError}/>
+        :
+        <Link
+            to="/sign_in"
+            style={{
+                position: "fixed",
+                textAlign: "right",
+                right: "0px",
+                top: "0px"
+            }}
+            >
+            <Login/>
+        </Link>
+        }
+        {signOutError ? <p>{signOutError}</p> : null
+        }
         <h1>Neurosongs</h1>
         {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
