@@ -14,7 +14,13 @@ function Header(){
     const location = useLocation()
   
     return (<header>
-        <Link to="/">
+        <Link 
+            to="/"
+            style={{
+                position: "fixed",
+                textAlign: "left"
+            }}
+        >
             <Home/> 
         </Link>
         {isUserSignedIn
