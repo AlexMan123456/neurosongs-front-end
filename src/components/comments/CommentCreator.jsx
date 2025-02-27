@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid2, Input, Slider, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, TextField } from "@mui/material"
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { postComment } from "../../../api";
@@ -48,7 +48,7 @@ function CommentCreator({contentType, content_id, setComments}){
     return (<FormControl>
         <TextField
             sx={{
-                minWidth: "30vw",
+                width: "98vw",
                 backgroundColor: isUserSignedIn ? null : "lightgray"
             }}
             minRows={5}
@@ -58,10 +58,16 @@ function CommentCreator({contentType, content_id, setComments}){
             onChange={(event) => {setBody(event.target.value)}}
             disabled={!isUserSignedIn}
         />
-        {isUserSignedIn ? <div>
+        {isUserSignedIn ? <Box sx={{
+                display: "grid",
+                textAlign: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                }}
+            >
             <Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this song from 1 to 10</Button>
-            {isRating ? <RatingSlider rating={rating} setRating={setRating}/> : null}
-        </div> : null
+            {isRating ? <RatingSlider rating={rating} setRating={setRating} paddingLeft="23px"/> : null}
+        </Box> : null
         }
         <br/>
         <Button disabled={!isUserSignedIn} variant="contained" onClick={handleSubmit}>Submit</Button>

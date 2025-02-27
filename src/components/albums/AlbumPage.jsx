@@ -7,6 +7,7 @@ import { getAlbumById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { storage } from "../../firebase-config";
+import { Divider } from "@mui/material";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -49,6 +50,7 @@ function AlbumPage(){
     
     return (<>
         <AlbumData album={album} backCover={backCover} frontCover={frontCover}/>
+        <Divider><h2>Album Comments</h2></Divider>
         <CommentsSection content={album}/>
     </>)
 }

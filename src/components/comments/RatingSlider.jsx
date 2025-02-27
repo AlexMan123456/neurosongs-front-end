@@ -1,9 +1,9 @@
 import { Box, Grid2, Input, Slider } from "@mui/material"
 import getRatingColour from "../../utils/get-rating-colour"
 
-function RatingSlider({rating, setRating}){
+function RatingSlider({rating, setRating, paddingLeft}){
     return (<Box>
-        <Grid2 container spacing={2} sx={{ alignItems: 'center' }}>
+        <Grid2 container spacing={2} sx={{ alignItems: 'center', paddingLeft: {paddingLeft} }}>
             <Grid2>
                 <Slider
                     id="rating-slider"
@@ -15,7 +15,7 @@ function RatingSlider({rating, setRating}){
                     valueLabelDisplay="auto"
                     color={getRatingColour(rating)}
                     aria-labelledby="rating-slider"
-                    sx={{width: 250}}
+                    sx={{width: 270}}
                 />
             </Grid2>
             <Grid2>
