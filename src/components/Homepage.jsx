@@ -1,11 +1,61 @@
+import { Button, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import StyledLink from "./styling/StyledLink"
+import { useEffect, useState } from "react"
+import axios from "axios";
+import wait from "../utils/wait";
+import Loading from "./Loading";
+import formatDateAndTime from "../utils/format-date-and-time";
+import formatDate from "../utils/format-date";
+import getCommitsFromRecentBranch from "../utils/get-commits-from-recent-branch";
+import { Circle } from "@mui/icons-material";
 
 function Homepage(){
+    const [viewCommits, setViewCommits] = useState(false);
+    const [commits, setCommits] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get(import.meta.env.VITE_GITHUB_API_COMMITS_URL).then(({data}) => {
+            setCommits(data);
+        }).catch((err) => {
+            setError("Error fetching update information. Please try again later.")
+            wait(4).then(() => {
+                setError("");
+            })
+        }).finally(() => {
+            setIsLoading(false);
+        })
+    }, [])
+
+    if(isLoading){
+        return <Loading/>
+    }
+
     return (<section>
         <header>
             <h2>Welcome to Neurosongs!</h2>
             <p>By: Alex Man</p>
         </header>
+            <Button onClick={() => {setViewCommits((viewCommits) => {return !viewCommits})}}>See recent updates</Button>
+            {viewCommits ? 
+            <List sx={{
+                    paddingLeft: "1vw",
+                    border: 0.5,
+                    borderRadius: 0.7
+                }}
+            >
+                {getCommitsFromRecentBranch(commits).map((commit) => {
+                    return (<ListItem key={commit.url}>
+                            <ListItemIcon>
+                                <Circle fontSize="small" color="info" />
+                            </ListItemIcon>
+                            <ListItemText primary={commit.message}/>
+                        </ListItem>)
+                })}
+            </List>
+            : null}
             <p>Welcome to my latest project. This is a website I created called Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube and Spotify, in that it has the streaming capabilities of Spotify, mixed with the community aspects of YouTube.</p>
 
             <p>You can either experience this site as a signed out user, or a signed in user. As a signed out user, you'll only be able to explore the songs and albums, and see other people's comments. It's a serviceable experience, but nothing special.</p>
