@@ -3,3 +3,22 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 2vh
 }
+
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 1vw;
+}
+
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 0.5vw;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 1vw;
+}
+
+li {
+  font-family: Arial, Helvetica, sans-serif;
+}
