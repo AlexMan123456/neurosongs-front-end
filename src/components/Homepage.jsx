@@ -21,7 +21,7 @@ function Homepage(){
             setCommits(data);
         }).catch((err) => {
             setError("Error fetching update information. Please try again later.")
-            wait(4).then(() => {
+            return wait(4).then(() => {
                 setError("");
             })
         }).finally(() => {
