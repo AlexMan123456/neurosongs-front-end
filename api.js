@@ -86,4 +86,10 @@ function postSong(album_id, data){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong }
+function patchAlbum(album_id, data){
+    return api.patch(`/api/albums/${album_id}`, data).then(({data}) => {
+        return data.album
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum }
