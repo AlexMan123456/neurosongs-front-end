@@ -13,6 +13,7 @@ function UserDescription(){
 
     useEffect(() => {
         getUserById(user_id).then((user) => {
+            console.log(user.description)
             setIsLoading(false);
             setDescription(user.description);
             setMemberSince(user.member_since);
@@ -32,7 +33,7 @@ function UserDescription(){
 
     return (<section>
         <h2>Description</h2>
-            <p>{description}</p>
+            {description ? <p style={{ whiteSpace: 'pre-line' }}>{description}</p> : <p><em>No description set</em></p>}
             <p>Member since: {formatDate(new Date(memberSince))}</p>
     </section>)
 }
