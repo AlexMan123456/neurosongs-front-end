@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import wait from "../utils/wait";
 import Loading from "./Loading";
-import formatDateAndTime from "../utils/format-date-and-time";
-import formatDate from "../utils/format-date";
 import getCommitsFromRecentBranch from "../utils/get-commits-from-recent-branch";
 import { Circle } from "@mui/icons-material";
 

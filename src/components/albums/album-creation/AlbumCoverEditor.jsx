@@ -5,12 +5,15 @@ import { Button, FormControl } from "@mui/material";
 import FileInput from "../../styling/FileInput";
 import AlbumCoverInput from "./AlbumCoverInput";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
-import { getAlbumById } from "../../../../api";
+import { getAlbumById, patchAlbum } from "../../../../api";
 import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../firebase-config";
 import getAlbumCoverDirectory from "../../../references/get-album-cover-directory";
+import ForbiddenAccess from "../../errors/ForbiddenAccess";
+import Loading from "../../Loading";
+import wait from "../../../utils/wait";
 
 function AlbumCoverEditor(){
     const {user_id, album_id} = useParams();
@@ -21,6 +24,8 @@ function AlbumCoverEditor(){
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         setIsLoading(true);
@@ -39,28 +44,35 @@ function AlbumCoverEditor(){
 
     async function handleSubmit(){
         try {
-            setIsLoading(true);    
-            const frontCoverRef = ref(storage, getAlbumCoverDirectory(frontCoverFile.name, "front"));
+            setIsLoading(true);
+            
+            const frontCoverRef = ref(storage, getAlbumCoverDirectory({user_id, album_id, front_cover_reference: frontCoverFile.name}, "front"));
             await uploadBytes(frontCoverRef, frontCoverFile);
+            const data = {front_cover_reference: frontCoverFile.name}
     
             if(backCoverFile){
-                const backCoverRef = ref(storage, getAlbumCoverDirectory(backCoverFile.name, "back"));
+                const backCoverRef = ref(storage, getAlbumCoverDirectory({user_id, album_id, back_cover_reference: backCoverFile.name}, "back"));
                 await uploadBytes(backCoverRef, backCoverFile);
+                data.back_cover_reference = backCoverFile.name
             }
 
-            // We need PATCH /api/albums/:album_id for this to work, but I haven't quite yet added that. This will come soon.
+            await patchAlbum(album_id, data)
+            navigate(`/users/${user_id}`)
         } catch(err) {
-
+            setError("Error setting album covers. Please try again later.")
+            await wait(4);
+            setError("");
         }
 
 
     }
 
     if(signedInUser.user_id !== user_id){
-        <section>
-            <h2>Wrong account!</h2>
-            <p>Looks like you're on the wrong album creation page...</p>
-        </section>
+        return <ForbiddenAccess/>
+    }
+
+    if(isLoading){
+        return <Loading/>
     }
 
     return (<>
@@ -75,6 +87,7 @@ function AlbumCoverEditor(){
                 side="back"
             />
         <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+        {error ? <p>{error}</p> : null}
         </FormControl>
     </>)
 
