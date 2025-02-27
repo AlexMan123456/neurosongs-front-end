@@ -13,7 +13,6 @@ function UserDescription(){
 
     useEffect(() => {
         getUserById(user_id).then((user) => {
-            console.log(user.description)
             setIsLoading(false);
             setDescription(user.description);
             setMemberSince(user.member_since);
