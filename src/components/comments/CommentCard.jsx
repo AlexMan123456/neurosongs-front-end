@@ -1,4 +1,4 @@
-import { Avatar, Button, ListItem, ListItemText, Popper, TextField, Typography } from "@mui/material"
+import { Avatar, Box, Button, ListItem, ListItemText, Popper, TextField, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
 import { deleteComment, getUserById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -80,10 +80,10 @@ function CommentCard({comment: givenComment, setComments}){
     >
         {!isLoading ? <Avatar src={profilePicture}/> : <Loading/>} 
         <ListItemText 
-            primary={<>
+            primary={<Box sx={{paddingLeft: "1vw"}}>
                 {comment.author.artist_name}
                 <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {formatDateAndTime(new Date(comment.created_at))}</Typography>
-            </>}
+            </Box>}
             secondary={<>
                 <StyledLink to={`/users/${comment.user_id}`}>@{comment.author.username}</StyledLink>
                 {isEditing ? 
