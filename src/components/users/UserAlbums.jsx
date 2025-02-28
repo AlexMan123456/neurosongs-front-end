@@ -39,7 +39,7 @@ function UserAlbums(){
             <br/>
         </> : null}
         {albums.map((album) => {
-            return <AlbumCard key={`album-card-${album.album_id}`} album={album}/>
+            return <AlbumCard setAlbums={setAlbums} key={`album-card-${album.album_id}`} album={album}/>
         })}
     </List>)
 }
