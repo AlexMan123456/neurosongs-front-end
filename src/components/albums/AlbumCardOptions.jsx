@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { deleteAlbum } from "../../../api";
 import wait from "../../utils/wait";
 import Loading from "../Loading";
+import DeletePopup from "../utility/DeletePopup";
 
 function AlbumCardOptions({album, setAlbums}){
     const [anchorElement, setAnchorElement] = useState(null);
@@ -62,7 +63,7 @@ function AlbumCardOptions({album, setAlbums}){
                 >
                     Delete album
                 </MenuItem>
-                <Backdrop
+                {/*<Backdrop
                     open={showDeleteBackdrop}
                     onClick={() => {setShowDeleteBackdrop(false)}}
                 >
@@ -73,7 +74,14 @@ function AlbumCardOptions({album, setAlbums}){
                             <Button onClick={() => {setShowDeleteBackdrop(false)}} color="error">No</Button>
                         </Box>
                     </Box>
-                </Backdrop>
+                </Backdrop>*/}
+                <DeletePopup
+                    showMessage={showDeleteBackdrop}
+                    setShowMessage={setShowDeleteBackdrop}
+                    onDelete={handleDelete}
+                >
+                    Are you sure you want to delete {album.title}?
+                </DeletePopup>
             </Menu>
     </Box>)
 }
