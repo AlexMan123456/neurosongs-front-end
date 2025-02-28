@@ -96,4 +96,10 @@ function deleteAlbum(album_id){
     return api.delete(`/api/albums/${album_id}`)
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum }
+function patchSong(song_id, data){
+    return api.patch(`/api/songs/${song_id}`, data).then(({data}) => {
+        return data.song;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong }
