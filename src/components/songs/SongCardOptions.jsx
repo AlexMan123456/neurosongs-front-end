@@ -6,8 +6,9 @@ import DeletePopup from "../utility/DeletePopup";
 import Markdown from "react-markdown";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../Loading";
+import { deleteSong } from "../../../api";
 
-function SongCardOptions({song}){
+function SongCardOptions({song, setSongs}){
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const {signedInUser} = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +19,18 @@ function SongCardOptions({song}){
             setError("This isn't even your song!")
             return;
         }
+        setIsLoading(true);
         deleteSong(song.song_id).then(() => {
-            
+            setSongs((songs) => {
+                const newSongs = [...songs];
+
+                const songIndex = newSongs.map((songInMap) => {
+                    return songInMap.song_id
+                }).indexOf(song.song_id)
+
+                newSongs.splice(songIndex,1);
+                return newSongs;
+            })
         })
     }
 
@@ -37,8 +48,9 @@ function SongCardOptions({song}){
             </MenuItem>
             <MenuItem
                 onClick={() => {setShowDeleteBackdrop(true)}}
-            >Delete song</MenuItem>
-        </DropdownMenu>
+            >
+                Delete song
+            </MenuItem>
         <DeletePopup
             showMessage={showDeleteBackdrop}
             setShowMessage={setShowDeleteBackdrop}
@@ -47,7 +59,8 @@ function SongCardOptions({song}){
             <Markdown>
                 {`Are you sure you want to delete _${song.title}_?`}
             </Markdown>
-            </DeletePopup>
+        </DeletePopup>
+        </DropdownMenu>
         {error ? <p>{error}</p> : null}
     </Box>)
 }

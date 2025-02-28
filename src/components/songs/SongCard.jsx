@@ -9,7 +9,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useLocation } from "react-router-dom";
 import SongCardOptions from "./SongCardOptions";
 
-function SongCard({song}){
+function SongCard({song, setSongs}){
     const [frontCover, setFrontCover] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const {signedInUser} = useContext(UserContext);
@@ -52,7 +52,7 @@ function SongCard({song}){
             <ListItemText>
                 <StyledLink to={`/albums/${song.album_id}`}>{song.album.title}</StyledLink>
             </ListItemText>
-            {location.pathname.includes("users") && signedInUser.user_id === song.user_id ? <SongCardOptions song={song}/> : null}
+            {location.pathname.includes("users") && signedInUser.user_id === song.user_id ? <SongCardOptions song={song} setSongs={setSongs}/> : null}
         </ListItem>
     )
 }
