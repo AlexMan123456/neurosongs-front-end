@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";
 import { Button } from "@mui/material";
@@ -6,8 +6,9 @@ import verifyUserAge from "../../../utils/verify-user-age";
 import { UserContext } from "../../../contexts/UserContext";
 import wait from "../../../utils/wait";
 import dayjs from "dayjs";
-import { patchUser } from "../../../../api";
+import { getUserById, patchUser } from "../../../../api";
 import Loading from "../../Loading";
+import ForbiddenAccess from "../../errors/ForbiddenAccess";
 
 function EditDateOfBirthPage(){
     const {user_id} = useParams()
@@ -17,6 +18,19 @@ function EditDateOfBirthPage(){
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setIsLoading(true);
+        getUserById(user_id).then(({date_of_birth}) => {
+            setDateOfBirth(dayjs(new Date(date_of_birth)));
+            setIsLoading(false);
+        }).catch((err) => {
+            setError("Error getting date of birth. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
+        })
+    }, [])
 
     function handleSubmit(){
         if(!verifyUserAge(new Date(dateOfBirth), 13)){
@@ -37,14 +51,14 @@ function EditDateOfBirthPage(){
         .catch((err) => {
             setIsLoading(false);
             setError("Error setting your date of birth. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
         })
     }
 
     if(signedInUser.user_id !== user_id){
-        return (<section>
-                <h2>Wrong account!</h2>
-                <p>Looks like you're on the wrong edit page...</p>
-            </section>)
+        return <ForbiddenAccess/>
     }
 
     if(isLoading){
