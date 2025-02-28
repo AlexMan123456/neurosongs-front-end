@@ -46,17 +46,22 @@ function AlbumCoverEditor(){
         try {
             setIsLoading(true);
             
-            const frontCoverRef = ref(storage, getAlbumCoverDirectory({user_id, album_id, front_cover_reference: frontCoverFile.name}, "front"));
-            await uploadBytes(frontCoverRef, frontCoverFile);
-            const data = {front_cover_reference: frontCoverFile.name}
+            const data = {}
+            if(frontCoverFile !== null){
+                const frontCoverRef = ref(storage, getAlbumCoverDirectory({user_id, album_id, front_cover_reference: frontCoverFile.name}, "front"));
+                await uploadBytes(frontCoverRef, frontCoverFile);
+                data.front_cover_reference = frontCoverFile.name;
+            }
     
-            if(backCoverFile){
+            if(backCoverFile !== null){
                 const backCoverRef = ref(storage, getAlbumCoverDirectory({user_id, album_id, back_cover_reference: backCoverFile.name}, "back"));
                 await uploadBytes(backCoverRef, backCoverFile);
-                data.back_cover_reference = backCoverFile.name
+                data.back_cover_reference = backCoverFile.name;
             }
 
-            await patchAlbum(album_id, data)
+            if(Object.keys(data).length !== 0){
+                await patchAlbum(album_id, data)
+            }
             navigate(`/users/${user_id}`)
         } catch(err) {
             setError("Error setting album covers. Please try again later.")

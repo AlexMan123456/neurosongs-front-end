@@ -1,10 +1,16 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import StyledLink from "../styling/StyledLink";
 import { Box, ListItem, ListItemText } from "@mui/material";
 import AlbumImage from "./AlbumImage";
+import { ArrowDropDown } from "@mui/icons-material";
+import AlbumCardOptions from "./AlbumCardOptions";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
-function AlbumCard({album}){
+function AlbumCard({album, setAlbums}){
     const location = useLocation();
+    const {user_id} = useParams();
+    const {signedInUser} = useContext(UserContext)
 
     return (
         <Box
@@ -16,7 +22,8 @@ function AlbumCard({album}){
                 borderRadius: 0.7
             }}
         >
-        <AlbumImage album={album}/>
+            {location.pathname.includes("users") && signedInUser.user_id === user_id ? <AlbumCardOptions album={album} setAlbums={setAlbums}/> : null}
+            <AlbumImage album={album}/>
             <ListItem
                 sx={{ fontWeight: "bold" }}
             >
