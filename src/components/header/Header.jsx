@@ -7,6 +7,7 @@ import { isSignInWithEmailLink } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Home, Login } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -26,18 +27,20 @@ function Header(){
         {isUserSignedIn
         ? 
         <UserDropdown setSignOutError={setSignOutError}/>
-        :
-        <Link
-            to="/sign_in"
-            style={{
-                position: "fixed",
-                textAlign: "right",
-                right: "0px",
-                top: "0px"
-            }}
-            >
-            <Login/>
-        </Link>
+        :<Box style={{
+            position: "fixed",
+            textAlign: "right",
+            right: "0px",
+            top: "0px"
+        }}>
+            <Link
+                to="/sign_in"
+                
+                >
+                <Login/>
+            </Link>
+            <StyledLink to="/sign_in">Sign in</StyledLink>
+        </Box>
         }
         {signOutError ? <p>{signOutError}</p> : null
         }
