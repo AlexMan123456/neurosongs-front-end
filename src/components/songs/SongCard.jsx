@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import StyledLink from "../styling/StyledLink"
-import { ListItem, ListItemText } from "@mui/material";
+import { Button, ListItem, ListItemText, Menu, MenuItem } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
+import Loading from "../Loading";
+import { UserContext } from "../../contexts/UserContext";
+import { useLocation } from "react-router-dom";
+import SongCardOptions from "./SongCardOptions";
 
 function SongCard({song}){
     const [frontCover, setFrontCover] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const {signedInUser} = useContext(UserContext);
+    const location = useLocation();
     
     useEffect(() => {
         setIsLoading(true);
@@ -25,14 +31,14 @@ function SongCard({song}){
             alignItems="center"
             sx={{ border: 0.5, borderRadius: 0.7 }}
         >
-            <img
+            {isLoading ? <Loading/> : <img
                 src={frontCover}
                 alt={`${song.album.title}'s front cover`}
                 style={{
                     width: "50px",
                     height: "auto"
                 }}
-            />
+            /> }
             <ListItemText>
                 <StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>
             </ListItemText>
@@ -46,6 +52,7 @@ function SongCard({song}){
             <ListItemText>
                 <StyledLink to={`/albums/${song.album_id}`}>{song.album.title}</StyledLink>
             </ListItemText>
+            {location.pathname.includes("users") && signedInUser.user_id === song.user_id ? <SongCardOptions song={song}/> : null}
         </ListItem>
     )
 }
