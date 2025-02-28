@@ -71,7 +71,6 @@ function AlbumCardOptions({album, setAlbums}){
                         <Box sx={{textAlign: "center"}}>
                             <Button onClick={handleDelete} color="success">Yes</Button>
                             <Button onClick={() => {setShowDeleteBackdrop(false)}} color="error">No</Button>
-
                         </Box>
                     </Box>
                 </Backdrop>
