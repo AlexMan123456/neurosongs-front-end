@@ -1,0 +1,123 @@
+import { useContext, useEffect, useState } from "react"
+import { getAlbumById, patchAlbum } from "../../../api";
+import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../Loading";
+import { UserContext } from "../../contexts/UserContext";
+import ForbiddenAccess from "../errors/ForbiddenAccess";
+import { Button, FormControl, TextField, Typography } from "@mui/material";
+import FileInput from "../styling/FileInput";
+import AlbumCoverInput from "./album-creation/AlbumCoverInput";
+import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../firebase-config";
+import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
+import wait from "../../utils/wait";
+
+function AlbumEditPage(){
+    const {album_id} = useParams();
+    const {signedInUser} = useContext(UserContext);
+    const [album, setAlbum] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const [frontCover, setFrontCover] = useState(null);
+    const [backCover, setBackCover] = useState(null);
+    
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsLoading(true);
+        getAlbumById(album_id).then((album) => {
+            setAlbum(album);
+            setTitle(album.title);
+            setDescription(album.description);
+            setFrontCover(album.front_cover_reference);
+            setBackCover(album.back_cover_reference);
+            setIsLoading(false);
+        }).catch((err) => {
+            setIsLoading(false);
+            setError("Error fetching album. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
+        })
+    }, [])
+
+    async function handleSubmit(){
+        try {
+            setIsLoading(true);
+            if(!title){
+                setError("ERROR: Title cannot be blank. Please enter a title.");
+                return;
+            }
+            
+            const data = {title};
+            
+            if(description){
+                data.description = description;
+            }
+            
+            if(frontCover !== null){
+                const frontCoverRef = ref(storage, getAlbumCoverDirectory({user_id: album.user_id, album_id, front_cover_reference: frontCover.name}, "front"));
+                await uploadBytes(frontCoverRef, frontCover);
+                data.front_cover_reference = frontCover.name;
+            }
+    
+            if(backCover !== null){
+                const backCoverRef = ref(storage, getAlbumCoverDirectory({user_id: album.user_id, album_id, back_cover_reference: backCover.name}, "back"))
+                await uploadBytes(backCoverRef, backCover);
+                data.back_cover_reference = backCover.name;
+            }
+
+            await patchAlbum(album_id, data);
+            await wait(2);
+            navigate(`/users/${album.user_id}`);
+        } catch(err) {
+            setError("Error saving your edits. Please try again later.")
+            await wait(4);
+            setError("");
+        }
+
+
+    }
+
+    if(isLoading){
+        return <Loading/>
+    }
+
+    if(signedInUser.user_id !== album.user_id){
+        return <ForbiddenAccess/>
+    }
+
+    return (<FormControl>
+        <AlbumCoverInput
+            side="front"
+            setCover={setFrontCover}
+        />
+        <AlbumCoverInput
+            side="back"
+            setCover={setBackCover}
+        />
+        <TextField
+            label="Title"
+            value={title}
+            onChange={(event) => {setTitle(event.target.value)}}
+        />
+        <TextField
+            multiline
+            sx={{
+                minWidth: "30vw",
+            }}
+            minRows={5}
+            label="Description"
+            value={description}
+            onChange={(event) => {setDescription(event.target.value)}}
+        />
+        {error ? <p>{error}</p> : null}
+        <Button onClick={handleSubmit}>Submit</Button>
+    </FormControl>)
+}
+
+export default AlbumEditPage
