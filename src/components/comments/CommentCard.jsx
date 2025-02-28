@@ -99,12 +99,6 @@ function CommentCard({comment: givenComment, setComments}){
         {signedInUser.user_id === comment.user_id && !isEditing ? <>
             <Button onClick={enterEditMode}>Edit</Button>
             <Button color="error" onClick={() => {setShowDeleteBackdrop(true)}}>Delete</Button>
-            {/*<Popper id={deletePopupID} open={open} anchorEl={anchorElement}>
-                Are you sure you want to delete this comment?
-                <br/>
-                <Button color="success" onClick={handleDelete}>Yes</Button>
-                <Button color="error" onClick={() => {setAnchorElement(null)}}>No</Button>
-            </Popper>*/}
             <DeletePopup
                 showMessage={showDeleteBackdrop}
                 setShowMessage={setShowDeleteBackdrop}
