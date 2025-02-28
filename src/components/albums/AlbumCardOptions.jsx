@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { deleteAlbum } from "../../../api";
 import wait from "../../utils/wait";
 import Loading from "../Loading";
+import DeletePopup from "../utility/DeletePopup";
+import Markdown from "react-markdown";
 
 function AlbumCardOptions({album, setAlbums}){
     const [anchorElement, setAnchorElement] = useState(null);
@@ -46,35 +48,29 @@ function AlbumCardOptions({album, setAlbums}){
         <Button onClick={(event) => {setAnchorElement(event.currentTarget)}}>
             {isDropdownOpen ? <ArrowDropUp/> : <ArrowDropDown/>}
         </Button>
-            <Menu
-                anchorEl={anchorElement}
-                open={isDropdownOpen}
-                onClose={() => {setAnchorElement(null)}}
+        <Menu
+            anchorEl={anchorElement}
+            open={isDropdownOpen}
+            onClose={() => {setAnchorElement(null)}}
+        >
+            <MenuItem
+                component={Link}
+                to={`/albums/${album.album_id}/edit`}
             >
-                <MenuItem
-                    component={Link}
-                    to={`/albums/${album.album_id}/edit`}
-                >
-                    Edit album
-                </MenuItem>
-                <MenuItem
-                    onClick={() => {setShowDeleteBackdrop(true)}}
-                >
-                    Delete album
-                </MenuItem>
-                <Backdrop
-                    open={showDeleteBackdrop}
-                    onClick={() => {setShowDeleteBackdrop(false)}}
-                >
-                    <Box sx={{backgroundColor: "white", borderRadius: 0.7}}>
-                        <Typography sx={{paddingLeft: "0.5vw", paddingRight: "0.5vw"}}>Are you sure you want to delete {album.title}?</Typography>
-                        <Box sx={{textAlign: "center"}}>
-                            <Button onClick={handleDelete} color="success">Yes</Button>
-                            <Button onClick={() => {setShowDeleteBackdrop(false)}} color="error">No</Button>
-
-                        </Box>
-                    </Box>
-                </Backdrop>
+                Edit album
+            </MenuItem>
+            <MenuItem
+                onClick={() => {setShowDeleteBackdrop(true)}}
+            >
+                Delete album
+            </MenuItem>
+            <DeletePopup
+                showMessage={showDeleteBackdrop}
+                setShowMessage={setShowDeleteBackdrop}
+                onDelete={handleDelete}
+            >
+                <Markdown>{`Are you sure you want to delete ${album.title}?`}</Markdown>
+            </DeletePopup>
             </Menu>
     </Box>)
 }

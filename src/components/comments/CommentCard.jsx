@@ -11,14 +11,15 @@ import CommentEditor from "./CommentEditor";
 import formatDateAndTime from "../../utils/format-date-and-time";
 import wait from "../../utils/wait";
 import getRatingColour from "../../utils/get-rating-colour";
+import DeletePopup from "../utility/DeletePopup";
 
 function CommentCard({comment: givenComment, setComments}){
     const [comment, setComment] = useState(givenComment);
     const [profilePicture, setProfilePicture] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
-    const [anchorElement, setAnchorElement] = useState(null);
-    const [deleteError, setDeleteError] = useState("")
+    const [deleteError, setDeleteError] = useState("");
+    const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
 
     const {signedInUser} = useContext(UserContext);
 
@@ -61,15 +62,6 @@ function CommentCard({comment: givenComment, setComments}){
         })
     }
 
-    function handleDisplayDeleteConfirmation(event){
-        setAnchorElement((anchorElement) => {
-            return anchorElement ? null : event.currentTarget;
-        });
-    }
-
-    const open = !!anchorElement;
-    const deletePopupID = open ? "delete-popup" : undefined;
-
     return (<ListItem
         alignItems="flex-start"
         sx={{
@@ -106,13 +98,14 @@ function CommentCard({comment: givenComment, setComments}){
         />
         {signedInUser.user_id === comment.user_id && !isEditing ? <>
             <Button onClick={enterEditMode}>Edit</Button>
-            <Button aria-describedby={deletePopupID} color="error" onClick={handleDisplayDeleteConfirmation}>Delete</Button>
-            <Popper id={deletePopupID} open={open} anchorEl={anchorElement}>
+            <Button color="error" onClick={() => {setShowDeleteBackdrop(true)}}>Delete</Button>
+            <DeletePopup
+                showMessage={showDeleteBackdrop}
+                setShowMessage={setShowDeleteBackdrop}
+                onDelete={handleDelete}
+            >
                 Are you sure you want to delete this comment?
-                <br/>
-                <Button color="success" onClick={handleDelete}>Yes</Button>
-                <Button color="error" onClick={() => {setAnchorElement(null)}}>No</Button>
-            </Popper>
+            </DeletePopup>
         </> : null}
         {deleteError ? <Typography>{deleteError}</Typography> : null}
     </ListItem>)
