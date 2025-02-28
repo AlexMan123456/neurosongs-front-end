@@ -65,7 +65,7 @@ function CommentCreator({contentType, content_id, setComments}){
                 justifyContent: "center",
                 }}
             >
-            <Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this song from 1 to 10</Button>
+            <Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this {contentType} from 1 to 10</Button>
             {isRating ? <RatingSlider rating={rating} setRating={setRating} paddingLeft="23px"/> : null}
         </Box> : null
         }
