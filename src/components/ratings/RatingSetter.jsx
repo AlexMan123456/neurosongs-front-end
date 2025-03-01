@@ -2,15 +2,16 @@ import { useContext, useEffect, useState } from "react"
 import RatingSlider from "./RatingSlider"
 import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getRatingByIds, patchRating, postRating } from "../../../api";
+import { deleteRating, getRatingByIds, patchRating, postRating } from "../../../api";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
+import DeletePopup from "../utility/DeletePopup";
 
 function RatingSetter({contentType, currentRating, setCurrentRating}){
     const params = useParams();
     const {signedInUser} = useContext(UserContext);
     const [newRating, setNewRating] = useState(0);
-    const [isRating, setIsRating] = useState(false);
+    const [showRatingSlider, setShowRatingSlider] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -34,7 +35,15 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
         
         callAPI.then((rating) => {
             setCurrentRating(rating.score);
-            setIsRating(false);
+            setShowRatingSlider(false);
+        })
+    }
+
+    function handleReset(){
+        deleteRating(contentType + "s", signedInUser.user_id, params[`${contentType}_id`]).then(() => {
+            setCurrentRating(0);
+            setNewRating(0);
+            setShowRatingSlider(false);
         })
     }
 
@@ -45,9 +54,9 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this {contentType} from 1 to 10</Button>
+            <Button id="rating-slider" onClick={() => {setShowRatingSlider((setRating) => {return !setRating})}}>Click here to rate this {contentType} from 1 to 10</Button>
             {currentRating !== 0 ? <Typography color={getRatingColour(currentRating)}>Your current rating: {currentRating}</Typography> : null}
-            {isRating ? 
+            {showRatingSlider ? 
                 <FormControl>
                     <RatingSlider rating={newRating} setRating={setNewRating} paddingLeft="23px"/>
                     <FormControlLabel
@@ -61,6 +70,7 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
                             />
                         } 
                         label="Make my rating visible in comments"/>
+                    {currentRating > 0 ? <Button onClick={handleReset}>Reset Rating</Button> : null}
                     <Button onClick={handleSubmit} variant="contained">Submit Rating</Button>
                 </FormControl>
             : null}

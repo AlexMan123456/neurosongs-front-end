@@ -124,5 +124,9 @@ function patchRating(contentType, user_id, content_id, data){
     })
 }
 
+function deleteRating(contentType, user_id, content_id){
+    return api.delete(`/api/ratings/${contentType}/${content_id}/users/${user_id}`)
+}
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating }
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating }
