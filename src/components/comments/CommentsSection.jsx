@@ -4,7 +4,7 @@ import { getComments } from "../../../api";
 import CommentsList from "./CommentsList";
 import Loading from "../Loading";
 
-function CommentsSection({content}){
+function CommentsSection({content, ratingVisibilityUpdated}){
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
@@ -23,7 +23,7 @@ function CommentsSection({content}){
     return (<section>
             {isLoading ? <Loading/> : (error ? <p>{error}</p> : <>
                 <CommentCreator contentType={content.song_id ? "songs" : "albums"} content_id={content.song_id ?? content.album_id} setComments={setComments}/>
-                <CommentsList comments={comments} setComments={setComments}/>
+                <CommentsList comments={comments} setComments={setComments} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
             </>)}
         </section>)
 }

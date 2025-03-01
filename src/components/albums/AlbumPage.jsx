@@ -8,6 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { storage } from "../../firebase-config";
 import { Divider } from "@mui/material";
+import RatingSection from "../ratings/RatingSection";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -16,6 +17,7 @@ function AlbumPage(){
     const [backCover, setBackCover] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
 
     useEffect(() => {
         async function getAlbumData(){
@@ -50,8 +52,9 @@ function AlbumPage(){
     
     return (<>
         <AlbumData album={album} backCover={backCover} frontCover={frontCover}/>
+        <RatingSection contentType="album" setRatingVisibilityUpdated={setRatingVisibilityUpdated}/>
         <Divider><h2>Album Comments</h2></Divider>
-        <CommentsSection content={album}/>
+        <CommentsSection ratingVisibilityUpdated={ratingVisibilityUpdated} content={album}/>
     </>)
 }
 

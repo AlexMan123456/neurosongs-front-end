@@ -5,11 +5,7 @@ import AlbumSongCard from "./AlbumSongCard";
 import StyledLink from "../styling/StyledLink";
 import AlbumSongPlayer from "./AlbumSongPlayer";
 import NowPlaying from "./NowPlaying";
-import Loading from "../Loading";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
 import { Button, List, Typography } from "@mui/material";
-import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
 
@@ -37,7 +33,6 @@ function AlbumData({album, backCover, frontCover}){
             return <p key={`album-${album.album_id}-paragraph-${index}`}>{paragraph}</p>
         }) : null}
         <p>Created: {formatDate(new Date(album.created_at))}</p>
-        {album.average_rating ? <Typography color={getRatingColour(album.average_rating)} sx={{fontSize: "14px"}}>Average rating: {album.average_rating}</Typography> : null}
         {song_id
         ? <div>
             <NowPlaying/>    

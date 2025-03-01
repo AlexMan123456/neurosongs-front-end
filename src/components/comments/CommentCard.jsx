@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, ListItem, ListItemText, Popper, TextField, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { deleteComment, getUserById } from "../../../api";
+import { deleteComment, getRatingByIds, getUserById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
@@ -13,13 +13,14 @@ import wait from "../../utils/wait";
 import getRatingColour from "../../utils/get-rating-colour";
 import DeletePopup from "../utility/DeletePopup";
 
-function CommentCard({comment: givenComment, setComments}){
+function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated}){
     const [comment, setComment] = useState(givenComment);
     const [profilePicture, setProfilePicture] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
+    const [rating, setRating] = useState({})
 
     const {signedInUser} = useContext(UserContext);
 
@@ -35,6 +36,13 @@ function CommentCard({comment: givenComment, setComments}){
             setIsLoading(false);
         })
     }, [])
+
+    useEffect(() => {
+        const contentType = comment.song_id ? "song" : "album";
+        getRatingByIds(contentType + "s", comment.user_id, comment[`${contentType}_id`]).then((rating) => {
+            setRating(rating);
+        })
+    }, [ratingVisibilityUpdated])
 
     function enterEditMode(){
         setIsEditing(true);
@@ -92,7 +100,7 @@ function CommentCard({comment: givenComment, setComments}){
                     <br/>
                     <Typography component="span" sx={{color: "text.primary"}}>{comment.body}</Typography>
                     <br/>
-                    {comment.rating ? <Typography component="span" color={getRatingColour(comment.rating)} sx={{fontSize: "14px"}}>Rating: {comment.rating}</Typography> : null}
+                    {rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null}
                 </>}
             </>}
         />

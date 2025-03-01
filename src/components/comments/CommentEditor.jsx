@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material"
 import { useState } from "react"
-import RatingSlider from "./RatingSlider";
+import RatingSlider from "../ratings/RatingSlider";
 import { patchComment } from "../../../api";
 import Loading from "../Loading";
 
@@ -13,7 +13,10 @@ function CommentEditor({comment, setComment, setIsEditing}){
 
     function handleEdit(){
         setIsLoading(true);
-        patchComment(comment.comment_id, {body, rating}).then((comment) => {
+        patchComment(comment.comment_id, {
+            body, 
+            //rating
+        }).then((comment) => {
             setIsLoading(false);
             setIsEditing(false);
             setComment(comment);
@@ -43,9 +46,9 @@ function CommentEditor({comment, setComment, setIsEditing}){
         {error ? <p>{error}</p> : null}
         <br/>
         <Button disabled={error ? true : false} variant="contained" onClick={handleEdit}>Confirm</Button>
-        <Button disabled={error ? true : false} onClick={() => {setEditRating((editRating) => {return !editRating})}}>Edit rating</Button>
+        {/*<Button disabled={error ? true : false} onClick={() => {setEditRating((editRating) => {return !editRating})}}>Edit rating</Button>*/}
         <Button disabled={error ? true : false} color="error" onClick={() => {setIsEditing(false)}}>Cancel</Button>
-        {editRating ? <RatingSlider rating={rating} setRating={setRating}/> : null}
+        {/*editRating ? <RatingSlider rating={rating} setRating={setRating}/> : null*/}
     </>)
 }
 

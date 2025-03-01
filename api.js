@@ -106,4 +106,27 @@ function deleteSong(song_id){
     return api.delete(`/api/songs/${song_id}`)
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong }
+function getRatingByIds(contentType, user_id, content_id){
+    return api.get(`/api/ratings/${contentType}/${content_id}/users/${user_id}`).then(({data}) => {
+        return data.rating;
+    })
+}
+
+function postRating(contentType, content_id, data){
+    return api.post(`/api/${contentType}/${content_id}/ratings`, data).then(({data}) => {
+        return data.rating;
+    })
+}
+
+function patchRating(contentType, user_id, content_id, data){
+    return api.patch(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, data).then(({data}) => {
+        return data.rating;
+    })
+}
+
+function deleteRating(contentType, user_id, content_id){
+    return api.delete(`/api/ratings/${contentType}/${content_id}/users/${user_id}`)
+}
+
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating }
