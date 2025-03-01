@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { deleteRating, getRatingByIds, patchRating, postRating } from "../../../api";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
-import DeletePopup from "../utility/DeletePopup";
 
 function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVisibilityUpdated}){
     const params = useParams();
