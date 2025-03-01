@@ -118,5 +118,11 @@ function postRating(contentType, content_id, data){
     })
 }
 
+function patchRating(contentType, user_id, content_id, data){
+    return api.patch(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, data).then(({data}) => {
+        return data.rating;
+    })
+}
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating }
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating }

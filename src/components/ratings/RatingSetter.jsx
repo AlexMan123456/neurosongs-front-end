@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import RatingSlider from "./RatingSlider"
 import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getRatingByIds, postRating } from "../../../api";
+import { getRatingByIds, patchRating, postRating } from "../../../api";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -23,12 +23,18 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
     }, [])
 
     function handleSubmit(){
-        postRating(contentType + "s", params[`${contentType}_id`], {
+        const callAPI = currentRating === 0 ? postRating(contentType + "s", params[`${contentType}_id`], {
             user_id: signedInUser.user_id,
             score: newRating,
             is_visible: isVisible
-        }).then((rating) => {
+        }) : patchRating(contentType + "s", signedInUser.user_id, params[`${contentType}_id`], {
+            score: newRating,
+            isVisible: isVisible
+        })
+        
+        callAPI.then((rating) => {
             setCurrentRating(rating.score);
+            setIsRating(false);
         })
     }
 
@@ -55,7 +61,7 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
                             />
                         } 
                         label="Make my rating visible in comments"/>
-                    <Button onClick={handleSubmit}>Submit Rating</Button>
+                    <Button onClick={handleSubmit} variant="contained">Submit Rating</Button>
                 </FormControl>
             : null}
         </Box>
