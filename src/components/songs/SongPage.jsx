@@ -9,6 +9,7 @@ import { storage } from "../../firebase-config";
 import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { Divider } from "@mui/material";
+import RatingSetter from "../ratings/RatingSetter";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -57,6 +58,7 @@ function SongPage(){
 
     return (<>
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
+        <RatingSetter contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
         <CommentsSection content={songData}/>
     </>)

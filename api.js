@@ -106,4 +106,10 @@ function deleteSong(song_id){
     return api.delete(`/api/songs/${song_id}`)
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong }
+function postRating(content_id, contentType, data){
+    return api.post(`/api/${contentType}/${content_id}/ratings`, data).then(({data}) => {
+        return data.rating;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, postRating }
