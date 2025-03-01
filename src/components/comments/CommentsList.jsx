@@ -1,7 +1,7 @@
 import { List } from "@mui/material"
 import CommentCard from "./CommentCard"
 
-function CommentsList({comments, setComments}){
+function CommentsList({comments, setComments, ratingVisibilityUpdated}){
     if(comments.length === 0){
         return (<section>
             <h3>There are no comments here yet!</h3>
@@ -11,7 +11,7 @@ function CommentsList({comments, setComments}){
     
     return (<List>
         {comments.map((comment) => {
-            return <CommentCard key={`comment-${comment.comment_id}`} comment={comment} setComments={setComments}/>
+            return <CommentCard key={`comment-${comment.comment_id}`} comment={comment} setComments={setComments} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
         })}
     </List>)
 }

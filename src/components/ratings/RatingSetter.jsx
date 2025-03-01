@@ -7,17 +7,20 @@ import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
 import DeletePopup from "../utility/DeletePopup";
 
-function RatingSetter({contentType, currentRating, setCurrentRating}){
+function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVisibilityUpdated}){
     const params = useParams();
     const {signedInUser} = useContext(UserContext);
     const [newRating, setNewRating] = useState(0);
     const [showRatingSlider, setShowRatingSlider] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
+    const [newIsVisible, setNewIsVisible] = useState(false);
+    const [currentIsVisible, setCurrentIsVisible] = useState(false);
 
     useEffect(() => {
         getRatingByIds(contentType + "s", signedInUser.user_id, params[`${contentType}_id`]).then((rating) => {
             if(Object.keys(rating).length !== 0){
                 setCurrentRating(rating.score);
+                setCurrentIsVisible(rating.is_visible);
+                setNewIsVisible(rating.is_visible);
                 setNewRating(rating.score);
             }
         })
@@ -27,15 +30,21 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
         const callAPI = currentRating === 0 ? postRating(contentType + "s", params[`${contentType}_id`], {
             user_id: signedInUser.user_id,
             score: newRating,
-            is_visible: isVisible
+            is_visible: newIsVisible
         }) : patchRating(contentType + "s", signedInUser.user_id, params[`${contentType}_id`], {
             score: newRating,
-            isVisible: isVisible
+            is_visible: newIsVisible
         })
         
         callAPI.then((rating) => {
             setCurrentRating(rating.score);
+            setCurrentIsVisible(rating.is_visible);
             setShowRatingSlider(false);
+            if(currentIsVisible !== newIsVisible){
+                setRatingVisibilityUpdated((oldValue) => {
+                    return !oldValue;
+                })
+            }
         })
     }
 
@@ -65,8 +74,8 @@ function RatingSetter({contentType, currentRating, setCurrentRating}){
                         }}
                         control={
                             <Checkbox
-                                checked={isVisible}
-                                onChange={() => {setIsVisible((isVisible) => {return !isVisible})}}
+                                checked={newIsVisible}
+                                onChange={() => {setNewIsVisible((isVisible) => {return !isVisible})}}
                             />
                         } 
                         label="Make my rating visible in comments"/>

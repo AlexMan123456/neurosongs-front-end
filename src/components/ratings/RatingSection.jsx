@@ -5,13 +5,14 @@ import RatingSetter from "./RatingSetter";
 import wait from "../../utils/wait";
 import { Typography } from "@mui/material";
 import getRatingColour from "../../utils/get-rating-colour";
+import Loading from "../Loading";
 
-function RatingSection({contentType}){
+function RatingSection({contentType, setRatingVisibilityUpdated}){
     const params = useParams();
     const [averageRating, setAverageRating] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
-    const [currentRating, setCurrentRating] = useState(0)
+    const [currentRating, setCurrentRating] = useState(0);
 
     useEffect(() => {
         setIsLoading(true);
@@ -27,9 +28,13 @@ function RatingSection({contentType}){
         })
     }, [currentRating])
 
+    if(isLoading){
+        return <Loading/>
+    }
+
     return (<>
         {averageRating ? <Typography color={getRatingColour(averageRating)} sx={{fontSize: "14px"}}>Average rating: {averageRating}</Typography> : null}
-        <RatingSetter contentType={contentType} currentRating={currentRating} setCurrentRating={setCurrentRating}/>
+        <RatingSetter setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType={contentType} currentRating={currentRating} setCurrentRating={setCurrentRating}/>
         {error ? <p>{error}</p> : null}
     </>)
 }

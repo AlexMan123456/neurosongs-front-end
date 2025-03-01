@@ -19,6 +19,7 @@ function SongPage(){
     const [error, setError] = useState("")
     const [frontCover, setFrontCover] = useState(null);
     const [backCover, setBackCover] = useState(null);
+    const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
 
     useEffect(() => {
         async function getAllData(){
@@ -58,9 +59,9 @@ function SongPage(){
 
     return (<>
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
-        <RatingSection contentType="song"/>
+        <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
-        <CommentsSection content={songData}/>
+        <CommentsSection content={songData} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
     </>)
 }
 
