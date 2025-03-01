@@ -29,7 +29,6 @@ function SongData({song, songData, frontCover, backCover}){
         }) : null}
         <H5AudioPlayer src={song} showJumpControls={false}/>
         <p>Created: {formatDate(new Date(songData.created_at))}</p>
-        {songData.average_rating ? <Typography color={getRatingColour(songData.average_rating)} sx={{fontSize: "14px"}}>Average rating: {songData.average_rating}</Typography> : null}
     </section>)
 }
 

@@ -6,10 +6,9 @@ import { getRatingByIds, postRating } from "../../../api";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
 
-function RatingSetter({contentType}){
+function RatingSetter({contentType, currentRating, setCurrentRating}){
     const params = useParams();
     const {signedInUser} = useContext(UserContext);
-    const [currentRating, setCurrentRating] = useState(0)
     const [newRating, setNewRating] = useState(0);
     const [isRating, setIsRating] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
