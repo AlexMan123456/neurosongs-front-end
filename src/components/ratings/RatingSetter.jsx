@@ -52,6 +52,9 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
             setCurrentRating(0);
             setNewRating(0);
             setShowRatingSlider(false);
+            setRatingVisibilityUpdated((oldValue) => {
+                return !oldValue;
+            })
         })
     }
 

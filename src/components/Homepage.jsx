@@ -1,35 +1,11 @@
-import { Button, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
-import StyledLink from "./styling/StyledLink"
-import { useEffect, useState } from "react"
-import axios from "axios";
-import wait from "../utils/wait";
-import Loading from "./Loading";
-import getCommitsFromRecentBranch from "../utils/get-commits-from-recent-branch";
+import { Button, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import StyledLink from "./styling/StyledLink";
+import { useState } from "react";
 import { Circle } from "@mui/icons-material";
+import updates from "../../updates.json"
 
 function Homepage(){
     const [viewCommits, setViewCommits] = useState(false);
-    const [commits, setCommits] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        setIsLoading(true);
-        axios.get(import.meta.env.VITE_GITHUB_API_COMMITS_URL).then(({data}) => {
-            setCommits(data);
-        }).catch((err) => {
-            setError("Error fetching update information. Please try again later.")
-            return wait(4).then(() => {
-                setError("");
-            })
-        }).finally(() => {
-            setIsLoading(false);
-        })
-    }, [])
-
-    if(isLoading){
-        return <Loading/>
-    }
 
     return (<section>
         <header>
@@ -44,13 +20,15 @@ function Homepage(){
                     borderRadius: 0.7
                 }}
             >
-                {getCommitsFromRecentBranch(commits).map((commit) => {
-                    return (<ListItem key={commit.url}>
+                {updates.map((update) => {
+                    return (
+                        <ListItem key={update.id}>
                             <ListItemIcon>
                                 <Circle fontSize="small" color="info" />
                             </ListItemIcon>
-                            <ListItemText primary={commit.message}/>
-                        </ListItem>)
+                            <ListItemText primary={update.message}/>
+                        </ListItem>
+                    )
                 })}
             </List>
             : null}
