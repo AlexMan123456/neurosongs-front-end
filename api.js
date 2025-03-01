@@ -106,10 +106,17 @@ function deleteSong(song_id){
     return api.delete(`/api/songs/${song_id}`)
 }
 
-function postRating(content_id, contentType, data){
+function getRatingByIds(contentType, user_id, content_id){
+    return api.get(`/api/ratings/${contentType}/${content_id}/users/${user_id}`).then(({data}) => {
+        return data.rating;
+    })
+}
+
+function postRating(contentType, content_id, data){
     return api.post(`/api/${contentType}/${content_id}/ratings`, data).then(({data}) => {
         return data.rating;
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, postRating }
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating }
