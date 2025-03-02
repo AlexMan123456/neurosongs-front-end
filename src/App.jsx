@@ -9,7 +9,6 @@ import UserSettingsPage from "./components/users/settings/UserSettingsPage"
 import LoadingPage from "./components/LoadingPage"
 import Header from "./components/header/Header"
 import SongPage from "./components/songs/SongPage"
-import SongsList from "./components/songs/SongsList"
 import UserDisplayInfoEditPage from "./components/users/settings/UserDisplayInfoEditPage"
 import EditDateOfBirthPage from "./components/users/settings/EditDateOfBirthPage"
 import GetEmailToResetPassword from "./components/users/sign-in/reset-password/GetEmailToResetPassword"
@@ -23,6 +22,7 @@ import Footer from "./components/Footer"
 import PageNotFound from "./components/errors/PageNotFound"
 import AlbumEditPage from "./components/albums/AlbumEditPage"
 import SongEditPage from "./components/songs/song-edit/SongEditPage"
+import AllSongs from "./components/songs/AllSongs"
 
 function App() {
   return (<>
@@ -32,7 +32,7 @@ function App() {
       <Route path="/featured" element={<FeaturedPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
-      <Route path="/all_songs" element={<SongsList/>}/>
+      <Route path="/all_songs" element={<AllSongs/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>

@@ -4,6 +4,7 @@ import SongCard from "./songs/SongCard";
 import AlbumCard from "./albums/AlbumCard";
 import Loading from "./Loading";
 import { List } from "@mui/material";
+import SongsTable from "./songs/SongsTable";
 
 function FeaturedPage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
@@ -42,12 +43,7 @@ function FeaturedPage(){
                 })}
             </List>}
             <h3>Featured Songs</h3>
-            {isLoading ? <Loading/> : 
-            <List>
-                {featuredSongs.map((song) => {
-                    return (<SongCard key={`song-card-${song.song_id}`} song={song}/>)
-                })}
-            </List>}
+            {isLoading ? <Loading/> : <SongsTable songs={featuredSongs}/>}
         </>}
     </section>)
 }

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
+import SongsTable from "./SongsTable";
 import { getSongs } from "../../../api";
-import SongCard from "./SongCard";
 import Loading from "../Loading";
-import { List } from "@mui/material";
 
-function SongsList(){
+function AllSongs(){
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
@@ -31,12 +30,8 @@ function SongsList(){
     return (<section>
         <h2>Most recent songs</h2>
         <p>Search feature coming soon!</p>
-        <List>
-            {songs.map((song) => {
-                return <SongCard key={`song-card-${song.song_id}`} song={song}/>
-            })}
-        </List>
+        <SongsTable songs={songs}/>
     </section>)
 }
 
-export default SongsList
+export default AllSongs
