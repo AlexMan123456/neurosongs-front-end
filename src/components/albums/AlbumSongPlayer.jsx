@@ -38,8 +38,8 @@ function AlbumSongPlayer({album}){
 
         const indexOfNextID = songIDs.indexOf(song_id)+1
         if(indexOfNextID >= album.songs.length){
-            searchParams.set("song_id", songIDs[0]);
-            navigate(`${location.pathname}?${searchParams.toString()}`);
+            searchParams.remove("song_id");
+            navigate(`${location.pathname}`);
             return;
         }
 

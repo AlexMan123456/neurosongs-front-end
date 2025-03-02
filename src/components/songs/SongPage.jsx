@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CommentsSection from "../comments/CommentsSection"
 import SongData from "./SongData"
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
-import { Divider } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
 
 function SongPage(){
@@ -57,12 +57,13 @@ function SongPage(){
         return <p>{error}</p>
     }
 
-    return (<>
+    return (<main>
+        <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button>
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
         <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
         <CommentsSection content={songData} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
-    </>)
+    </main>)
 }
 
 export default SongPage

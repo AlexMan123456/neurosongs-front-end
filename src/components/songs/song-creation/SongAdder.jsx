@@ -15,7 +15,7 @@ import wait from "../../../utils/wait";
 import getSongDirectory from "../../../references/get-song-directory";
 
 function SongAdder(){
-    const {user_id, album_id} = useParams();
+    const {album_id} = useParams();
     const {signedInUser} = useContext(UserContext);
     const [album, setAlbum] = useState({});
     const [frontCover, setFrontCover] = useState(null);
@@ -97,7 +97,7 @@ function SongAdder(){
         }
 
         const data = {
-            user_id,
+            user_id: album.user_id,
             title,
             reference: songFile.name
         }
@@ -113,7 +113,7 @@ function SongAdder(){
             return Promise.all([song, wait(2)]);
         }).then(([song, temp]) => {
             setIsLoading(false);
-            navigate(`/songs/${song.song_id}`);
+            navigate(`/albums/${song.album_id}?song_id=${song.song_id}`);
         }).catch((err) => {
             setIsLoading(false);
             setError("Error posting song. Please try again later.");
@@ -127,13 +127,14 @@ function SongAdder(){
         return <Loading/>
     }
 
-    if(signedInUser.user_id !== user_id){
+    if(signedInUser.user_id !== album.user_id){
         return <ForbiddenAccess/>
     }
 
     return (<section>
         <h2>Add a song to {album.title}</h2>
         <StyledImage src={frontCover} alt={`${album.title}'s front cover`}/>
+        <br/>
         <br/>
         <FormControl>
             <TextField

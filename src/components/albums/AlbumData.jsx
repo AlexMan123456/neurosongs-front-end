@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom"
 import { getAlbumById } from "../../../api";
 import AlbumSongCard from "./AlbumSongCard";
 import StyledLink from "../styling/StyledLink";
@@ -8,11 +8,14 @@ import NowPlaying from "./NowPlaying";
 import { Button, List, Typography } from "@mui/material";
 import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
+import { UserContext } from "../../contexts/UserContext";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
     const song_id = searchParams.get("song_id")
     const [displayFront, setDisplayFront] = useState(true);
+    const {album_id} = useParams();
+    const {signedInUser} = useContext(UserContext);
 
     return (<>
     <header>
@@ -35,7 +38,7 @@ function AlbumData({album, backCover, frontCover}){
         <p>Created: {formatDate(new Date(album.created_at))}</p>
         {song_id
         ? <div>
-            <NowPlaying/>    
+            <NowPlaying/>
             <AlbumSongPlayer album={album}/>
         </div>
         : null}
@@ -45,6 +48,7 @@ function AlbumData({album, backCover, frontCover}){
             {album.songs.map((song, index) => {
                 return <AlbumSongCard key={`song-card-${song.song_id}`} song={song} index={index+1}/>
             })}
+            {signedInUser.user_id === album.user_id ? <Button component={Link} to={`/albums/${album_id}/songs/create`}>Add a new song</Button> : null}
         </List>
     </section>
     </>)

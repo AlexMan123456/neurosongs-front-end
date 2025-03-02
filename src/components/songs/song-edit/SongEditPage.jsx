@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getSongById, patchSong } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import wait from "../../../utils/wait";
@@ -8,6 +8,8 @@ import SongAudioInput from "../song-creation/SongAudioInput";
 import { ref, uploadBytes } from "firebase/storage";
 import getSongDirectory from "../../../references/get-song-directory";
 import { storage } from "../../../firebase-config";
+import { UserContext } from "../../../contexts/UserContext";
+import ForbiddenAccess from "../../errors/ForbiddenAccess";
 
 function SongEditPage(){
     const [userID, setUserID] = useState("");
@@ -21,6 +23,7 @@ function SongEditPage(){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const {song_id} = useParams();
+    const {signedInUser} = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -44,7 +47,7 @@ function SongEditPage(){
     }, [])
 
     async function handleSubmit(){
-        const songRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: file.name}));
+        //const songRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: file.name}));
         setIsLoading(true);
         
         //return uploadBytes(songRef, file).then(() => {
@@ -54,7 +57,7 @@ function SongEditPage(){
                 //reference: file.name
             }).then(() => {
                 setIsLoading(false);
-                navigate(`/users/${userID}`);
+                navigate(`/songs/${song_id}`);
             }).catch((err) => {
                 setError("Error editing song details. Please try again later");
                 return wait(4).then(() => {
@@ -66,6 +69,10 @@ function SongEditPage(){
 
     if(isLoading){
         return <Loading/>
+    }
+
+    if(signedInUser.user_id !== userID){
+        return <ForbiddenAccess/>
     }
 
     return (<FormControl>

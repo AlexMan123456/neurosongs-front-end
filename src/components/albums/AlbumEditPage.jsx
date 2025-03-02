@@ -73,7 +73,7 @@ function AlbumEditPage(){
 
             await patchAlbum(album_id, data);
             await wait(2);
-            navigate(`/users/${album.user_id}`);
+            navigate(`/albums/${album_id}`);
         } catch(err) {
             setError("Error saving your edits. Please try again later.")
             await wait(4);
