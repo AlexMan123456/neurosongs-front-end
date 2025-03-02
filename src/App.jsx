@@ -44,7 +44,7 @@ function App() {
       <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
       <Route path="/users/:user_id/albums/create" element={<AlbumCreator/>}/>
       <Route path="/users/:user_id/songs/create" element={<AlbumSelector/>}/>
-      <Route path="/users/:user_id/albums/:album_id/songs/create" element={<SongAdder/>}/>
+      <Route path="/albums/:album_id/songs/create" element={<SongAdder/>}/>
       <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
       <Route path="/albums/:album_id/edit" element={<AlbumEditPage/>}/>

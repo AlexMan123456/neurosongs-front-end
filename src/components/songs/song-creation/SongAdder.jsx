@@ -15,7 +15,7 @@ import wait from "../../../utils/wait";
 import getSongDirectory from "../../../references/get-song-directory";
 
 function SongAdder(){
-    const {user_id, album_id} = useParams();
+    const {album_id} = useParams();
     const {signedInUser} = useContext(UserContext);
     const [album, setAlbum] = useState({});
     const [frontCover, setFrontCover] = useState(null);
@@ -127,7 +127,7 @@ function SongAdder(){
         return <Loading/>
     }
 
-    if(signedInUser.user_id !== user_id){
+    if(signedInUser.user_id !== album.user_id){
         return <ForbiddenAccess/>
     }
 

@@ -10,5 +10,9 @@
     {
         "id": 3,
         "message": "Linked to song edit page on song page"
+    },
+    {
+        "id": 4,
+        "message": "Linked to album edit page on album page"
     }
 ]

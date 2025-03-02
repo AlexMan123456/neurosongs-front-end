@@ -27,7 +27,7 @@ function SongCreationAlbumCard({album}){
         return <Loading/>
     }
 
-    return (<ListItemButton component={Link} to={`/users/${user_id}/albums/${album.album_id}/songs/create`}>
+    return (<ListItemButton component={Link} to={`/albums/${album.album_id}/songs/create`}>
         <StyledImage src={frontCover} alt={`${album.title}'s front cover`}/>
         <ListItemText primary={album.title}/>
     </ListItemButton>)
