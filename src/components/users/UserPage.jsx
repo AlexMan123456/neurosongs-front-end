@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getUserById } from "../../../api";
 import Loading from "../Loading";
 import StyledLink from "../styling/StyledLink";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import { UserContext } from "../../contexts/UserContext";
@@ -44,6 +44,7 @@ function UserPage(){
 
     return (<>
         <header>
+            {signedInUser.user_id === user.user_id ? <Button component={Link} to={`/users/settings/${user.user_id}/edit_display`}>Edit</Button> : null}
             <Avatar
                 src={profilePictureURL}
                 alt={`${user.username}'s profile picture`}

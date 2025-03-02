@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import CommentsSection from "../comments/CommentsSection"
 import SongData from "./SongData"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "../Loading";
 import { getSongById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -10,6 +10,7 @@ import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { Button, Divider } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
+import { UserContext } from "../../contexts/UserContext";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -20,6 +21,7 @@ function SongPage(){
     const [frontCover, setFrontCover] = useState(null);
     const [backCover, setBackCover] = useState(null);
     const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         async function getAllData(){
@@ -58,7 +60,7 @@ function SongPage(){
     }
 
     return (<main>
-        <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button>
+        {signedInUser.user_id === songData.song_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button> : null}
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
         <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
