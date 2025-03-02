@@ -23,6 +23,7 @@ import PageNotFound from "./components/errors/PageNotFound"
 import AlbumEditPage from "./components/albums/AlbumEditPage"
 import SongEditPage from "./components/songs/song-edit/SongEditPage"
 import AllSongs from "./components/songs/AllSongs"
+import SearchPage from "./components/search-page/SearchPage"
 
 function App() {
   return (<>
@@ -32,7 +33,8 @@ function App() {
       <Route path="/featured" element={<FeaturedPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
-      <Route path="/all_songs" element={<AllSongs/>}/>
+      <Route path="/search" element={<SearchPage/>}/>
+      <Route path="/search/:search_for" element={<SearchPage/>}/>
       <Route path="/albums/:album_id" element={<AlbumPage/>}/>
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>
