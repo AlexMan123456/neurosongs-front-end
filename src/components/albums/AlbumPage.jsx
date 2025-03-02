@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CommentsSection from "../comments/CommentsSection"
 import AlbumData from "./AlbumData"
 import { Link, useParams, useSearchParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { storage } from "../../firebase-config";
 import { Button, Divider } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
+import { UserContext } from "../../contexts/UserContext";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -18,6 +19,7 @@ function AlbumPage(){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         async function getAlbumData(){
@@ -52,7 +54,7 @@ function AlbumPage(){
     
     return (<>
         <br/>
-        <Button component={Link} to={`/albums/${album_id}/edit`}>Edit</Button>
+        {signedInUser.user_id === album.user_id ? <Button component={Link} to={`/albums/${album_id}/edit`}>Edit</Button> : null}
         <AlbumData album={album} backCover={backCover} frontCover={frontCover}/>
         <RatingSection contentType="album" setRatingVisibilityUpdated={setRatingVisibilityUpdated}/>
         <Divider><h2>Album Comments</h2></Divider>
