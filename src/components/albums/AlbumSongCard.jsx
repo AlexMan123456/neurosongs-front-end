@@ -1,12 +1,13 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import StyledLink from "../styling/StyledLink";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { TableBody, TableCell, TableRow } from "@mui/material";
+import { useState } from "react";
 
 function AlbumSongCard({song, index}){
     const [searchParams, setSearchParams] = useSearchParams();
     const song_id = parseInt(searchParams.get("song_id"));
     const location = useLocation();
     const navigate = useNavigate();
+    const [focus, setFocus] = useState(false);
 
     function handleClick(event){
         event.preventDefault();
@@ -19,14 +20,21 @@ function AlbumSongCard({song, index}){
         navigate(`${location.pathname}?${searchParams.toString()}`);
     }
 
-    return (<ListItemButton component="li"
-            selected={song_id === song.song_id}
-            sx={{border: 0.5, borderRadius: 0.7}}
-            onClick={handleClick}
-        >
-        <ListItemText primary={`${index}. ${song.title}`}/>
-        <ListItemText primary={song.artist.artist_name}/>
-    </ListItemButton>)
+    return (<TableBody>
+            <TableRow
+                hover={true}
+                onFocus={() => {setFocus(true)}}
+                onBlur={() => {setFocus(false)}}
+                component={Link}
+                to={`${location.pathname}?song_id=${song.song_id}`}
+                selected={song_id === song.song_id}
+                sx={{border: 0.5, borderRadius: 0.7, backgroundColor: focus ? "#F5F5F5" : null}}
+            >
+                <TableCell>{index}</TableCell>
+                <TableCell>{song.title}</TableCell>
+                <TableCell>{song.artist.artist_name}</TableCell>
+            </TableRow>
+    </TableBody>)
 }
 
 export default AlbumSongCard

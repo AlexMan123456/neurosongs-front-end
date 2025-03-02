@@ -6,6 +6,7 @@ import { List } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
+import SongsTable from "../songs/SongsTable";
 
 function UserSongs(){
     const {signedInUser} = useContext(UserContext);
@@ -35,9 +36,7 @@ function UserSongs(){
 
     return (<List style={{listStyle: "none"}}>
         {signedInUser.user_id === user_id ? <StyledLink to={`/users/${user_id}/songs/create`}>Add a new song</StyledLink> : null}
-        {songs.map((song) => {
-            return <SongCard key={`song-card-${song.song_id}`} song={song} setSongs={setSongs}/>
-        })}
+        <SongsTable songs={songs} setSongs={setSongs}/>
     </List>)
 }
 
