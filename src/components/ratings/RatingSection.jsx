@@ -13,12 +13,14 @@ function RatingSection({contentType, setRatingVisibilityUpdated}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentRating, setCurrentRating] = useState(0);
+    const [ratingCount, setRatingCount] = useState(0);
 
     useEffect(() => {
         setIsLoading(true);
         const getContent = contentType === "song" ? getSongById(params[`${contentType}_id`]) : getAlbumById(params[`${contentType}_id`])
-        getContent.then(({average_rating}) => {
+        getContent.then(({average_rating, rating_count}) => {
             setAverageRating(average_rating);
+            setRatingCount(rating_count);
             setIsLoading(false);
         }).catch((err) => {
             setError("Error getting average rating.")
@@ -33,7 +35,10 @@ function RatingSection({contentType, setRatingVisibilityUpdated}){
     }
 
     return (<>
-        {averageRating ? <Typography color={getRatingColour(averageRating)} sx={{fontSize: "14px"}}>Average rating: {averageRating}</Typography> : null}
+        {ratingCount !== 0 ? <>
+            <Typography color={getRatingColour(averageRating)} sx={{fontSize: "14px"}}>Average rating: {averageRating} </Typography>
+            <Typography sx={{fontSize: "14px"}}>Based on {ratingCount} rating{ratingCount === 1 ? "" : "s"}</Typography>
+        </>: null}
         <RatingSetter setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType={contentType} currentRating={currentRating} setCurrentRating={setCurrentRating}/>
         {error ? <p>{error}</p> : null}
     </>)
