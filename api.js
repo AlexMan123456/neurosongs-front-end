@@ -10,8 +10,8 @@ function getSongs(queries){
     })
 }
 
-function getUsers(){
-    return api.get("/api/users").then(({data}) => {
+function getUsers(queries){
+    return api.get("/api/users", {params: queries}).then(({data}) => {
         return data.users
     })
 }

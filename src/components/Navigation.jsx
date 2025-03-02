@@ -1,30 +1,28 @@
-import { List, ListItemButton, ToggleButton, ToggleButtonGroup, useScrollTrigger } from "@mui/material"
-import StyledLink from "./styling/StyledLink"
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { ToggleButton, ToggleButtonGroup } from "@mui/material"
+import { Link, useLocation } from "react-router-dom"
 
 function Navigation(){
-    const [page, setPage] = useState("")
+    const location = useLocation();
 
     return (
         <ToggleButtonGroup
-            value={page}
-            onChange={(event) => {setPage(event.target.value)}}
+            value={location.pathname}
             exclusive
             aria-label="Choose page"
         >
             <ToggleButton
                 component={Link}
                 to="/featured"
-                value="featured"
+                value="/featured"
             >
                 Featured
             </ToggleButton>
             <ToggleButton
                 component={Link}
-                to="/all_songs"
+                to="/search"
+                value="/search"
                 >
-                    All songs
+                    Search
             </ToggleButton>
         </ToggleButtonGroup>
     )
