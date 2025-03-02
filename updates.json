@@ -14,5 +14,17 @@
     {
         "id": 4,
         "message": "Linked to album edit page on album page"
+    },
+    {
+        "id": 5,
+        "message": "Added edit option to album page and song page"
+    },
+    {
+        "id": 6,
+        "message": "Added 'add song' button to album page"
+    },
+    {
+        "id": 7,
+        "message": "Upon song creation, you are now linked back to album page, where you can then easily add a new song again"
     }
 ]
