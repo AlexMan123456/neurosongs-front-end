@@ -5,6 +5,7 @@ import AlbumCard from "./albums/AlbumCard";
 import Loading from "./Loading";
 import { List } from "@mui/material";
 import SongsTable from "./songs/SongsTable";
+import AllSongs from "./songs/AllSongs";
 
 function FeaturedPage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
@@ -45,6 +46,8 @@ function FeaturedPage(){
             <h3>Featured Songs</h3>
             {isLoading ? <Loading/> : <SongsTable songs={featuredSongs}/>}
         </>}
+        <h2>Most Recent Songs</h2>
+        <AllSongs/>
     </section>)
 }
 

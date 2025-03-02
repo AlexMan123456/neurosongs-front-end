@@ -37,7 +37,7 @@ function SongCard({song, setSongs}){
                     src={frontCover}
                     alt={`${song.album.title}'s front cover`}
                     style={{
-                        width: "125px",
+                        width: "70px",
                         height: "auto"
                     }}
                     /> }

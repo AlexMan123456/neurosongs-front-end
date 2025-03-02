@@ -1,34 +1,10 @@
 [
     {
         "id": 1, 
-        "message": "Changed the rating system so that they're no longer associated with comments."
+        "message": "Added a new search feature"
     },
     {
         "id": 2,
-        "message": "Added a rating count to the rating display."
-    },
-    {
-        "id": 3,
-        "message": "Linked to song edit page on song page."
-    },
-    {
-        "id": 4,
-        "message": "Linked to album edit page on album page."
-    },
-    {
-        "id": 5,
-        "message": "Added edit option to album page and song page."
-    },
-    {
-        "id": 6,
-        "message": "Added 'add song' button to album page."
-    },
-    {
-        "id": 7,
-        "message": "Upon song creation, you are now linked back to album page, where you can then easily add a new song again."
-    },
-    {
-        "id": 8,
-        "message": "Improved the appearance of the songs in song lists. They now display as a table."
+        "message": "Moved the view of all songs to bottom of featured page"
     }
 ]

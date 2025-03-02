@@ -28,8 +28,6 @@ function AllSongs(){
     }
 
     return (<section>
-        <h2>Most recent songs</h2>
-        <p>Search feature coming soon!</p>
         <SongsTable songs={songs}/>
     </section>)
 }
