@@ -9,6 +9,7 @@ import { Button, List, Typography } from "@mui/material";
 import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
+import AlbumSongsTable from "./AlbumSongsTable";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -45,9 +46,7 @@ function AlbumData({album, backCover, frontCover}){
         </header>
         <section>
         <List>
-            {album.songs.map((song, index) => {
-                return <AlbumSongCard key={`song-card-${song.song_id}`} song={song} index={index+1}/>
-            })}
+            <AlbumSongsTable songs={album.songs}/>
             {signedInUser.user_id === album.user_id ? <Button component={Link} to={`/albums/${album_id}/songs/create`}>Add a new song</Button> : null}
         </List>
     </section>
