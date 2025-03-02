@@ -35,7 +35,7 @@ function AlbumData({album, backCover, frontCover}){
         <p>Created: {formatDate(new Date(album.created_at))}</p>
         {song_id
         ? <div>
-            <NowPlaying/>    
+            <NowPlaying/>
             <AlbumSongPlayer album={album}/>
         </div>
         : null}

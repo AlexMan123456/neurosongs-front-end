@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import CommentsSection from "../comments/CommentsSection"
 import AlbumData from "./AlbumData"
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 import { getAlbumById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import { storage } from "../../firebase-config";
-import { Divider } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
 
 function AlbumPage(){
@@ -51,6 +51,8 @@ function AlbumPage(){
     }
     
     return (<>
+        <br/>
+        <Button component={Link} to={`/albums/${album_id}/edit`}>Edit</Button>
         <AlbumData album={album} backCover={backCover} frontCover={frontCover}/>
         <RatingSection contentType="album" setRatingVisibilityUpdated={setRatingVisibilityUpdated}/>
         <Divider><h2>Album Comments</h2></Divider>

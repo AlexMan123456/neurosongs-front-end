@@ -6,5 +6,9 @@
     {
         "id": 2,
         "message": "Added a rating count to the rating display."
+    },
+    {
+        "id": 3,
+        "message": "Linked to song edit page on song page"
     }
 ]
