@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { Box, Button, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { getUserById, postFollow } from "../../../api";
+import { getUserById, postFollow, removeFollow } from "../../../api";
 import Loading from "../Loading";
+import wait from "../../utils/wait";
 
 function FollowControl(){
     const {signedInUser} = useContext(UserContext);
@@ -13,7 +14,7 @@ function FollowControl(){
     const [followerCount, setFollowerCount] = useState(0);
     const [followingCount, setFollowingCount] = useState(0);
 
-    const [followPosted, setFollowPosted] = useState(false);
+    const [followUpdated, setFollowUpdated] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const {user_id} = useParams();
 
@@ -32,16 +33,28 @@ function FollowControl(){
             setError("Could not fetch follow information. Please try again later.");
             setIsLoading(false);
         })
-    }, [followPosted])
+    }, [followUpdated])
 
     function handleFollow(){
         setIsLoading(true);
-        // Apparently it seems to be backwards?!?!
-        postFollow(signedInUser.user_id, user_id).then(() => {
-            setFollowPosted((followPosted) => {return !followPosted})
+        postFollow(user_id, signedInUser.user_id).then(() => {
+            setFollowUpdated((followPosted) => {return !followPosted})
             setIsLoading(false);
         }).catch((err) => {
             setError("Error following user. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
+            })
+        })
+    }
+
+    function handleUnfollow(){
+        setIsLoading(true);
+        removeFollow(user_id, signedInUser.user_id).then(() => {
+            setFollowUpdated((followPosted) => {return !followPosted});
+            setIsLoading(false);
+        }).catch((err) => {
+            setError("Error unfollowing user. Please try again later.")
             return wait(4).then(() => {
                 setError("");
             })
@@ -65,6 +78,7 @@ function FollowControl(){
                 <Button 
                     variant="contained" 
                     color="success"
+                    onClick={handleUnfollow}
                 >
                     Following
                 </Button> 

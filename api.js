@@ -134,5 +134,8 @@ function postFollow(follower_id, following_id){
     })
 }
 
+function removeFollow(follower_id, following_id){
+    return api.delete(`/api/follows/follower/${follower_id}/following/${following_id}`)
+}
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow }
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow }
