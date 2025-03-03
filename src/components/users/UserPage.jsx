@@ -10,7 +10,7 @@ import { UserContext } from "../../contexts/UserContext";
 import DisplayCategory from "./DisplayCategory";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
 import formatDate from "../../utils/format-date";
-import FollowControl from "./FollowControl";
+import FollowControl from "./follows/FollowControl";
 import wait from "../../utils/wait";
 
 function UserPage(){
@@ -37,10 +37,6 @@ function UserPage(){
             setError("Could not fetch user. Please try again later.");
         })
     }, [params.user_id])
-
-    function handleFollow(){
-
-    }
 
     if(isLoading){
         return <Loading/>

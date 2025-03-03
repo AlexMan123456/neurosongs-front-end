@@ -24,6 +24,7 @@ import AlbumEditPage from "./components/albums/AlbumEditPage"
 import SongEditPage from "./components/songs/song-edit/SongEditPage"
 import AllSongs from "./components/songs/AllSongs"
 import SearchPage from "./components/search-page/SearchPage"
+import ShowFollows from "./components/users/follows/ShowFollows"
 
 function App() {
   return (<>
@@ -40,6 +41,8 @@ function App() {
       <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>
       <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
       <Route path="/users/settings" element={<UserSettingsPage/>}/>
+      <Route path="/users/:user_id/followers" element={<ShowFollows/>}/>
+      <Route path="/users/:user_id/following" element={<ShowFollows/>}/>
       <Route path="/loading" element={<LoadingPage/>}/>
       <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage/>}/>
       <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
