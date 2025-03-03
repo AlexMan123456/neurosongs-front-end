@@ -22,3 +22,8 @@ p {
 li {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+#follow-details > .follow-link {
+  margin-right: 4vw;
+  margin-left: 1vw;
+}

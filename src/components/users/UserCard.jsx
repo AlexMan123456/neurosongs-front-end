@@ -4,13 +4,13 @@ import { useEffect, useState } from "react"
 import { storage } from "../../firebase-config";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
 import StyledLink from "../styling/StyledLink";
+import Loading from "../Loading";
 
 function UserCard({user}){
     const [profilePicture, setProfilePicture] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log("Getting profile picture")
         setIsLoading(true);
         const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
         getDownloadURL(profilePictureRef).then((profilePictureURL) => {
@@ -21,6 +21,10 @@ function UserCard({user}){
             setIsLoading(false);
         })
     }, [])
+
+    if(isLoading){
+        return <Loading/>
+    }
     
     return (<ListItem sx={{border: 0.5, borderRadius: 0.7}}>
         <Avatar src={profilePicture} alt={`${user.username}'s profile picture`}/>
