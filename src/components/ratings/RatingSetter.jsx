@@ -8,7 +8,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVisibilityUpdated}){
     const params = useParams();
-    const {signedInUser} = useContext(UserContext);
+    const {signedInUser, isUserSignedIn} = useContext(UserContext);
     const [newRating, setNewRating] = useState(0);
     const [showRatingSlider, setShowRatingSlider] = useState(false);
     const [newIsVisible, setNewIsVisible] = useState(false);
@@ -65,7 +65,7 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <Button id="rating-slider" onClick={() => {setShowRatingSlider((setRating) => {return !setRating})}}>Click here to rate this {contentType} from 1 to 10</Button>
+            <Button id="rating-slider" disabled={!isUserSignedIn} onClick={() => {setShowRatingSlider((setRating) => {return !setRating})}}>{isUserSignedIn ? "Rate" : "Sign in to rate"} this {contentType} from 1 to 10</Button>
             {currentRating !== 0 ? <Typography color={getRatingColour(currentRating)}>Your current rating: {currentRating}</Typography> : null}
             {showRatingSlider ? 
                 <FormControl>
