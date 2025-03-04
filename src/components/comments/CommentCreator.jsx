@@ -21,9 +21,6 @@ function CommentCreator({contentType, content_id, setComments}){
     function handleSubmit(){
         setIsLoading(true);
         const data = {body, user_id: signedInUser.user_id}
-        /*if(isRating){
-            data.rating = rating;
-        }*/
         postComment(contentType, content_id, data).then((comment) => {
             setComments((previousComments) => {
                 const newComments = [...previousComments]
@@ -65,8 +62,6 @@ function CommentCreator({contentType, content_id, setComments}){
                 justifyContent: "center",
                 }}
             >
-            {/*<Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this {contentType.slice(0,contentType.length-1)} from 1 to 10</Button>*/}
-            {/*isRating ? <RatingSlider rating={rating} setRating={setRating} paddingLeft="23px"/> : null*/}
         </Box> : null
         }
         <br/>
