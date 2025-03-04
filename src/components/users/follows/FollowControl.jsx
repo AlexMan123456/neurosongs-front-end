@@ -7,7 +7,7 @@ import Loading from "../../Loading";
 import wait from "../../../utils/wait";
 
 function FollowControl(){
-    const {signedInUser} = useContext(UserContext);
+    const {signedInUser, isUserSignedIn} = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -83,7 +83,7 @@ function FollowControl(){
                     Following
                 </Button> 
                 : 
-                <Button onClick={handleFollow}>Follow</Button>
+                <Button onClick={handleFollow} disabled={!isUserSignedIn}>{isUserSignedIn ? "Follow" : "Sign in to follow"}</Button>
             )
         )}
         {error ? <p>{error}</p> : null}
