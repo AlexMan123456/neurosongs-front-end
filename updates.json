@@ -1,18 +1,6 @@
 [
     {
         "id": 1, 
-        "message": "Added a new search feature"
-    },
-    {
-        "id": 2,
-        "message": "Moved the view of all songs to bottom of featured page"
-    },
-    {
-        "id": 3,
-        "message": "After so much hard work and confusion with the database and how to store this, I finally managed to get the following feature to work!"
-    },
-    {
-        "id": 4,
-        "message": "Added comment notifications"
+        "message": "Bug fixes"
     }
 ]
