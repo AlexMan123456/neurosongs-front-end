@@ -9,6 +9,7 @@ function UserProvider({children}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
     const [signedInUser, setUser] = useState({});
+    const [checkNotifications, setCheckNotifications] = useState(true);
 
     function setSignedInUser(user){
         Object.keys(user).length === 0 ? localStorage.removeItem("signedInUserID") : localStorage.setItem("signedInUserID", user.user_id);
@@ -38,7 +39,7 @@ function UserProvider({children}){
         return <p>{error}</p>
     }
 
-    return <UserContext.Provider value={{signedInUser, setSignedInUser, isUserSignedIn: Object.keys(signedInUser).length !== 0}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{signedInUser, setSignedInUser, isUserSignedIn: Object.keys(signedInUser).length !== 0, checkNotifications, setCheckNotifications}}>{children}</UserContext.Provider>
 }
 
 export { UserContext, UserProvider }

@@ -130,7 +130,7 @@ function deleteRating(contentType, user_id, content_id){
 
 function postFollow(follower_id, following_id){
     return api.post(`/api/follows/follower/${follower_id}/following/${following_id}`).then(({data}) => {
-        return data.follow
+        return data.follow;
     })
 }
 
@@ -138,4 +138,16 @@ function removeFollow(follower_id, following_id){
     return api.delete(`/api/follows/follower/${follower_id}/following/${following_id}`)
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow }
+function postNotification(data){
+    return api.post("/api/notifications", data).then(({data}) => {
+        return data.notification;
+    })
+}
+
+function patchNotification(notification_id){
+    return api.patch(`/api/notifications/${notification_id}`).then(({data}) => {
+        return data.notification;
+    })
+}
+
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, postNotification, patchNotification }

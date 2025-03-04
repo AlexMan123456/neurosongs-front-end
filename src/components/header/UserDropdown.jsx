@@ -8,6 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
 import Loading from "../Loading";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
+import NotificationDot from "./NotificationDot";
 
 function UserDropdown({setSignOutError}){
     const {signedInUser, setSignedInUser, isUserSignedIn} = useContext(UserContext);
@@ -16,6 +17,7 @@ function UserDropdown({setSignOutError}){
     const location = useLocation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [notificationCount, setNotificationCount] = useState(0);
 
     useEffect(() => {
         if(isUserSignedIn){
@@ -71,10 +73,12 @@ function UserDropdown({setSignOutError}){
                     aria-label="Open user dropdown" 
                     onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
                 >
-                    <Avatar
-                        src={profilePicture}
-                        alt={`${signedInUser.username}'s profile picture`}
-                    />
+                    <NotificationDot notificationCount={notificationCount} setNotificationCount={setNotificationCount}>
+                        <Avatar
+                            src={profilePicture}
+                            alt={`${signedInUser.username}'s profile picture`}
+                        />
+                    </NotificationDot>
                 </IconButton>
                 {displayUserList ? 
                 <List sx={{
@@ -87,12 +91,25 @@ function UserDropdown({setSignOutError}){
                         <ListItemButton
                             component={Link}
                             to={`/users/${signedInUser.user_id}`}
-                            onClick={handleViewProfile}
+                            onClick={() => {setDisplayUserList(false)}}
                         >
                             <ListItemText primary="View Profile"/>
                         </ListItemButton>
                     </ListItem>
                     <Divider/>
+                    <ListItem>
+                        <ListItemButton
+                            component={Link}
+                            to={`/users/${signedInUser.user_id}/notifications`}
+                            onClick={() => {setDisplayUserList(false)}}
+                        >
+                            <ListItemText primary={
+                                notificationCount === 0 ? "View Notifications" : <strong>View Notifications ({notificationCount})</strong>
+                            }/>
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider/>
+
                     <ListItem>
                         <ListItemButton 
                             component={Link}

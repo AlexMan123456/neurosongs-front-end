@@ -22,7 +22,7 @@ function CommentsSection({content, ratingVisibilityUpdated}){
 
     return (<section>
             {isLoading ? <Loading/> : (error ? <p>{error}</p> : <>
-                <CommentCreator contentType={content.song_id ? "songs" : "albums"} content_id={content.song_id ?? content.album_id} setComments={setComments}/>
+                <CommentCreator contentType={content.song_id ? "songs" : "albums"} content_id={content.song_id ?? content.album_id} title={content.title} content_user_id={content.user_id} setComments={setComments}/>
                 <CommentsList comments={comments} setComments={setComments} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
             </>)}
         </section>)
