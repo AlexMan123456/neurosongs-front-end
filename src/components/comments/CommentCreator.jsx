@@ -1,19 +1,14 @@
 import { Box, Button, FormControl, TextField } from "@mui/material"
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { postComment } from "../../../api";
+import { postComment, postNotification } from "../../../api";
 import Loading from "../Loading";
 import wait from "../../utils/wait";
 import RatingSlider from "../ratings/RatingSlider";
 
-function CommentCreator({contentType, content_id, setComments}){
+function CommentCreator({contentType, content_id, content_user_id, title, setComments}){
     const [body, setBody] = useState("");
-    const {signedInUser} = useContext(UserContext)
-    
-    const [isRating, setIsRating] = useState(false);
-
-    const [rating, setRating] = useState(null);
-    const {isUserSignedIn} = useContext(UserContext);
+    const {signedInUser, isUserSignedIn} = useContext(UserContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("")
@@ -21,10 +16,24 @@ function CommentCreator({contentType, content_id, setComments}){
     function handleSubmit(){
         setIsLoading(true);
         const data = {body, user_id: signedInUser.user_id}
-        /*if(isRating){
-            data.rating = rating;
-        }*/
         postComment(contentType, content_id, data).then((comment) => {
+            const promises = [comment];
+            if(signedInUser.user_id !== content_user_id){
+                const splitComment = comment.body.split(0,50)
+                promises.push(
+                    postNotification({
+                        sender_id: signedInUser.user_id,
+                        receiver_id: content_user_id,
+                        comment_id: comment.comment_id,
+                        message: `New comment from ${signedInUser.artist_name} (@${signedInUser.username}) on ${title}:
+                            
+                        ${splitComment}${splitComment.length > 50 ? "..." : ""}`
+                    })
+                )
+            }
+            return Promise.all(promises)
+        })
+        .then(([comment, temp]) => {
             setComments((previousComments) => {
                 const newComments = [...previousComments]
                 newComments.unshift(comment);
@@ -65,8 +74,6 @@ function CommentCreator({contentType, content_id, setComments}){
                 justifyContent: "center",
                 }}
             >
-            {/*<Button id="rating-slider" onClick={() => {setIsRating((setRating) => {return !setRating})}}>Click here to rate this {contentType.slice(0,contentType.length-1)} from 1 to 10</Button>*/}
-            {/*isRating ? <RatingSlider rating={rating} setRating={setRating} paddingLeft="23px"/> : null*/}
         </Box> : null
         }
         <br/>

@@ -5,14 +5,13 @@ import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
 import { isSignInWithEmailLink } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Home, Login } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
-    const location = useLocation()
   
     return (<header>
         <Link 
