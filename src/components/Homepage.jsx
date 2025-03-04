@@ -32,7 +32,7 @@ function Homepage(){
                 })}
             </List>
             : null}
-            <p>Welcome to my latest project. This is a website I created called Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube and Spotify, in that it has the streaming capabilities of Spotify, mixed with the community aspects of YouTube.</p>
+            <p>Welcome to my latest project. This is a website I created called Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube, Spotify, and a hint of Metacritic. It has the streaming capabilities of Spotify, mixed with the community aspects of YouTube, and you can also give each song a numerical rating, similarly to Metacritic.</p>
 
             <p>You can either experience this site as a signed out user, or a signed in user. As a signed out user, you'll only be able to explore the songs and albums, and see other people's comments. However, as a signed in user, you'll also have the ability to leave comments and ratings on other people's music, follow other users so that you can easily keep up-to-date with what they're posting, as well as post some of your own songs for others to hear! You can also change your profile picture, set a user description, and really make your presence on this site unique to you.</p>
 
