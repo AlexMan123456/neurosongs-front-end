@@ -1,7 +1,7 @@
 function DonationPage(){
     return (
         <stripe-buy-button
-            buy-button-id="buy_btn_1R00DuFQjVpnMqYV59aAWdOh"
+            buy-button-id={import.meta.env.VITE_STRIPE_DONATION_BUTTON_ID}
             publishable-key={import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY}
         >
         </stripe-buy-button>
