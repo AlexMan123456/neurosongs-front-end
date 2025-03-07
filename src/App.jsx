@@ -26,6 +26,7 @@ import AllSongs from "./components/songs/AllSongs"
 import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
+import DonationPage from "./components/donations/DonationPage"
 
 function App() {
   return (<>
@@ -33,6 +34,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Homepage/>}/>
       <Route path="/featured" element={<FeaturedPage/>}/>
+      <Route path="/donations" element={<DonationPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
       <Route path="/search" element={<SearchPage/>}/>
