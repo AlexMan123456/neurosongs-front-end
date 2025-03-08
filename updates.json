@@ -1,6 +1,6 @@
 [
     {
         "id": 1, 
-        "message": "Bug fixes"
+        "message": "Made the reset rating button just reset the rating to what it was previously, and clear rating clears the rating completely."
     }
 ]
