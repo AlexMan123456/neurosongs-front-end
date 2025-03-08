@@ -2,5 +2,9 @@
     {
         "id": 1, 
         "message": "Made the reset rating button just reset the rating to what it was previously, and clear rating clears the rating completely."
+    },
+    {
+        "id": 2,
+        "message": "Made clear rating button red"
     }
 ]
