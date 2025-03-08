@@ -47,7 +47,7 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
         })
     }
 
-    function handleReset(){
+    function handleClear(){
         deleteRating(contentType + "s", signedInUser.user_id, params[`${contentType}_id`]).then(() => {
             setCurrentRating(0);
             setNewRating(0);
@@ -65,7 +65,9 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <Button id="rating-slider" disabled={!isUserSignedIn} onClick={() => {setShowRatingSlider((setRating) => {return !setRating})}}>{isUserSignedIn ? "Rate" : "Sign in to rate"} this {contentType} from 1 to 10</Button>
+            <Button id="rating-slider" disabled={!isUserSignedIn} onClick={() => {setShowRatingSlider((setRating) => {return !setRating})}}>
+                {showRatingSlider ? "Close Rating Controls" : (`${!isUserSignedIn ? "Sign in to " : ""} rate this ${contentType} from 1 to 10`)}
+            </Button>
             {currentRating !== 0 ? <Typography color={getRatingColour(currentRating)}>Your current rating: {currentRating}</Typography> : null}
             {showRatingSlider ? 
                 <FormControl>
@@ -81,7 +83,8 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
                             />
                         } 
                         label="Make my rating visible in comments"/>
-                    {currentRating > 0 ? <Button onClick={handleReset}>Reset Rating</Button> : null}
+                    {currentRating > 0 ? <Button onClick={handleClear}>Clear Rating</Button> : null}
+                    {currentRating > 0 ? <Button onClick={() => {setNewRating(currentRating)}}>Reset Rating</Button> : null}
                     <Button onClick={handleSubmit} variant="contained">Submit Rating</Button>
                 </FormControl>
             : null}
