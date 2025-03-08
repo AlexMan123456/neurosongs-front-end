@@ -83,7 +83,7 @@ function RatingSetter({contentType, currentRating, setCurrentRating, setRatingVi
                             />
                         } 
                         label="Make my rating visible in comments"/>
-                    {currentRating > 0 ? <Button onClick={handleClear}>Clear Rating</Button> : null}
+                    {currentRating > 0 ? <Button color="error" onClick={handleClear}>Clear Rating</Button> : null}
                     {currentRating > 0 ? <Button onClick={() => {setNewRating(currentRating)}}>Reset Rating</Button> : null}
                     <Button onClick={handleSubmit} variant="contained">Submit Rating</Button>
                 </FormControl>
