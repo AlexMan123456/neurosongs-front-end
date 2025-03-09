@@ -12,8 +12,8 @@ function Homepage(){
             <h2>Welcome to Neurosongs!</h2>
             <p>By: Alex Man</p>
         </header>
-            <Button onClick={() => {setViewCommits((viewCommits) => {return !viewCommits})}}>{viewCommits ? "Hide" : "See"} recent updates</Button>
-            {viewCommits ? 
+        <Button onClick={() => {setViewCommits((viewCommits) => {return !viewCommits})}}>{viewCommits ? "Hide" : "See"} recent updates</Button>
+        {viewCommits ? 
             <List sx={{
                     paddingLeft: "1vw",
                     border: 0.5,

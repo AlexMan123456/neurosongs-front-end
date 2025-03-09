@@ -1,3 +1,32 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+} body {
+  overflow-x: hidden;
+  /* background-image: linear-gradient(to bottom right, #EFDDD8, #F1E4D9, #F9F6F3); */
+  /* color: #333; */
+  align-items: center;
+}
+
+/* Navbar styling:  */
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+.fixed-right {
+  position: fixed;
+  align-items: center;
+  right: 10px;
+}
+
+
+/* Link Styling:` */
+.link {
+  color: #222
+}
+
+
 h1 {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
