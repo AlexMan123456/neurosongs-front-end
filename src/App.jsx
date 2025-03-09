@@ -1,4 +1,7 @@
+
+
 import { Route, Routes } from "react-router-dom"
+
 import FeaturedPage from "./components/FeaturedPage"
 import UserPage from "./components/users/UserPage"
 import AlbumPage from "./components/albums/AlbumPage"
@@ -27,10 +30,15 @@ import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
 import DonationPage from "./components/donations/DonationPage"
+import NavBar from "./components/NavBar"
+// import { DarkMode } from '@mui/icons-material';
+
+
 
 function App() {
   return (<>
-    <Header/>
+    <NavBar/>
+    {/* <Header/> */}
     <Routes>
       <Route path="/" element={<Homepage/>}/>
       <Route path="/featured" element={<FeaturedPage/>}/>

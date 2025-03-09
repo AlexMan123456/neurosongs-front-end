@@ -1,30 +1,56 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material"
-import { Link, useLocation } from "react-router-dom"
+import { Button } from "@mui/material"
+import { Search, Album } from "@mui/icons-material";
+import { Link } from "react-router-dom"
 
-function Navigation(){
-    const location = useLocation();
+function Navigation() {
+
 
     return (
-        <ToggleButtonGroup
-            value={location.pathname}
-            exclusive
-            aria-label="Choose page"
-        >
-            <ToggleButton
+
+        <>
+
+            <Button
                 component={Link}
                 to="/featured"
                 value="/featured"
+                color="text"
             >
+                <Album color="secondary" />
+                <span style={{ paddingLeft: '10px' }} />
                 Featured
-            </ToggleButton>
-            <ToggleButton
+            </Button>
+            <Button
                 component={Link}
                 to="/search"
                 value="/search"
-                >
-                    Search
-            </ToggleButton>
-        </ToggleButtonGroup>
+                color="text"
+            >
+                <Search color="secondary" />
+                <span style={{ paddingLeft: '10px' }} />
+
+                Search
+            </Button>
+        </>
+        // <ToggleButtonGroup
+        //     value={location.pathname}
+        //     exclusive
+        //     aria-label="Choose page"
+        // >
+        //     <ToggleButton
+        //         component={Link}
+        //         to="/featured"
+        //         value="/featured"
+        //     >
+        //         Featured
+        //     </ToggleButton>
+        //     <ToggleButton
+        //         component={Link}
+        //         to="/search"
+        //         value="/search"
+        //         >
+        //             Search
+        //     </ToggleButton>
+        // </ToggleButtonGroup>
     )
 }
 
