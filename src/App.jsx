@@ -30,7 +30,7 @@ import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
 import DonationPage from "./components/donations/DonationPage"
-import NavBar from "./components/NavBar"
+import NavBar from "./components/NavBar.jsx"
 // import { DarkMode } from '@mui/icons-material';
 
 
