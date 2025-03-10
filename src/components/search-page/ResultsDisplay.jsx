@@ -56,7 +56,7 @@ function ResultsDisplay({searchFor, setSearchQuery}){
     }
 
     return (<>
-        {search_query ? <Button color="error" onClick={handleReset}>Reset Search</Button> : null}
+        {search_query ? <Button color="text" onClick={handleReset}>Reset Search</Button> : null}
         {content.length > 0 ? 
         {
             songs: <SongResults songs={content}/>,

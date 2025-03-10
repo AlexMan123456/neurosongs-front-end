@@ -4,8 +4,6 @@
   margin: 0;
 } body {
   overflow-x: hidden;
-  /* background-image: linear-gradient(to bottom right, #EFDDD8, #F1E4D9, #F9F6F3); */
-  /* color: #333; */
   align-items: center;
 }
 
@@ -13,6 +11,12 @@
 .flex-center {
   display: flex;
   align-items: center;
+}
+.flex-middle-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .fixed-right {
   position: fixed;

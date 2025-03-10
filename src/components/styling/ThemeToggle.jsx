@@ -18,13 +18,12 @@ export default function ThemeToggle() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
         <Switch 
         checked={darkMode}
-        onChange={() => setDarkMode(!darkMode)}
+        onChange={() => setDarkMode((prevDarkMode) => !prevDarkMode)}
         sx={{
             width: 51.5,
-            height: 23,
+            height: 22.5,
             padding: 0,
             margin: 2,
             '& .MuiSwitch-switchBase': {

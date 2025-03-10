@@ -49,40 +49,6 @@ function Header() {
         <h1>Neurosongs</h1>
         {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation /> : null}
         <ThemeToggle />
-
-
-        {/* <Link 
-            to="/"
-            style={{
-                position: "fixed",
-                textAlign: "left"
-            }}
-        >
-            <Home/> 
-        </Link>
-        {isUserSignedIn
-        ? 
-        <UserDropdown setSignOutError={setSignOutError}/>
-        :<Box style={{
-            position: "fixed",
-            textAlign: "right",
-            right: "0px",
-            top: "0px"
-        }}>
-            <Link
-                to="/sign_in"
-                
-                >
-                <Login/>
-            </Link>
-            <StyledLink to="/sign_in">Sign in</StyledLink>
-        </Box>
-        }
-        {signOutError ? <p>{signOutError}</p> : null
-        }
-        <h1>Neurosongs</h1>
-        {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
-        <ThemeToggle /> */}
     </header>)
 }
 

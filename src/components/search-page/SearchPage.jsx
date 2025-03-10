@@ -1,11 +1,11 @@
-import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { ToggleButtonGroup, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ResultsDisplay from "./ResultsDisplay";
 
-function SearchPage(){
-    const {search_for} = useParams();
+function SearchPage() {
+    const { search_for } = useParams();
     const [searchQuery, setSearchQuery] = useState("");
     const [searchFor, setSearchFor] = useState("songs");
     const [searchTriggered, setSearchTriggered] = useState(false);
@@ -15,40 +15,47 @@ function SearchPage(){
     }, [search_for])
 
     return (<>
-        <header>
-            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+        <header className="flex-middle-col">
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <Typography>Search for:</Typography>
             <ToggleButtonGroup
                 value={searchFor}
-                onChange={(event) => {setSearchFor(event.target.value)}}
+                onChange={(event) => { setSearchFor(event.target.value) }}
                 exclusive
                 aria-label="Search for"
+                sx={{bgcolor: "secondary.main", paddingX: 5,}}
             >
-                <ToggleButton
+                <Button
                     component={Link}
                     to="/search/songs"
                     value="songs"
+                    sx={{paddingX: 5}}
+                    color="text"
                 >
                     Songs
-                </ToggleButton>
-                <ToggleButton
+                </Button>
+                <Button
                     component={Link}
                     to="/search/albums"
                     value="albums"
+                    sx={{paddingX: 5}}
+                    color="text"
                 >
                     Albums
-                </ToggleButton>
-                <ToggleButton
+                </Button>
+                <Button
                     component={Link}
                     to="/search/users"
                     value="users"
+                    sx={{paddingX: 5}}
+                    color="text"
                 >
                     Users
-                </ToggleButton>
+                </Button>
             </ToggleButtonGroup>
         </header>
         <main>
-            <ResultsDisplay searchFor={searchFor} searchTriggered={searchTriggered} setSearchQuery={setSearchQuery}/>
+            <ResultsDisplay searchFor={searchFor} searchTriggered={searchTriggered} setSearchQuery={setSearchQuery} />
         </main>
     </>)
 }

@@ -37,39 +37,40 @@ import NavBar from "./components/NavBar"
 
 function App() {
   return (<>
-    <NavBar/>
-    {/* <Header/> */}
-    <Routes>
-      <Route path="/" element={<Homepage/>}/>
-      <Route path="/featured" element={<FeaturedPage/>}/>
-      <Route path="/donations" element={<DonationPage/>}/>
-      <Route path="/users/:user_id" element={<UserPage/>}/>
-      <Route path="/songs/:song_id" element={<SongPage/>}/>
-      <Route path="/search" element={<SearchPage/>}/>
-      <Route path="/search/:search_for" element={<SearchPage/>}/>
-      <Route path="/albums/:album_id" element={<AlbumPage/>}/>
-      <Route path="/sign_in" element={<SignInPage/>}/>
-      <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>
-      <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
-      <Route path="/users/settings" element={<UserSettingsPage/>}/>
-      <Route path="/users/:user_id/followers" element={<ShowFollows/>}/>
-      <Route path="/users/:user_id/following" element={<ShowFollows/>}/>
-      <Route path="/users/:user_id/notifications" element={<NotificationsPage/>}/>
-      <Route path="/loading" element={<LoadingPage/>}/>
-      <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage/>}/>
-      <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
-      <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
-      <Route path="/users/:user_id/albums/create" element={<AlbumCreator/>}/>
-      <Route path="/users/:user_id/songs/create" element={<AlbumSelector/>}/>
-      <Route path="/albums/:album_id/songs/create" element={<SongAdder/>}/>
-      <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor/>}/>
-      <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
-      <Route path="/albums/:album_id/edit" element={<AlbumEditPage/>}/>
-      <Route path="/songs/:song_id/edit" element={<SongEditPage/>}/>
-      <Route path="/*" element={<PageNotFound/>}/>
-    </Routes>
-    <br/>
-    <Footer/>
+    <NavBar />
+    <div className="flex-middle-col">
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/featured" element={<FeaturedPage />} />
+        <Route path="/donations" element={<DonationPage />} />
+        <Route path="/users/:user_id" element={<UserPage />} />
+        <Route path="/songs/:song_id" element={<SongPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search/:search_for" element={<SearchPage />} />
+        <Route path="/albums/:album_id" element={<AlbumPage />} />
+        <Route path="/sign_in" element={<SignInPage />} />
+        <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage />} />
+        <Route path="/complete_signup" element={<CompleteSignUpPage />} />
+        <Route path="/users/settings" element={<UserSettingsPage />} />
+        <Route path="/users/:user_id/followers" element={<ShowFollows />} />
+        <Route path="/users/:user_id/following" element={<ShowFollows />} />
+        <Route path="/users/:user_id/notifications" element={<NotificationsPage />} />
+        <Route path="/loading" element={<LoadingPage />} />
+        <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage />} />
+        <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage />} />
+        <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword />} />
+        <Route path="/users/:user_id/albums/create" element={<AlbumCreator />} />
+        <Route path="/users/:user_id/songs/create" element={<AlbumSelector />} />
+        <Route path="/albums/:album_id/songs/create" element={<SongAdder />} />
+        <Route path="/users/:user_id/albums/create/set_album_covers/:album_id" element={<AlbumCoverEditor />} />
+        <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage />} />
+        <Route path="/albums/:album_id/edit" element={<AlbumEditPage />} />
+        <Route path="/songs/:song_id/edit" element={<SongEditPage />} />
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+      <br />
+    </div>
+    <Footer />
   </>)
 }
 
