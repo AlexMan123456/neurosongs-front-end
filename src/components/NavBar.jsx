@@ -16,7 +16,7 @@ export default function NavBar() {
 
   // Checks to see if the user is on the sign-in page and hides the navbar if they are.
   // should change the signin page to a whole card item that has a single back button that takes you back a page. or you could use the browser back page button
-  const isSignInPage = location.pathname === "/sign_in";
+  const isSignInPage = isSignInWithEmailLink(auth, window.location.href);
   if (isSignInPage) return null;
 
   return (

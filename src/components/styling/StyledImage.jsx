@@ -1,4 +1,4 @@
-function StyledImage(src, alt){
+function StyledImage({src, alt}){
     return <img 
         style={{
             width: "15vw",
