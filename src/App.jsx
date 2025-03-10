@@ -52,6 +52,7 @@ function App() {
         <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage />} />
         <Route path="/complete_signup" element={<CompleteSignUpPage />} />
         <Route path="/users/settings" element={<UserSettingsPage />} />
+        <Route path="/users/:user_id/:category" element={<UserPage/>}/>
         <Route path="/users/:user_id/followers" element={<ShowFollows />} />
         <Route path="/users/:user_id/following" element={<ShowFollows />} />
         <Route path="/users/:user_id/notifications" element={<NotificationsPage />} />

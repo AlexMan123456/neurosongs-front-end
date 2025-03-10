@@ -1,6 +1,14 @@
 [
     {
         "id": 1, 
-        "message": "Bug fixes"
+        "message": "Made the reset rating button just reset the rating to what it was previously, and clear rating clears the rating completely."
+    },
+    {
+        "id": 2,
+        "message": "Made clear rating button red"
+    },
+    {
+        "id": 3,
+        "message": "Minor updates to the user page display"
     }
 ]
