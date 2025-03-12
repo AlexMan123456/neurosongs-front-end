@@ -51,7 +51,7 @@ function UserSongs(){
         {
             // Do a media query here to decide if we render a list or a table
         }
-        {isLargeScreen ? <SongsTable songs={songs} setSongs={setSongs}/> : <SongsList/>}
+        {isLargeScreen ? <SongsTable songs={songs} setSongs={setSongs}/> : <SongsList songs={songs} setSongs={setSongs}/>}
         
     </List>)
 }

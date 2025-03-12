@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import SongCard from "./SongCard";
-import { List, Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { List, ListItem, Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import SongCardForList from "./SongCardForList";
 
 function SongsList({songs, setSongs}){
     const location = useLocation();
@@ -12,7 +13,7 @@ function SongsList({songs, setSongs}){
                 {songs.map((song) => {
                     return (
                     <ListItem>
-                        <SongCard key={`song-card-${song.song_id}`} song={song} setSongs={setSongs}/>
+                        <SongCardForList key={`song-card-${song.song_id}`} song={song} setSongs={setSongs}/>
                     </ListItem>
                     )
                 })}
