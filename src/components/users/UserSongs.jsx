@@ -16,7 +16,7 @@ function UserSongs(){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 400 && window.innerHeight > 800);
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495 && window.innerHeight > 800);
 
     useEffect(() => {
         setIsLoading(true);
@@ -31,7 +31,7 @@ function UserSongs(){
 
     useEffect(() => {
         function handleResize(){
-            setIsLargeScreen(window.innerWidth > 400 && window.innerHeight > 800);
+            setIsLargeScreen(window.innerWidth > 495 && window.innerHeight > 800);
         }
 
         window.addEventListener("resize", handleResize);
