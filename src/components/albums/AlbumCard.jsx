@@ -4,17 +4,29 @@ import { Box, Card, CardContent, ListItem, ListItemText, Stack } from "@mui/mate
 import AlbumImage from "./AlbumImage";
 import { ArrowDropDown } from "@mui/icons-material";
 import AlbumCardOptions from "./AlbumCardOptions";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import isScreenLarge from "../../utils/is-screen-large";
 
 function AlbumCard({album, setAlbums}){
     const location = useLocation();
     const {user_id} = useParams();
     const {signedInUser} = useContext(UserContext)
 
+    const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
+
+    useEffect(() => {
+        function handleResize(){
+            setIsLargeScreen(isScreenLarge(window));
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => {window.removeEventListener("resize", handleResize)}
+    }, [])
+
     return (
-        <ListItem>
-            <Card variant="outlined" sx={{width: "100%"}}>
+        <ListItem sx={{justifyContent: "center"}}>
+            <Card variant="outlined" sx={{width: isLargeScreen ? "22%" : "100%"}}>
                 <CardContent sx={{
                     justifyItems: "center"
                 }}>

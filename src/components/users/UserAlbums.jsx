@@ -33,7 +33,7 @@ function UserAlbums(){
         return <p>{error}</p>
     }
 
-    return (<List>
+    return (<List sx={{justifyItems: "center"}}>
         {signedInUser.user_id === user_id ? <>
             <StyledLink to={`/users/${user_id}/albums/create`}>Add a new album</StyledLink>
             <br/>
