@@ -8,15 +8,13 @@ function SongsList({songs, setSongs}){
 
     return (
         <List>
-                {//!location.pathname.includes("/users") ? <TableCell>Username</TableCell> : null
-                }
-                {songs.map((song) => {
-                    return (
-                    <ListItem>
-                        <SongCardForList key={`song-card-${song.song_id}`} song={song} setSongs={setSongs}/>
-                    </ListItem>
-                    )
-                })}
+            {songs.map((song) => {
+                return (
+                <ListItem key={`song-list-item-${song.song_id}`}>
+                    <SongCardForList song={song} setSongs={setSongs}/>
+                </ListItem>
+                )
+            })}
         </List>
     )
 }
