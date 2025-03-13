@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SongsTable from "./SongsTable";
 import { getSongs } from "../../../api";
 import Loading from "../Loading";
+import DisplaySongs from "./DisplaySongs";
 
 function AllSongs(){
     const [songs, setSongs] = useState([]);
@@ -28,7 +29,7 @@ function AllSongs(){
     }
 
     return (<section>
-        <SongsTable songs={songs}/>
+        <DisplaySongs songs={songs}/>
     </section>)
 }
 

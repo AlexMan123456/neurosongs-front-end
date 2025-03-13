@@ -5,10 +5,22 @@
     },
     {
         "id": 2,
-        "message": "Made clear rating button red"
+        "message": "Made clear rating button red."
     },
     {
         "id": 3,
-        "message": "Minor updates to the user page display"
+        "message": "Minor updates to the user page display."
+    },
+    {
+        "id": 4,
+        "message": "Changed the layout of songs lists and albums lists, making them nicer to view on mobile in the process."
+    },
+    {
+        "id": 5,
+        "message": "Fixed a bug where the user dropdown sometimes got covered up by other components in the foreground"
+    },
+    {
+        "id": 6,
+        "message": "Fixed the appearance of the user dropdown on mobile"
     }
 ]

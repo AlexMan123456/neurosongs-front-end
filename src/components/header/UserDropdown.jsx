@@ -18,6 +18,7 @@ function UserDropdown({setSignOutError}){
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [notificationCount, setNotificationCount] = useState(0);
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495 && window.innerHeight > 800);
 
     useEffect(() => {
         if(isUserSignedIn){
@@ -32,9 +33,14 @@ function UserDropdown({setSignOutError}){
         }
     }, [signedInUser])
 
-    function handleViewProfile(){
-        setDisplayUserList(false);
-    }
+    useEffect(() => {
+        function handleResize(){
+            setIsLargeScreen(window.innerWidth > 495 && window.innerHeight > 800);
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => {window.removeEventListener("resize", handleResize)}
+    }, [])
 
     function handleUserSettings(){
         setDisplayUserList(false);
@@ -66,7 +72,8 @@ function UserDropdown({setSignOutError}){
                     position: "fixed",
                     textAlign: "right",
                     right: "0px",
-                    top: "0px"
+                    top: "0px",
+                    zIndex: 1
                 }}
             >
                 <IconButton
@@ -82,9 +89,9 @@ function UserDropdown({setSignOutError}){
                 </IconButton>
                 {displayUserList ? 
                 <List sx={{
-                    width: "20vw",
+                    width: isLargeScreen ? "20vw" : "50vw",
                     border: 0.5,
-                    right: "0px",
+                    right: "0.5vw",
                     backgroundColor: "white"
                 }}>
                     <ListItem>

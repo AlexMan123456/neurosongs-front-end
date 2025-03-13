@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
 import SongsTable from "../songs/SongsTable";
+import SongsList from "../songs/SongsList";
+import DisplaySongs from "../songs/DisplaySongs";
 
 function UserSongs(){
     const {signedInUser} = useContext(UserContext);
@@ -14,6 +16,8 @@ function UserSongs(){
     const [songs, setSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495 && window.innerHeight > 800);
 
     useEffect(() => {
         setIsLoading(true);
@@ -36,7 +40,8 @@ function UserSongs(){
 
     return (<List style={{listStyle: "none"}}>
         {signedInUser.user_id === user_id ? <StyledLink to={`/users/${user_id}/songs/create`}>Add a new song</StyledLink> : null}
-        <SongsTable songs={songs} setSongs={setSongs}/>
+        <DisplaySongs songs={songs} setSongs={setSongs}/>
+        
     </List>)
 }
 
