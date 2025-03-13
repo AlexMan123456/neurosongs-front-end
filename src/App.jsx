@@ -27,8 +27,21 @@ import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
 import DonationPage from "./components/donations/DonationPage"
+import { useEffect, useState } from "react"
+import isScreenLarge from "./utils/is-screen-large"
 
 function App() {
+  const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
+
+    useEffect(() => {
+        function handleResize(){
+            setIsLargeScreen(isScreenLarge(window));
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => {window.removeEventListener("resize", handleResize)}
+    }, [])
+
   return (<>
     <Header/>
     <Routes>
@@ -62,7 +75,7 @@ function App() {
       <Route path="/*" element={<PageNotFound/>}/>
     </Routes>
     <br/>
-    <Footer/>
+    {isLargeScreen ? <Footer/> : null}
   </>)
 }
 
