@@ -91,7 +91,7 @@ function UserDropdown({setSignOutError}){
                 <List sx={{
                     width: isLargeScreen ? "20vw" : "50vw",
                     border: 0.5,
-                    right: "0.5vw",
+                    right: isLargeScreen ? "0.5vw" : "1.2vw",
                     backgroundColor: "white"
                 }}>
                     <ListItem>
