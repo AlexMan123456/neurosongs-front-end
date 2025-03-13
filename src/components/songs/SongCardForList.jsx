@@ -6,7 +6,7 @@ import { storage } from "../../firebase-config";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
 import Loading from "../Loading";
 import { UserContext } from "../../contexts/UserContext";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SongCardOptions from "./SongCardOptions";
 
 function SongCardForList({song, setSongs}){
@@ -32,25 +32,22 @@ function SongCardForList({song, setSongs}){
             {isLoading ? <Loading/> : 
             <ListItemAvatar>
                 <Avatar
+                    component={Link}
+                    to={`/albums/${song.album_id}`}
                     src={frontCover}
                     alt={`${song.album.title}'s front cover`}
                 />
             </ListItemAvatar> }
             <ListItemText
                 primary={<StyledLink to={`/songs/${song.song_id}`}>{song.title}</StyledLink>}
-                secondary={song.artist.artist_name}
+                secondary={
+                    <>
+                        {song.artist.artist_name}
+                        <br/>
+                        {!location.pathname.includes("/users") ? <StyledLink to={`/users/${song.user_id}`}>@{song.artist.username}</StyledLink> : null}
+                    </>
+                }
             />
-            {!location.pathname.includes("users") ?
-            <>
-            <ListItemText>
-                <StyledLink to={`/users/${song.user_id}`}>@{song.artist.username}</StyledLink>
-            </ListItemText>
-            </>
-            : null
-            }
-            {/*<TableCell sx={{fontSize}}>
-                <StyledLink to={`/albums/${song.album_id}`}>{song.album.title}</StyledLink>
-            </TableCell>*/}
             {location.pathname.includes("users") && signedInUser.user_id === song.user_id ? <SongCardOptions song={song} setSongs={setSongs}/> : null}
         </>
     )

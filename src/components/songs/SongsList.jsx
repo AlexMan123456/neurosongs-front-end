@@ -10,7 +10,7 @@ function SongsList({songs, setSongs}){
         <List>
             {songs.map((song) => {
                 return (
-                <ListItem key={`song-list-item-${song.song_id}`}>
+                <ListItem key={`song-list-item-${song.song_id}`} sx={{border: 0.5}}>
                     <SongCardForList song={song} setSongs={setSongs}/>
                 </ListItem>
                 )
