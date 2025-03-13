@@ -8,6 +8,7 @@ import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
 import SongsTable from "../songs/SongsTable";
 import SongsList from "../songs/SongsList";
+import DisplaySongs from "../songs/DisplaySongs";
 
 function UserSongs(){
     const {signedInUser} = useContext(UserContext);
@@ -29,15 +30,6 @@ function UserSongs(){
         })
     }, [])
 
-    useEffect(() => {
-        function handleResize(){
-            setIsLargeScreen(window.innerWidth > 495 && window.innerHeight > 800);
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)}
-    }, [])
-
     if(isLoading){
         return <Loading/>
     }
@@ -48,10 +40,7 @@ function UserSongs(){
 
     return (<List style={{listStyle: "none"}}>
         {signedInUser.user_id === user_id ? <StyledLink to={`/users/${user_id}/songs/create`}>Add a new song</StyledLink> : null}
-        {
-            // Do a media query here to decide if we render a list or a table
-        }
-        {isLargeScreen ? <SongsTable songs={songs} setSongs={setSongs}/> : <SongsList songs={songs} setSongs={setSongs}/>}
+        <DisplaySongs songs={songs} setSongs={setSongs}/>
         
     </List>)
 }
