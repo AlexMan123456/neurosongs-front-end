@@ -18,7 +18,8 @@ function Header(){
             to="/"
             style={{
                 position: "fixed",
-                textAlign: "left"
+                textAlign: "left",
+                zIndex: 1
             }}
         >
             <Home/> 
