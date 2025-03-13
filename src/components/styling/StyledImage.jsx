@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import isScreenLarge from "../../utils/is-screen-large";
 
 function StyledImage({src, alt}){
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495)
+    const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
 
     useEffect(() => {
         function handleResize(){
-            setIsLargeScreen(window.innerWidth > 495);
+            setIsLargeScreen(isScreenLarge(window));
         }
 
         window.addEventListener("resize", handleResize);

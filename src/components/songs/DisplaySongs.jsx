@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import SongsTable from "./SongsTable";
 import SongsList from "./SongsList";
+import isScreenLarge from "../../utils/is-screen-large";
 
 function DisplaySongs({songs, setSongs}){
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495 && window.innerHeight > 800);
+    const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window));
 
     useEffect(() => {
         function handleResize(){
-            setIsLargeScreen(window.innerWidth > 495 && window.innerHeight > 800);
+            setIsLargeScreen(isScreenLarge(window));
         }
 
         window.addEventListener("resize", handleResize);
