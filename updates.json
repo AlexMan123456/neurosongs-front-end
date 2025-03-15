@@ -22,5 +22,9 @@
     {
         "id": 6,
         "message": "Fixed the appearance of the user dropdown on mobile"
+    },
+    {
+        "id": 7,
+        "message": "Added comment replies (notifications are still a W.I.P)"
     }
 ]
