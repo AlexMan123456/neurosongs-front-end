@@ -4,10 +4,11 @@ import Markdown from "react-markdown";
 import { Link } from "react-router-dom"
 import { patchNotification } from "../../../../api";
 import { UserContext } from "../../../contexts/UserContext";
+import getContentIDFromComment from "../../../utils/get-content-id-from-comment";
 
 function NotificationCard({notification, setNotifications}){
-    const contentType = notification.comment.song.song_id ? "songs" : "albums";
-    const content_id = notification.comment.song.song_id ?? notification.comment.album.album_id;
+    const contentType = notification.comment.song || notification.comment.replying_to.song ? "songs" : (notification.comment.album || notification.comment.replying_to.album ?"albums" : null);
+    const content_id = getContentIDFromComment(notification.comment);
     const {setCheckNotifications} = useContext(UserContext)
 
     function handleClick(){
