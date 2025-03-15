@@ -38,8 +38,8 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
     }, [])
 
     useEffect(() => {
-        const contentType = reply.song_id ? "song" : "album";
-        getRatingByIds(contentType + "s", reply.user_id, reply[`${contentType}_id`]).then((rating) => {
+        const contentType = reply.replying_to.song ? "song" : "album";
+        getRatingByIds(contentType + "s", reply.user_id, reply.replying_to[contentType][`${contentType}_id`]).then((rating) => {
             setRating(rating);
         })
     }, [ratingVisibilityUpdated])
