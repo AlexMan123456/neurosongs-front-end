@@ -58,9 +58,21 @@ function getComments(contentType, content_id){
     })
 }
 
+function getReplies(comment_id){
+    return api.get(`/api/comments/${comment_id}/replies`).then(({data}) => {
+        return data.replies;
+    })
+}
+
 function postComment(contentType, content_id, data){
     return api.post(`/api/${contentType}/${content_id}/comments`, data).then(({data}) => {
         return data.comment;
+    })
+}
+
+function postReply(comment_id, data){
+    return api.post(`/api/comments/${comment_id}/replies`, data).then(({data}) => {
+        return data.reply
     })
 }
 
@@ -150,4 +162,4 @@ function patchNotification(notification_id){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, postComment, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, postNotification, patchNotification }
+export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, postNotification, patchNotification }

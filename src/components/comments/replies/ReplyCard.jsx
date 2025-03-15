@@ -1,37 +1,32 @@
 import { Avatar, Box, Button, ListItem, ListItemText, Popper, TextField, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { deleteComment, getRatingByIds, getUserById } from "../../../api";
+import { deleteComment, getRatingByIds, getUserById } from "../../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
-import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
-import Loading from "../Loading";
-import StyledLink from "../styling/StyledLink";
-import { UserContext } from "../../contexts/UserContext";
-import CommentEditor from "./CommentEditor";
-import formatDateAndTime from "../../utils/format-date-and-time";
-import wait from "../../utils/wait";
-import getRatingColour from "../../utils/get-rating-colour";
-import DeletePopup from "../utility/DeletePopup";
-import ReplyCreator from "./replies/ReplyCreator";
-import RepliesList from "./replies/RepliesList";
+import { storage } from "../../../firebase-config";
+import getProfilePictureDirectory from "../../../references/get-profile-picture-directory";
+import Loading from "../../Loading";
+import StyledLink from "../../styling/StyledLink";
+import { UserContext } from "../../../contexts/UserContext";
+import CommentEditor from "../CommentEditor";
+import formatDateAndTime from "../../../utils/format-date-and-time";
+import wait from "../../../utils/wait";
+import getRatingColour from "../../../utils/get-rating-colour";
+import DeletePopup from "../../utility/DeletePopup";
 
-function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated}){
-    const [comment, setComment] = useState(givenComment);
-    const [replyCount, setReplyCount] = useState(givenComment.reply_count);
+function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
+    const [reply, setReply] = useState(givenReply);
     const [profilePicture, setProfilePicture] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const [rating, setRating] = useState({});
-    const [isReplying, setIsReplying] = useState(false);
-    const [replies, setReplies] = useState([]);
 
-    const {isUserSignedIn, signedInUser} = useContext(UserContext);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true);
-        getUserById(comment.user_id).then((user) => {
+        getUserById(reply.user_id).then((user) => {
             const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
             return getDownloadURL(profilePictureRef);
         }).then((profilePictureURL) => {
@@ -43,15 +38,11 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
     }, [])
 
     useEffect(() => {
-        const contentType = comment.song_id ? "song" : "album";
-        getRatingByIds(contentType + "s", comment.user_id, comment[`${contentType}_id`]).then((rating) => {
+        const contentType = reply.song_id ? "song" : "album";
+        getRatingByIds(contentType + "s", reply.user_id, reply[`${contentType}_id`]).then((rating) => {
             setRating(rating);
         })
     }, [ratingVisibilityUpdated])
-
-    useEffect(() => {
-        setReplyCount(replies.length);
-    }, [replies])
 
     function enterEditMode(){
         setIsEditing(true);
@@ -59,12 +50,12 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
 
     function handleDelete(){
         setIsLoading(true);
-        deleteComment(comment.comment_id).then(() => {
+        deleteComment(reply.comment_id).then(() => {
             setIsLoading(false);
-            setComments((comments) => {
+            setReplies((comments) => {
                 const commentIndex = comments.map((commentFromArray) => {
                     return commentFromArray.comment_id
-                }).indexOf(comment.comment_id)
+                }).indexOf(reply.comment_id)
                 
                 const newComments = [...comments];
                 newComments.splice(commentIndex, 1);
@@ -81,11 +72,6 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
 
     return (<ListItem
         alignItems="flex-start"
-        sx={{
-            padding: "35vw 30pvh",
-            border: 0.5,
-            borderRadius: 0.7
-        }}
     >
         {!isLoading ? <Avatar src={profilePicture}/> : <Loading/>} 
         <ListItemText
@@ -95,35 +81,29 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
                 }
             }}
             primary={<Box sx={{paddingLeft: "1vw"}}>
-                {comment.author.artist_name}
+                {reply.author.artist_name}
             </Box>}
             secondary={<>
-                <StyledLink to={`/users/${comment.user_id}`}>@{comment.author.username}</StyledLink>
-                <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {formatDateAndTime(new Date(comment.created_at))}</Typography>
+                <StyledLink to={`/users/${reply.user_id}`}>@{reply.author.username}</StyledLink>
+                <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {formatDateAndTime(new Date(reply.created_at))}</Typography>
                 {isEditing ? 
                 <>
                     <CommentEditor
-                        comment={comment}
-                        setComment={setComment}
+                        comment={reply}
+                        setComment={setReply}
                         setIsEditing={setIsEditing}
                     /> 
                 </>
                 :
                 <>
-                    <Typography component="span" sx={{color: "text.primary"}}>{comment.body}</Typography>
-                    {isReplying ? 
-                    <ReplyCreator comment={comment} setReplies={setReplies} setIsReplying={setIsReplying}/>
-                    : 
+                    <Typography component="span" sx={{color: "text.primary"}}>{reply.body}</Typography>
                     <Box>
-                        <Button onClick={() => {setIsReplying(true)}}>{!isUserSignedIn ? "Sign in to " : ""}Reply</Button>
                         {rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null}
-                    </Box>}
-                    {isReplying ? (rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null) : null}
+                    </Box>
                 </>}
-                {replyCount !== 0 ? <RepliesList comment_id={comment.comment_id} replies={replies} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated}/> : null}
             </>}
         />
-        {signedInUser.user_id === comment.user_id && !isEditing && !isReplying ? <>
+        {signedInUser.user_id === reply.user_id && !isEditing ? <>
             <Button onClick={enterEditMode}>Edit</Button>
             <Button color="error" onClick={() => {setShowDeleteBackdrop(true)}}>Delete</Button>
             <DeletePopup
@@ -138,4 +118,4 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
     </ListItem>)
 }
 
-export default CommentCard
+export default ReplyCard
