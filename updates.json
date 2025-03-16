@@ -25,6 +25,10 @@
     },
     {
         "id": 7,
-        "message": "Added comment replies (notifications are still a W.I.P)"
+        "message": "Added comment replies"
+    },
+    {
+        "id": 8,
+        "message": "Added comment reply notifications (but could probably be optimised in a few areas)"
     }
 ]
