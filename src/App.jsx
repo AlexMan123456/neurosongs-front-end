@@ -20,7 +20,6 @@ import AlbumSelector from "./components/songs/song-creation/AlbumSelector"
 import SongAdder from "./components/songs/song-creation/SongAdder"
 import Footer from "./components/Footer"
 import PageNotFound from "./components/errors/PageNotFound"
-import AlbumEditPage from "./components/albums/AlbumEditPage"
 import SongEditPage from "./components/songs/song-edit/SongEditPage"
 import AllSongs from "./components/songs/AllSongs"
 import SearchPage from "./components/search-page/SearchPage"
@@ -29,6 +28,7 @@ import NotificationsPage from "./components/users/notifications/NotificationsPag
 import DonationPage from "./components/donations/DonationPage"
 import { useEffect, useState } from "react"
 import isScreenLarge from "./utils/is-screen-large"
+import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 
 function App() {
   const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
