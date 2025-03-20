@@ -57,7 +57,7 @@ function AlbumSelector(){
         <h2>Please select an album to upload a song to</h2>
         <List>
             {albums.map((album) => {
-                return (<SongCreationAlbumCard album={album}/>)
+                return (<SongCreationAlbumCard key={`album-card-${album.album_id}`} album={album}/>)
             })}
         </List>
     </section>)
