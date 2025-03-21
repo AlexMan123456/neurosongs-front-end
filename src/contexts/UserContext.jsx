@@ -40,9 +40,10 @@ function UserProvider({children}){
     }, [authStateChanged])
 
     useEffect(() => {
-        onAuthStateChanged(auth, () => {
+        const unsubscribe = onAuthStateChanged(auth, () => {
             setAuthStateChanged(true);
         })
+        return () => {unsubscribe()}
     }, [])
 
     if(isLoading){
