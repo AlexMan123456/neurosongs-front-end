@@ -15,22 +15,23 @@ function GoogleSignIn({setIsLoading, setError}){
         setIsLoading(true);
         signInWithPopup(auth, provider).then(({user}) => {
             return getUserById(user.uid).then((userFromDatabase) => {
-                setIsLoading(false);
                 setSignedInUser(userFromDatabase);
+                setIsLoading(false);
                 navigate("/");
             }).catch((err) => {
-                setIsLoading(false);
                 if(err.status === 404){
-                    postUser({
+                    return postUser({
                         user_id: user.uid,
                         artist_name: user.displayName,
                         username: user.uid,
                         email: user.email
                     }).then((userFromDatabase) => {
                         setSignedInUser(userFromDatabase);
+                        setIsLoading(false);
                         navigate("/");
                     })
                 }
+                setIsLoading(false);
                 setError("Google sign in error")
             })
         })
