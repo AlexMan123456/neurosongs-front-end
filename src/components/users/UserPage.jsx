@@ -55,7 +55,7 @@ function UserPage(){
                 sx={{ width: 100, height: 100 }}
             />
             <h2>{user.artist_name}</h2>
-            <p>{`@${user.username}`}</p>
+            <p className="username">{`@${user.username}`}</p>
             <FollowControl/>
         </header>
         <DisplayCategory/>
