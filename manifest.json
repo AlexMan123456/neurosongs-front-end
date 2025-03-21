@@ -3,17 +3,17 @@
     "name": "Neurosongs",
     "icons": [
       {
-        "src": "neurosongs.ico",
+        "src": "Neurosongs_WebIcon_Note.ico",
         "sizes": "64x64 32x32 24x24 16x16",
         "type": "image/x-icon"
       },
       {
-        "src": "neurosongs192.png",
+        "src": "Neurosongs_WebIcon_Note_192x192",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "neurosongs512.png",
+        "src": "Neurosongs_WebIcon_Note_512x512",
         "type": "image/png",
         "sizes": "512x512"
       }

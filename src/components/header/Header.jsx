@@ -8,6 +8,8 @@ import { auth } from "../../firebase-config";
 import { Link } from "react-router-dom";
 import { Home, Login } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import neurosongs from "../../images/Neurosongs_WebIcon.png"
+import StyledImage from "../styling/StyledImage";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -44,7 +46,9 @@ function Header(){
         }
         {signOutError ? <p>{signOutError}</p> : null
         }
-        <h1>Neurosongs</h1>
+        <h1>
+            <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
+        </h1>
         {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }
