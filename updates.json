@@ -34,5 +34,9 @@
     {
         "id": 9,
         "message": "Added ability to change the order of songs on an album"
+    },
+    {
+        "id": 10,
+        "message": "Minor patches to handling of signed in user"
     }
 ]
