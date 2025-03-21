@@ -8,12 +8,12 @@
         "type": "image/x-icon"
       },
       {
-        "src": "Neurosongs_WebIcon_Note_192x192",
+        "src": "Neurosongs_WebIcon_Note_192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "Neurosongs_WebIcon_Note_512x512",
+        "src": "Neurosongs_WebIcon_Note_512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
