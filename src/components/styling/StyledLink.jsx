@@ -7,6 +7,8 @@ function StyledLink({to, children}){
         &:hover {
             color: purple;
         }
+        font-family: "Futura", "Arial", "Helvetica", "sans-serif"
+        }
     `} to={to}>{children}</Link>
 }
 
