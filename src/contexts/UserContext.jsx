@@ -1,35 +1,49 @@
 import { createContext, useEffect, useState } from "react";
 import { getUserById } from "../../api";
 import Loading from "../components/Loading";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 function UserProvider({children}){
-    const signedInUserID = localStorage.getItem("signedInUserID");
+    if(localStorage.getItem("signedInUserID")){
+        localStorage.removeItem("signedInUserID");
+    }
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
     const [signedInUser, setUser] = useState({});
     const [checkNotifications, setCheckNotifications] = useState(true);
+    const [authStateChanged, setAuthStateChanged] = useState(false);
 
     function setSignedInUser(user){
-        Object.keys(user).length === 0 ? localStorage.removeItem("signedInUserID") : localStorage.setItem("signedInUserID", user.user_id);
         setUser(user);
     }
 
     useEffect(() => {
-        if(signedInUserID){
-            setIsLoading(true);
-            getUserById(signedInUserID).then((user) => {
+        if(authStateChanged){
+            if(auth.currentUser){
+                setIsLoading(true);
+                getUserById(auth.currentUser.uid).then((user) => {
+                    setIsLoading(false);
+                    setSignedInUser(user);
+                }).catch((err) => {
+                    setIsLoading(false);
+                    setError("Error signing in. Please try again later.");
+                })
+            } else {
                 setIsLoading(false);
-                setSignedInUser(user);
-            }).catch((err) => {
-                setIsLoading(false);
-                setError("Error signing in. Please try again later.");
-            })
-        } else {
-            setIsLoading(false);
+                setSignedInUser({});
+            }
         }
-    }, [signedInUserID])
+    }, [authStateChanged])
+
+    useEffect(() => {
+        onAuthStateChanged(auth, () => {
+            setAuthStateChanged(true);
+        })
+    }, [])
 
     if(isLoading){
         return <Loading/>
