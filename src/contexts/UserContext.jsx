@@ -8,20 +8,20 @@ import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 
 function UserProvider({children}){
-    if(localStorage.getItem("signedInUserID")){
-        localStorage.removeItem("signedInUserID");
-    }
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
     const [signedInUser, setUser] = useState({});
     const [checkNotifications, setCheckNotifications] = useState(true);
     const [authStateChanged, setAuthStateChanged] = useState(false);
-
+    
     function setSignedInUser(user){
         setUser(user);
     }
-
+    
     useEffect(() => {
+        if(localStorage.getItem("signedInUserID")){
+            localStorage.removeItem("signedInUserID");
+        }
         if(authStateChanged){
             if(auth.currentUser){
                 setIsLoading(true);
