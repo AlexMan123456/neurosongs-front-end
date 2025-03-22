@@ -30,8 +30,9 @@ function SongCard({song, setSongs}){
     return (
         <TableBody
             sx={{ border: 0.5, borderRadius: 0.7 }}
+            suppressHydrationWarning
         >
-            <TableRow>
+            <TableRow suppressHydrationWarning>
                 <TableCell>
                 {isLoading ? <Loading/> : <img
                     src={frontCover}

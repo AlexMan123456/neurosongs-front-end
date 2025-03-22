@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
-import isScreenLarge from "../../utils/is-screen-large";
+import { useContext, useEffect, useState } from "react";
+import largeScreenCondition from "../../utils/large-screen-condition";
+import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
 function StyledImage({src, alt}){
-    const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
-
-    useEffect(() => {
-        function handleResize(){
-            setIsLargeScreen(isScreenLarge(window));
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)}
-    }, [])
+    const {isLargeScreen} = useContext(ScreenSizeContext);
 
     return <img 
         style={{

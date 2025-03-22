@@ -6,8 +6,8 @@ function SongsTable({songs, setSongs}){
     const location = useLocation();
 
     return (
-        <TableContainer suppressHydrationWarning>
-            <Table>
+        <TableContainer>
+            <Table suppressHydrationWarning>
                 <TableHead>
                     <TableRow>
                         <TableCell>Album Cover</TableCell>
