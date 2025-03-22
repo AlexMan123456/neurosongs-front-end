@@ -6,6 +6,7 @@ import { UserProvider } from './contexts/UserContext.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { ThemeProvider, createTheme } from '@mui/material'
+import { ScreenSizeProvider } from './contexts/ScreenSizeContext.jsx'
 
 const theme = createTheme({
   typography: {
@@ -20,13 +21,15 @@ const theme = createTheme({
 })
 
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={theme}>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <UserProvider>
-        <BrowserRouter>
-          <App/>
-        </BrowserRouter>
-      </UserProvider>
-    </LocalizationProvider>
-  </ThemeProvider>
+  <ScreenSizeProvider>
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <UserProvider>
+          <BrowserRouter>
+            <App/>
+          </BrowserRouter>
+        </UserProvider>
+      </LocalizationProvider>
+    </ThemeProvider>
+  </ScreenSizeProvider>
 )
