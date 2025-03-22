@@ -19,5 +19,9 @@
     {
         "id": 2,
         "message": "Changed display of updates on homepage"
+    },
+    {
+        "id": 3,
+        "message": "Minor changes to handling of screen resizing"
     }
 ]
