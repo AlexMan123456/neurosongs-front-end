@@ -3,31 +3,59 @@ import StyledLink from "./styling/StyledLink";
 import { useState } from "react";
 import { Circle } from "@mui/icons-material";
 import updates from "../../updates.json"
+import { version } from "../../package.json"
+import eighthNote from "../images/Neurosongs_note.png"
+import Markdown from "react-markdown";
 
 function Homepage(){
-    const [viewCommits, setViewCommits] = useState(false);
+    const [viewUpdates, setViewUpdates] = useState(false);
 
     return (<section>
         <header>
             <h2>Welcome to Neurosongs!</h2>
+            <p>v{version}</p>
             <p>By: Alex Man</p>
         </header>
-            <Button onClick={() => {setViewCommits((viewCommits) => {return !viewCommits})}}>{viewCommits ? "Hide" : "See"} recent updates</Button>
-            {viewCommits ? 
+            <Button onClick={() => {setViewUpdates((viewUpdates) => {return !viewUpdates})}}>{viewUpdates ? "Hide" : "See"} recent updates</Button>
+            {viewUpdates ? 
             <List sx={{
                     paddingLeft: "1vw",
+                    paddingTop: "3vh",
                     border: 0.5,
-                    borderRadius: 0.7
+                    borderRadius: 0.7,
                 }}
             >
                 {updates.map((update) => {
                     return (
-                        <ListItem key={update.id}>
+                    <>
+                        <ListItem key={update.id} sx={{marginTop: "-30px"}}>
                             <ListItemIcon>
-                                <Circle fontSize="small" color="info" />
+                                <img src={eighthNote} alt="Bullet point" style={{width: "25px", height: "auto"}}/>
                             </ListItemIcon>
-                            <ListItemText primary={update.message}/>
+                                <ListItemText primary={
+                                    <Markdown>
+                                        {update.message}
+                                    </Markdown>}
+                                />
                         </ListItem>
+                        {update.subPoints ? 
+                        <List sx={{paddingLeft: "35px"}}>
+                            {update.subPoints.map((subPoint, index) => {
+                                return (
+                                    <ListItem key={`subpoint-${subPoint.id}`} sx={{marginTop: "-30px"}}>
+                                        <ListItemIcon>
+                                            <img src={eighthNote} alt="Bullet point" style={{width: "25px", height: "auto"}}/>
+                                        </ListItemIcon>
+                                        <ListItemText primary={
+                                            <Markdown>
+                                                {subPoint.message}
+                                            </Markdown>}
+                                        />
+                                    </ListItem>
+                                    )
+                                })}
+                        </List> : null}
+                    </>
                     )
                 })}
             </List>
