@@ -1,23 +1,28 @@
 import { createContext, useEffect, useState } from "react";
+import largeScreenCondition from "../utils/large-screen-condition";
 
 const ScreenSizeContext = createContext();
 
 function ScreenSizeProvider({children}){
-    const largeScreenCondition = window.innerWidth > 669 && window.innerHeight > 800;
-    const [isLargeScreen, setIsLargeScreen] = useState(largeScreenCondition);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [windowHeight, setWindowHeight] = useState(window.innerHeight)
-
-    function handleResize(){
-        setWindowWidth(window.innerWidth);
-        setWindowHeight(window.innerHeight);
-        setIsLargeScreen(window.innerWidth > 669 && window.innerHeight > 669);
-    }
-
+    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+    const [isLargeScreen, setIsLargeScreen] = useState(largeScreenCondition(window.innerWidth, window.innerHeight));
+    
+    
     useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)};
+        function setDimensions(){
+            setWindowWidth(window.innerWidth);
+            setWindowHeight(window.innerHeight);
+        }
+        setDimensions()
+        window.addEventListener("resize", setDimensions);
+        return () => {window.removeEventListener("resize", setDimensions)};
     }, [])
+
+    
+    useEffect(() => {
+        setIsLargeScreen(largeScreenCondition(windowWidth, windowHeight));
+    }, [windowWidth, windowHeight])
 
     return (
         <ScreenSizeContext.Provider
@@ -32,4 +37,4 @@ function ScreenSizeProvider({children}){
     )
 }
 
-export { ScreenSizeContext, ScreenSizeProvider };
+export { ScreenSizeContext, ScreenSizeProvider }
