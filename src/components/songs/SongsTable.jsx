@@ -7,7 +7,7 @@ function SongsTable({songs, setSongs}){
 
     return (
         <TableContainer>
-            <Table>
+            <Table suppressHydrationWarning>
                 <TableHead>
                     <TableRow>
                         <TableCell>Album Cover</TableCell>

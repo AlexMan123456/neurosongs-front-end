@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { getSongs } from "../../../api";
 import SongCard from "../songs/SongCard";
 import Loading from "../Loading";
-import { List } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import StyledLink from "../styling/StyledLink";
@@ -38,11 +38,10 @@ function UserSongs(){
         return <p>{error}</p>
     }
 
-    return (<List style={{listStyle: "none"}}>
+    return (<Box>
         {signedInUser.user_id === user_id ? <StyledLink to={`/users/${user_id}/songs/create`}>Add a new song</StyledLink> : null}
         <DisplaySongs songs={songs} setSongs={setSongs}/>
-        
-    </List>)
+    </Box>)
 }
 
 export default UserSongs

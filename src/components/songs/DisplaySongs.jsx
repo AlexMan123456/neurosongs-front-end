@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import SongsTable from "./SongsTable";
 import SongsList from "./SongsList";
-import isScreenLarge from "../../utils/is-screen-large";
+import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
 function DisplaySongs({songs, setSongs}){
-    const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window));
-
-    useEffect(() => {
-        function handleResize(){
-            setIsLargeScreen(isScreenLarge(window));
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)}
-    }, [])
-
+    const {isLargeScreen} = useContext(ScreenSizeContext);
     return isLargeScreen ? <SongsTable songs={songs} setSongs={setSongs}/> : <SongsList songs={songs} setSongs={setSongs}/>
 }
 

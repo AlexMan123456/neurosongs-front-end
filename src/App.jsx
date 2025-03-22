@@ -27,15 +27,15 @@ import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
 import DonationPage from "./components/donations/DonationPage"
 import { useEffect, useState } from "react"
-import isScreenLarge from "./utils/is-screen-large"
+import largeScreenCondition from "./utils/large-screen-condition"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 
 function App() {
-  const [isLargeScreen, setIsLargeScreen] = useState(isScreenLarge(window))
+  const [isLargeScreen, setIsLargeScreen] = useState(largeScreenCondition(window))
 
     useEffect(() => {
         function handleResize(){
-            setIsLargeScreen(isScreenLarge(window));
+            setIsLargeScreen(largeScreenCondition(window));
         }
 
         window.addEventListener("resize", handleResize);
