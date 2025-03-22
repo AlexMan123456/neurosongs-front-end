@@ -23,5 +23,9 @@
     {
         "id": 3,
         "message": "Minor changes to handling of screen resizing"
+    },
+    {
+        "id": 4,
+        "message": "Removed donations link from footer"
     }
 ]
