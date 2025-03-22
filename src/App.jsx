@@ -26,21 +26,13 @@ import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
 import DonationPage from "./components/donations/DonationPage"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import largeScreenCondition from "./utils/large-screen-condition"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
+import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 
 function App() {
-  const [isLargeScreen, setIsLargeScreen] = useState(largeScreenCondition(window))
-
-    useEffect(() => {
-        function handleResize(){
-            setIsLargeScreen(largeScreenCondition(window));
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)}
-    }, [])
+  const {isLargeScreen} = useContext(ScreenSizeContext)
 
   return (<>
     <Header/>
