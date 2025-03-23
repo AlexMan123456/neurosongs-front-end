@@ -22,6 +22,10 @@ function getUserById(user_id){
     })
 }
 
+function deleteUserFromDatabase(user_id){
+    return api.delete(`/api/users/${user_id}`)
+}
+
 function getSongById(song_id){
     return api.get(`/api/songs/${song_id}`).then(({data}) => {
         return data.song
@@ -162,4 +166,4 @@ function patchNotification(notification_id){
     })
 }
 
-export { getSongs, getUsers, getUserById, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, postNotification, patchNotification }
+export { getSongs, getUsers, getUserById, deleteUserFromDatabase, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, postNotification, patchNotification }

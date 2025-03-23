@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getUserById } from "../../api";
 import Loading from "../components/Loading";
-import { onAuthStateChanged } from "firebase/auth";
+import { isSignInWithEmailLink, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 
@@ -10,41 +10,36 @@ const UserContext = createContext();
 function UserProvider({children}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
-    const [signedInUser, setUser] = useState({});
+    const [signedInUser, setSignedInUser] = useState({});
+    const [firebaseUser, setFirebaseUser] = useState(null)
     const [checkNotifications, setCheckNotifications] = useState(true);
-    const [authStateChanged, setAuthStateChanged] = useState(false);
-    
-    function setSignedInUser(user){
-        setUser(user);
-    }
     
     useEffect(() => {
         if(localStorage.getItem("signedInUserID")){
             localStorage.removeItem("signedInUserID");
         }
-        if(authStateChanged){
-            if(auth.currentUser){
-                setIsLoading(true);
-                getUserById(auth.currentUser.uid).then((user) => {
-                    setIsLoading(false);
-                    setSignedInUser(user);
-                }).catch((err) => {
-                    setIsLoading(false);
-                    setError("Error signing in. Please try again later.");
-                })
-            } else {
-                setIsLoading(false);
-                setSignedInUser({});
-            }
-        }
-    }, [authStateChanged])
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, () => {
-            setAuthStateChanged(true);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setFirebaseUser(user);
         })
         return () => {unsubscribe()}
     }, [])
+
+    useEffect(() => {
+        if(firebaseUser && !isSignInWithEmailLink(auth, window.location.href)){
+            setIsLoading(true);
+            getUserById(firebaseUser.uid).then((user) => {
+                setIsLoading(false);
+                setSignedInUser(user);
+            }).catch((err) => {
+                setIsLoading(false);
+                setError("Error signing in. Please try again later.");
+            })
+        } else {
+            setIsLoading(false);
+            setSignedInUser({});
+        }
+    }, [firebaseUser])
+
 
     if(isLoading){
         return <Loading/>
@@ -54,7 +49,7 @@ function UserProvider({children}){
         return <p>{error}</p>
     }
 
-    return <UserContext.Provider value={{signedInUser, setSignedInUser, isUserSignedIn: Object.keys(signedInUser).length !== 0, checkNotifications, setCheckNotifications}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{signedInUser, setSignedInUser, firebaseUser, isUserSignedIn: Object.keys(signedInUser).length !== 0, checkNotifications, setCheckNotifications}}>{children}</UserContext.Provider>
 }
 
 export { UserContext, UserProvider }
