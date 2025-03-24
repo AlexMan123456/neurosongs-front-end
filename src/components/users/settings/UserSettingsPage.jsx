@@ -11,33 +11,65 @@ import { deleteObject, ref } from "firebase/storage";
 import getSongDirectory from "../../../references/get-song-directory";
 import { storage } from "../../../firebase-config";
 import Loading from "../../Loading";
-
+import wait from "../../../utils/wait";
+import UserDeletedSuccess from "../sign-in/UserDeletedSuccess";
 
 function UserSettingsPage(){
     const {signedInUser, isUserSignedIn, firebaseUser} = useContext(UserContext);
     const [showDeleteWarning, setShowDeleteWarning] = useState(false);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
 
-    if(!isUserSignedIn){
-        return <ForbiddenAccess/>
+    
+    // This is not being used at the moment. The intent is to try and delete all files and folders from a user's folder, but I can't seem to be getting that to work.
+    function deleteFolder(path){
+        const userFolder = ref(storage, path);
+        return userFolder.listAll().then((userDirectory) => {
+            userDirectory.items.forEach((file) => {
+                const fullRef = ref(storage, userFolder.fullPath);
+                const childRef = fullRef.child(file.name);
+                childRef.delete();
+            })
+            userDirectory.prefixes.forEach((folder) => {
+                deleteFolder(folder.fullPath)
+            })
+        })
     }
-
+    
     async function handleDelete(){
         setIsLoading(true);
-        const userDirectory = ref(storage, `/${signedInUser.user_id}`);
-        console.log(userDirectory)
-        await deleteObject(userDirectory);
-        await deleteUserFromDatabase(signedInUser.user_id)
-        await deleteUser(firebaseUser)
-        setIsLoading(false);
-        navigate("/")
+        try {
+            // await deleteFolder(`${signedInUser.user_id}`);
+            await deleteUserFromDatabase(signedInUser.user_id);
+            await deleteUser(firebaseUser);
+            await wait(2);
+            setIsLoading(false);
+            setDeleteSuccess(true);
+            await wait(2);
+            navigate("/");
+        } catch(err) {
+            console.log(err)
+            setError("Error deleting your account. Please try again later.");
+            await wait(4);
+            setError("");
+        }
     }
-
+    
+    
     if(isLoading){
         return <Loading/>
     }
-
+    
+    if(deleteSuccess){
+        return <UserDeletedSuccess/>
+    }
+    
+    if(!isUserSignedIn){
+        return <ForbiddenAccess/>
+    }
+    
     return (<>
     <List sx={{
             border: 0.5,
@@ -69,6 +101,7 @@ function UserSettingsPage(){
             **This process cannot be undone!**
             </Markdown>
         </DeletePopup>
+        {error ? <p>{error}</p> : null}
     </>)
 }
 
