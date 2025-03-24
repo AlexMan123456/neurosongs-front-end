@@ -74,6 +74,7 @@ function Homepage(){
                 <p>I'll leave it here for now. Enjoy the site!</p>
 
                 <p><StyledLink to="/featured">See featured content</StyledLink></p>
+                <p><StyledLink to="https://neurosongs-privacy.netlify.app/">See privacy policy</StyledLink></p>
             </main>
         </section>)
 }
