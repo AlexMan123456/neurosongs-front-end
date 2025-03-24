@@ -31,5 +31,15 @@
     {
         "id": 5,
         "message": "Added ability to delete user"
+    },
+    {
+        "id": 6,
+        "message": "Added popup asking about cookies and consent to data processing",
+        "subPoints": [
+            {
+                "id": 1,
+                "message": "If prompted, you may simply just leave all options as default"
+            }
+        ]
     }
 ]
