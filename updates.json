@@ -27,5 +27,9 @@
     {
         "id": 4,
         "message": "Removed donations link from footer"
+    },
+    {
+        "id": 5,
+        "message": "Added ability to delete user"
     }
 ]
