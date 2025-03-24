@@ -21,13 +21,10 @@ import SongAdder from "./components/songs/song-creation/SongAdder"
 import Footer from "./components/Footer"
 import PageNotFound from "./components/errors/PageNotFound"
 import SongEditPage from "./components/songs/song-edit/SongEditPage"
-import AllSongs from "./components/songs/AllSongs"
 import SearchPage from "./components/search-page/SearchPage"
 import ShowFollows from "./components/users/follows/ShowFollows"
 import NotificationsPage from "./components/users/notifications/NotificationsPage"
-import DonationPage from "./components/donations/DonationPage"
-import { useContext, useEffect, useState } from "react"
-import largeScreenCondition from "./utils/large-screen-condition"
+import { useContext } from "react"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 
@@ -39,7 +36,6 @@ function App() {
     <Routes>
       <Route path="/" element={<Homepage/>}/>
       <Route path="/featured" element={<FeaturedPage/>}/>
-      <Route path="/donations" element={<DonationPage/>}/>
       <Route path="/users/:user_id" element={<UserPage/>}/>
       <Route path="/songs/:song_id" element={<SongPage/>}/>
       <Route path="/search" element={<SearchPage/>}/>
