@@ -1,7 +1,6 @@
-import { Button, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Box, Button, Checkbox, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import StyledLink from "./styling/StyledLink";
-import { useState } from "react";
-import { Circle } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import updates from "../../updates.json"
 import { version } from "../../package.json"
 import eighthNote from "../images/Neurosongs_note.png"

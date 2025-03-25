@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getUserById } from "../../api";
 import Loading from "../components/Loading";
-import { isSignInWithEmailLink, onAuthStateChanged } from "firebase/auth";
+import { isSignInWithEmailLink, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 
@@ -30,9 +30,15 @@ function UserProvider({children}){
             getUserById(firebaseUser.uid).then((user) => {
                 setIsLoading(false);
                 setSignedInUser(user);
-            }).catch((err) => {
-                setIsLoading(false);
-                setError("Error signing in. Please try again later.");
+            }).catch((error) => {
+                async function handleError(){
+                    if(error.status === 404){
+                        await signOut(auth)
+                    }
+                    setIsLoading(false);
+                    setError("Error signing in. Please try again later.");
+                }
+                handleError()
             })
         } else {
             setIsLoading(false);

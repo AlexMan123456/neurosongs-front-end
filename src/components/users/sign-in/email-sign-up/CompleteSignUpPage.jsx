@@ -1,8 +1,8 @@
 import { isSignInWithEmailLink, signInWithEmailLink, signOut, updatePassword } from "firebase/auth"
 import { auth, storage } from "../../../../firebase-config"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "../../../Loading";
-import { Avatar, Button, FormControl, FormHelperText, TextField } from "@mui/material";
+import { Avatar, Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import getMissingPasswordRequirements from "../../../../utils/get-missing-password-requirements";
 import { postUser } from "../../../../../api";
@@ -14,8 +14,11 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import verifyUserAge from "../../../../utils/verify-user-age";
 import getProfilePictureDirectory from "../../../../references/get-profile-picture-directory";
+import StyledLink from "../../../styling/StyledLink";
+import { UserContext } from "../../../../contexts/UserContext";
 
 function CompleteSignUpPage(){
+    const {firebaseUser} = useContext(UserContext)
     const [displayForm, setDisplayForm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [formLoadError, setFormLoadError] = useState("");
@@ -25,6 +28,8 @@ function CompleteSignUpPage(){
     const [password, setPassword] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState(dayjs());
     const [description, setDescription] = useState("");
+    const [isPrivacyPolicyAccepted, setIsPrivacyPolicyAccepted] = useState(false);
+    const [privacyPolicyError, setPrivacyPolicyError] = useState("");
 
     const [confirmPassword, setConfirmPassword] = useState("")
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -53,8 +58,10 @@ function CompleteSignUpPage(){
                 setIsLoading(false);
                 setDisplayForm(true);
             }).catch((err) => {
-                setIsLoading(false);
-                setFormLoadError("Could not sign you in. Please try again later.");
+                return signOut(auth).then(() => {
+                    setIsLoading(false);
+                    setFormLoadError("Could not sign you in. Please try again later.");
+                })
             })
         }
     }, [])
@@ -88,7 +95,14 @@ function CompleteSignUpPage(){
         setUsernameError("");
         setPasswordError("");
         setDateOfBirthError("");
-        const user = auth.currentUser
+        setPrivacyPolicyError("");
+
+        if(!isPrivacyPolicyAccepted){
+            setPrivacyPolicyError("Please accept the privacy policy.");
+            setIsLoading(false);
+            return;
+        }
+
         if(username.includes(" ") || username.includes("@")){
             setIsLoading(false);
             setUsernameError("Username must not contain spaces or @");
@@ -107,18 +121,18 @@ function CompleteSignUpPage(){
             return;
         }
 
-        return updatePassword(user, password).then(() => {
+        return updatePassword(firebaseUser, password).then(() => {
             return postUser({
-                user_id: user.uid,
+                user_id: firebaseUser.uid,
                 username,
                 artist_name,
                 description,
                 profile_picture: profilePicture.name,
-                email: user.email,
+                email: firebaseUser.email,
                 date_of_birth: new Date(dateOfBirth.format())
             })
         }).then(() => {
-            const profilePictureRef = ref(storage, getProfilePictureDirectory({user_id: user.uid, profile_picture: profilePicture.name}))
+            const profilePictureRef = ref(storage, getProfilePictureDirectory({user_id: firebaseUser.uid, profile_picture: profilePicture.name}))
             return uploadBytes(profilePictureRef, profilePicture)
         }).then(() => {
             return signOut(auth);
@@ -228,9 +242,9 @@ function CompleteSignUpPage(){
                 })}
             </ul>
         </> : null}
-        {confirmPasswordError ? <p>{confirmPasswordError}</p> : null}
-        {usernameError ? <p>{usernameError}</p> : null}
-        {dateOfBirthError ? <p>{dateOfBirthError}</p> : null}
+        {confirmPasswordError ? <Typography color="error">{confirmPasswordError}</Typography> : null}
+        {usernameError ? <Typography color="error">{usernameError}</Typography> : null}
+        {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
         <h3>Optional</h3>
         <p>This can be changed later</p>
         <TextField
@@ -243,6 +257,24 @@ function CompleteSignUpPage(){
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
         />
+        {
+            /*<Box sx={{display: "inline-list-item"}}>
+                <Checkbox value={isPrivacyPolicyAccepted} onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}/>
+                <Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>
+                {privacyPolicyError ? <Typography sx={{paddingTop: "8px"}} color="error">{privacyPolicyError}</Typography> : null}
+            </Box>*/
+        }
+        <FormGroup>
+        <FormControlLabel 
+            control={
+                <Checkbox
+                    value={isPrivacyPolicyAccepted}
+                    onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
+                />} 
+            label={<Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+        />
+        {privacyPolicyError ? <Typography sx={{paddingTop: "8px"}} color="error">{privacyPolicyError}</Typography> : null}
+        </FormGroup>
         <Button onClick={handleSubmit}>Submit</Button>
     </FormControl>
     </>)
