@@ -2,7 +2,7 @@ import { isSignInWithEmailLink, signInWithEmailLink, signOut, updatePassword } f
 import { auth, storage } from "../../../../firebase-config"
 import { useEffect, useState } from "react";
 import Loading from "../../../Loading";
-import { Avatar, Button, FormControl, FormHelperText, TextField } from "@mui/material";
+import { Avatar, Box, Button, Checkbox, FormControl, FormHelperText, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import getMissingPasswordRequirements from "../../../../utils/get-missing-password-requirements";
 import { postUser } from "../../../../../api";
@@ -14,6 +14,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import verifyUserAge from "../../../../utils/verify-user-age";
 import getProfilePictureDirectory from "../../../../references/get-profile-picture-directory";
+import StyledLink from "../../../styling/StyledLink";
 
 function CompleteSignUpPage(){
     const [displayForm, setDisplayForm] = useState(false);
@@ -53,8 +54,10 @@ function CompleteSignUpPage(){
                 setIsLoading(false);
                 setDisplayForm(true);
             }).catch((err) => {
-                setIsLoading(false);
-                setFormLoadError("Could not sign you in. Please try again later.");
+                return signOut(auth).then(() => {
+                    setIsLoading(false);
+                    setFormLoadError("Could not sign you in. Please try again later.");
+                })
             })
         }
     }, [])
