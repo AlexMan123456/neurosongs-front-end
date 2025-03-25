@@ -31,5 +31,9 @@
     {
         "id": 5,
         "message": "Added ability to delete user"
+    },
+    {
+        "id": 6,
+        "message": "Added a checkbox to let users accept privacy policy during signup process"
     }
 ]
