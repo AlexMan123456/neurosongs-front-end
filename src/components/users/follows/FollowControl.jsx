@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../../contexts/UserContext"
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useColorScheme } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { getUserById, postFollow, removeFollow } from "../../../../api";
 import Loading from "../../Loading";
@@ -10,6 +10,7 @@ function FollowControl(){
     const {signedInUser, isUserSignedIn} = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const {mode} = useColorScheme();
 
     const [followerCount, setFollowerCount] = useState(0);
     const [followingCount, setFollowingCount] = useState(0);
@@ -67,8 +68,8 @@ function FollowControl(){
 
     return (<>
         <Box id="follow-details" sx={{marginBottom: "2vh"}}>
-            <Link className="follow-link" style={{color: "black", fontWeight: "bold", textDecoration: "none"}} to={`/users/${user_id}/followers`}>{followerCount} follower{followerCount !== 1 ? "s" : null}</Link>
-            <Link className="follow-link" style={{color: "black", fontWeight: "bold", textDecoration: "none"}} to={`/users/${user_id}/following`}>{followingCount} following</Link>
+            <Link className="follow-link" style={{color: mode === "dark" ? "white" : "black", fontWeight: "bold", textDecoration: "none"}} to={`/users/${user_id}/followers`}>{followerCount} follower{followerCount !== 1 ? "s" : null}</Link>
+            <Link className="follow-link" style={{color: mode === "dark" ? "white" : "black", fontWeight: "bold", textDecoration: "none"}} to={`/users/${user_id}/following`}>{followingCount} following</Link>
         </Box>
         {isLoading ? <Loading/> : 
         (signedInUser.user_id === user_id ? null : 

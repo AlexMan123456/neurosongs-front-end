@@ -32,7 +32,6 @@ function UserPage(){
             setIsLoading(false);
             setProfilePictureURL(profilePictureURL);
         }).catch((err) => {
-            console.log(err)
             setIsLoading(false);
             setError("Could not fetch user. Please try again later.");
         })

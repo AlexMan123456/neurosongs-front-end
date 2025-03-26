@@ -1,15 +1,9 @@
 import { css } from "@emotion/css"
-import { Link } from "react-router-dom"
+import { Link } from "@mui/material"
+import { Link as ReactDOMLink } from "react-router-dom"
 
 function StyledLink({to, target, children}){
-    return <Link target={target} className={css`
-        color: blue;
-        &:hover {
-            color: purple;
-        }
-        font-family: "Futura", "Arial", "Helvetica", "sans-serif"
-        }
-    `} to={to}>{children}</Link>
+    return <Link component={ReactDOMLink} target={target} to={to}>{children}</Link>
 }
 
 export default StyledLink
