@@ -15,7 +15,8 @@ function Header(){
     const {isUserSignedIn} = useContext(UserContext);
     const [signOutError, setSignOutError] = useState("");
     const {mode, setMode} = useColorScheme();
-    const [isDarkMode, setIsDarkMode] = useState(mode === "dark");
+    const [isDarkByDefault, setIsDarkByDefault] = useState(mode === "dark");
+    const [isDarkMode, setIsDarkMode] = useState(isDarkByDefault);
 
     useEffect(() => {
         setMode(isDarkMode ? "dark" : "light")
@@ -38,7 +39,11 @@ function Header(){
             </Link>
             <FormControl>
                 <FormControlLabel
-                    control={<Switch value={isDarkMode} onChange={() => {setIsDarkMode((isDarkMode) => {return !isDarkMode})}}/>}
+                    control={<Switch
+                        defaultChecked={isDarkByDefault}
+                        value={isDarkMode}
+                        onChange={() => {setIsDarkMode((isDarkMode) => {return !isDarkMode})}}
+                    />}
                     value="dark-mode-enabled"
                     label="Enable dark mode"
                     labelPlacement= "end"
