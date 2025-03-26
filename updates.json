@@ -35,5 +35,17 @@
     {
         "id": 6,
         "message": "Added a checkbox to let users accept privacy policy during signup process"
+    },
+    {
+        "id": 7,
+        "message": "Added dark mode toggle"
+    },
+    {
+        "id": 8,
+        "message": "Replaced homepage icon with custom logo"
+    },
+    {
+        "id": 9,
+        "message": "Other minor styling changes"
     }
 ]

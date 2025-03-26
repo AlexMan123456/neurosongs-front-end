@@ -9,8 +9,9 @@ import { auth, storage } from "../../firebase-config";
 import Loading from "../Loading";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
 import NotificationDot from "./NotificationDot";
+import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
-function UserDropdown({setSignOutError}){
+function UserDropdown({setSignOutError, isDarkMode}){
     const {signedInUser, setSignedInUser, isUserSignedIn} = useContext(UserContext);
     const [profilePicture, setProfilePicture] = useState(null);
     const [displayUserList, setDisplayUserList] = useState(false);
@@ -18,7 +19,7 @@ function UserDropdown({setSignOutError}){
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [notificationCount, setNotificationCount] = useState(0);
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 495 && window.innerHeight > 800);
+    const {isLargeScreen} = useContext(ScreenSizeContext);
 
     useEffect(() => {
         if(isUserSignedIn){
@@ -32,15 +33,6 @@ function UserDropdown({setSignOutError}){
             })
         }
     }, [signedInUser])
-
-    useEffect(() => {
-        function handleResize(){
-            setIsLargeScreen(window.innerWidth > 495 && window.innerHeight > 800);
-        }
-
-        window.addEventListener("resize", handleResize);
-        return () => {window.removeEventListener("resize", handleResize)}
-    }, [])
 
     function handleUserSettings(){
         setDisplayUserList(false);
@@ -69,11 +61,11 @@ function UserDropdown({setSignOutError}){
     return (
             <Box 
                 sx={{
-                    position: "fixed",
+                    position: "absolute",
                     textAlign: "right",
                     right: "0px",
                     top: "0px",
-                    zIndex: 1
+                    zIndex: 1,
                 }}
             >
                 <IconButton
@@ -92,7 +84,7 @@ function UserDropdown({setSignOutError}){
                     width: isLargeScreen ? "20vw" : "50vw",
                     border: 0.5,
                     right: isLargeScreen ? "0.5vw" : "1.2vw",
-                    backgroundColor: "white"
+                    backgroundColor: isDarkMode ? "black" : "white"
                 }}>
                     <ListItem>
                         <ListItemButton
