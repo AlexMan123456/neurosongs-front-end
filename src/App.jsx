@@ -27,6 +27,7 @@ import NotificationsPage from "./components/users/notifications/NotificationsPag
 import { useContext } from "react"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
+import CompleteGoogleSignup from "./components/users/sign-in/google-sign-in/CompleteGoogleSignup"
 
 function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
@@ -44,6 +45,7 @@ function App() {
       <Route path="/sign_in" element={<SignInPage/>}/>
       <Route path="/sign_in/create_account" element={<GetEmailForSignUpPage/>}/>
       <Route path="/complete_signup" element={<CompleteSignUpPage/>}/>
+      <Route path="/complete_signup_with_google" element={<CompleteGoogleSignup/>}/>
       <Route path="/users/settings" element={<UserSettingsPage/>}/>
       <Route path="/users/:user_id/:category" element={<UserPage/>}/>
       <Route path="/users/:user_id/followers" element={<ShowFollows/>}/>

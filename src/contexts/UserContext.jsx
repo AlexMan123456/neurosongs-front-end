@@ -3,7 +3,7 @@ import { getUserById } from "../../api";
 import Loading from "../components/Loading";
 import { isSignInWithEmailLink, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -11,8 +11,9 @@ function UserProvider({children}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("")
     const [signedInUser, setSignedInUser] = useState({});
-    const [firebaseUser, setFirebaseUser] = useState(null)
+    const [firebaseUser, setFirebaseUser] = useState(null);
     const [checkNotifications, setCheckNotifications] = useState(true);
+    const [isSigningInWithGoogle, setIsSigningInWithGoogle] = useState(false);
     
     useEffect(() => {
         if(localStorage.getItem("signedInUserID")){
@@ -25,7 +26,7 @@ function UserProvider({children}){
     }, [])
 
     useEffect(() => {
-        if(firebaseUser && !isSignInWithEmailLink(auth, window.location.href)){
+        if(firebaseUser && !isSignInWithEmailLink(auth, window.location.href) && !isSigningInWithGoogle){
             setIsLoading(true);
             getUserById(firebaseUser.uid).then((user) => {
                 setIsLoading(false);
@@ -55,7 +56,7 @@ function UserProvider({children}){
         return <p>{error}</p>
     }
 
-    return <UserContext.Provider value={{signedInUser, setSignedInUser, firebaseUser, isUserSignedIn: Object.keys(signedInUser).length !== 0, checkNotifications, setCheckNotifications}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{signedInUser, setSignedInUser, firebaseUser, isUserSignedIn: Object.keys(signedInUser).length !== 0, checkNotifications, setCheckNotifications, setIsSigningInWithGoogle}}>{children}</UserContext.Provider>
 }
 
 export { UserContext, UserProvider }
