@@ -9,30 +9,24 @@ import { UserContext } from "../../../../contexts/UserContext"
 function GoogleSignIn({setIsLoading, setError}){
     const provider = new GoogleAuthProvider();
     const navigate = useNavigate();
-    const {setSignedInUser} = useContext(UserContext)
+    const {setSignedInUser, setIsSigningInWithGoogle} = useContext(UserContext)
 
     function handleSignInWithGoogle(){
         setIsLoading(true);
+        setIsSigningInWithGoogle(true);
         signInWithPopup(auth, provider).then(({user}) => {
             return getUserById(user.uid).then((userFromDatabase) => {
                 setSignedInUser(userFromDatabase);
                 setIsLoading(false);
+                setIsSigningInWithGoogle(false);
                 navigate("/");
             }).catch((err) => {
                 if(err.status === 404){
-                    return postUser({
-                        user_id: user.uid,
-                        artist_name: user.displayName,
-                        username: user.uid,
-                        email: user.email
-                    }).then((userFromDatabase) => {
-                        setSignedInUser(userFromDatabase);
-                        setIsLoading(false);
-                        navigate("/");
-                    })
+                    setIsLoading(false);
+                    return navigate(`/complete_signup_with_google`);
                 }
-                setIsLoading(false);
                 setError("Google sign in error")
+                setIsLoading(false);
             })
         })
     }
