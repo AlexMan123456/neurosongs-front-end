@@ -60,7 +60,7 @@ function SongPage(){
     }
 
     return (<main>
-        {signedInUser.user_id === songData.song_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button> : null}
+        {signedInUser.user_id === songData.user_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button> : null}
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
         <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
