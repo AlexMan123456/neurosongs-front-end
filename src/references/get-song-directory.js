@@ -1,5 +1,5 @@
-function getSongDirectory(song){
-    return `${song.user_id}/albums/${song.album_id}/songs/${song.reference}`
+function getSongDirectory({user_id, album_id, reference}){
+    return `${user_id}/albums/${album_id}/songs/${reference}`
 }
 
 export default getSongDirectory

@@ -7,6 +7,10 @@ import Markdown from "react-markdown";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../Loading";
 import { deleteSong } from "../../../api";
+import { deleteObject, ref } from "@firebase/storage";
+import { storage } from "../../firebase-config";
+import getSongDirectory from "../../references/get-song-directory";
+import wait from "../../utils/wait";
 
 function SongCardOptions({song, setSongs}){
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
@@ -21,6 +25,9 @@ function SongCardOptions({song, setSongs}){
         }
         setIsLoading(true);
         deleteSong(song.song_id).then(() => {
+            const songRef = ref(storage, getSongDirectory(song))
+            return deleteObject(songRef)
+        }).then(() => {
             setSongs((songs) => {
                 const newSongs = [...songs];
 
@@ -30,6 +37,11 @@ function SongCardOptions({song, setSongs}){
 
                 newSongs.splice(songIndex,1);
                 return newSongs;
+            })
+        }).catch((err) => {
+            setError("Error deleting song. Please try again later.")
+            return wait(4).then(() => {
+                setError("");
             })
         })
     }

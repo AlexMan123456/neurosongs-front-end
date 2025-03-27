@@ -1,16 +1,17 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CommentsSection from "../comments/CommentsSection"
 import SongData from "./SongData"
 import { useContext, useEffect, useState } from "react";
 import Loading from "../Loading";
-import { getSongById } from "../../../api";
-import { getDownloadURL, ref } from "firebase/storage";
+import { deleteSong, getSongById } from "../../../api";
+import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import getSongDirectory from "../../references/get-song-directory";
 import getAlbumCoverDirectory from "../../references/get-album-cover-directory";
-import { Button, Divider } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
 import { UserContext } from "../../contexts/UserContext";
+import wait from "../../utils/wait";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -22,6 +23,7 @@ function SongPage(){
     const [backCover, setBackCover] = useState(null);
     const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
     const {signedInUser} = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getAllData(){
@@ -51,16 +53,38 @@ function SongPage(){
         getAllData()
     }, [])
 
+    function handleDelete(){
+        if(signedInUser.user_id !== songData.user_id){
+            setError("This isn't even your song!")
+            return wait(4).then(() => {
+                setError("");
+            })
+        }
+        setIsLoading(true);
+        return deleteSong(song_id).then(() => {
+            const songRef = ref(storage, getSongDirectory(songData));
+            return deleteObject(songRef);
+        }).then(() => {
+            navigate(`/users/${songData.user_id}`);
+        }).catch((err) => {
+            setError("Error deleting song. Please try again later.");
+            return wait(4).then(() => {
+                setError("");
+            })
+        })
+    }
+
     if(isLoading){
         return <Loading/>
     }
 
     if(error){
-        return <p>{error}</p>
+        return <Typography color="error">{error}</Typography>
     }
 
     return (<main>
-        {signedInUser.user_id === songData.song_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit</Button> : null}
+        {signedInUser.user_id === songData.user_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit Song</Button> : null}
+        {signedInUser.user_id === songData.user_id ? <Button color="error" onClick={handleDelete}>Delete Song</Button> : null}
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
         <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>

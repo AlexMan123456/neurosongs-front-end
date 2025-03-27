@@ -55,5 +55,9 @@
     {
         "id": 11,
         "message": "Display dark mode toggle switch in the center of page"
+    },
+    {
+        "id": 12,
+        "message": "Added edit button and delete button to song page"
     }
 ]
