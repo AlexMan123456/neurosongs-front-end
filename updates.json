@@ -51,5 +51,9 @@
     {
         "id": 10,
         "message": "Added extra confirmation screen to Google sign-in"
+    },
+    {
+        "id": 11,
+        "message": "Display dark mode toggle switch in the center of page"
     }
 ]
