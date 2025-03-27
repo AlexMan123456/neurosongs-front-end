@@ -5,20 +5,22 @@ import wait from "../../../utils/wait";
 import Loading from "../../Loading";
 import { Button, FormControl, TextField } from "@mui/material";
 import SongAudioInput from "../song-creation/SongAudioInput";
-import { ref, uploadBytes } from "firebase/storage";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import getSongDirectory from "../../../references/get-song-directory";
 import { storage } from "../../../firebase-config";
 import { UserContext } from "../../../contexts/UserContext";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
+import SongFileChanger from "./SongFileChanger";
 
 function SongEditPage(){
     const [userID, setUserID] = useState("");
     const [albumID, setAlbumID] = useState("");
     
-    const [file, setFile] = useState({});
+    const [oldFileName, setOldFileName] = useState({});
+    const [newFile, setNewFile] = useState({});
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-
+    const [isFileChanged, setIsFileChanged] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
@@ -34,37 +36,38 @@ function SongEditPage(){
 
             setTitle(song.title);
             setDescription(song.description ?? "");
-            setFile({name: song.reference});
+            setOldFileName(song.reference);
+            setNewFile({name: song.reference});
 
             setIsLoading(false);
         }).catch((err) => {
             setError("Error fetching album data. Please try again later");
             setIsLoading(false);
-            return wait(4).then(() => {
+            wait(4).then(() => {
                 setError("");
             })
         })
     }, [])
 
     async function handleSubmit(){
-        //const songRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: file.name}));
         setIsLoading(true);
-        
-        //return uploadBytes(songRef, file).then(() => {
-            return patchSong(song_id, {
-                title,
-                description
-                //reference: file.name
-            }).then(() => {
-                setIsLoading(false);
-                navigate(`/songs/${song_id}`);
-            }).catch((err) => {
-                setError("Error editing song details. Please try again later");
-                return wait(4).then(() => {
-                    setError("");
-                })
-            })
-        //})
+        try {
+            const data = {title, description}
+            if(isFileChanged){
+                const oldSongRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: oldFileName}));
+                await deleteObject(oldSongRef);
+                const newSongRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: newFile.name}));
+                await uploadBytes(newSongRef, newFile);
+                data.reference = newFile.name
+            }
+            await patchSong(song_id, data);
+            setIsLoading(false);
+            navigate(`/songs/${song_id}`);
+        } catch (err) {
+            setError("Error editing song details. Please try again later");
+            await wait(4);
+            setError("");
+        }
     }
 
     if(isLoading){
@@ -92,13 +95,15 @@ function SongEditPage(){
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
         />
-        {/*<br/>
-        <SongAudioInput
+        <br/>
+        <SongFileChanger
             user_id={userID}
             album_id={albumID}
-            reference={file.name}
-            setFile={setFile}
-        />}*/}
+            file={newFile}
+            setFile={setNewFile}
+            isFileChanged={isFileChanged}
+            setIsFileChanged={setIsFileChanged}
+        />
         <br/>
         <Button variant="contained" onClick={handleSubmit}>Submit</Button>
         {error ? <p>{error}</p> : null}
