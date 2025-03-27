@@ -10,6 +10,7 @@ import { Home, Login } from "@mui/icons-material";
 import { Avatar, Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
 import neurosongs from "../../images/Neurosongs_WebIcon.png"
 import NS from "../../images/Neurosongs_NS.png"
+import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -17,6 +18,7 @@ function Header(){
     const {mode, setMode} = useColorScheme();
     const [isDarkByDefault, setIsDarkByDefault] = useState(mode === "dark");
     const [isDarkMode, setIsDarkMode] = useState(isDarkByDefault);
+    const {isLargeScreen} = useContext(ScreenSizeContext)
 
     useEffect(() => {
         setMode(isDarkMode ? "dark" : "light")
@@ -28,7 +30,6 @@ function Header(){
                     position: "absolute",
                     textAlign: "left",
                     paddingLeft: "10px",
-                    marginTop: "-20px",
                     zIndex: 1
                 }}
         >
@@ -37,19 +38,19 @@ function Header(){
             >
                 <img style={{width: "30px", height: "auto"}} src={NS} alt="Return to homepage"/>
             </Link>
-            <FormControl>
-                <FormControlLabel
-                    control={<Switch
-                        defaultChecked={isDarkByDefault}
-                        value={isDarkMode}
-                        onChange={() => {setIsDarkMode((isDarkMode) => {return !isDarkMode})}}
-                    />}
-                    value="dark-mode-enabled"
-                    label="Enable dark mode"
-                    labelPlacement= "end"
-                />
-            </FormControl>
         </Box>
+        <FormControl sx={{marginLeft: isLargeScreen ? "45%" : "25%"}}>
+            <FormControlLabel
+                control={<Switch
+                    defaultChecked={isDarkByDefault}
+                    value={isDarkMode}
+                    onChange={() => {setIsDarkMode((isDarkMode) => {return !isDarkMode})}}
+                />}
+                value="dark-mode-enabled"
+                label="Enable dark mode"
+                labelPlacement= "end"
+            />
+        </FormControl>
         {isUserSignedIn
         ? 
         <UserDropdown setSignOutError={setSignOutError} isDarkMode={isDarkMode}/>
