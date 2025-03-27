@@ -47,5 +47,9 @@
     {
         "id": 9,
         "message": "Other minor styling changes"
+    },
+    {
+        "id": 10,
+        "message": "Added extra confirmation screen to Google sign-in"
     }
 ]
