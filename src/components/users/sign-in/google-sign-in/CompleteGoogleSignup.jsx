@@ -6,7 +6,7 @@
 import { useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";
-import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel, TextField, Typography } from "@mui/material";
 import verifyUserAge from "../../../../utils/verify-user-age";
 import { UserContext } from "../../../../contexts/UserContext";
 import wait from "../../../../utils/wait";
@@ -15,6 +15,10 @@ import dayjs from "dayjs";
 import { postUser } from "../../../../../api";
 import AvatarInput from "../../../utility/AvatarInput";
 import Loading from "../../../Loading";
+import { ref, uploadBytes } from "@firebase/storage";
+import { storage } from "../../../../firebase-config";
+import getProfilePictureDirectory from "../../../../references/get-profile-picture-directory";
+import StyledLink from "../../../styling/StyledLink";
 
 function CompleteGoogleSignup(){
     const {setSignedInUser, firebaseUser, setIsSigningInWithGoogle} = useContext(UserContext);
@@ -26,49 +30,64 @@ function CompleteGoogleSignup(){
     const [dateOfBirthError, setDateOfBirthError] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [signUpSuccess, setSignUpSuccess] = useState(false);
-    const [generalError, setGeneralError] = useState("")
+    const [generalError, setGeneralError] = useState("");
+    const [isPrivacyPolicyAccepted, setIsPrivacyPolicyAccepted] = useState(false);
+    const [privacyPolicyError, setPrivacyPolicyError] = useState("");
+
     const navigate = useNavigate();
 
-    function handleSubmit(){
-        setIsLoading(true);
-        if(!verifyUserAge(new Date(dateOfBirth), 13)){
-            setDateOfBirthError("You must be 13 years old or older to create an account on this site.");
-            setIsLoading(false);
-            return wait(4).then(() => {
-                setDateOfBirthError("");
-            })
-        }
+    async function handleSubmit(){
         
-        return postUser({
-            user_id: firebaseUser.uid,
-            artist_name: artistName,
-            username,
-            email: firebaseUser.email,
-            profile_picture: profilePicture?.name ?? "Default",
-            date_of_birth: new Date(dateOfBirth.format())
-        }).then((user) => {
-            setSignedInUser(user);
+        
+        try {
+            setIsLoading(true);
+            if(!isPrivacyPolicyAccepted){
+                setPrivacyPolicyError("Please accept the privacy policy.");
+                setIsLoading(false);
+                await wait(4);
+                setPrivacyPolicyError("");
+                return;
+            }
+    
+            if(!verifyUserAge(new Date(dateOfBirth), 13)){
+                setDateOfBirthError("You must be 13 years old or older to create an account on this site.");
+                setIsLoading(false);
+                await wait(4);
+                setDateOfBirthError("");
+                return;
+            }
+
+            if(profilePicture){
+                const profilePictureRef = ref(storage, getProfilePictureDirectory({user_id: firebaseUser.uid, profile_picture: profilePicture.name}))
+                await uploadBytes(profilePictureRef, profilePicture);
+            }
+            const user_1 = await postUser({
+                user_id: firebaseUser.uid,
+                artist_name: artistName,
+                username,
+                email: firebaseUser.email,
+                profile_picture: profilePicture?.name ?? "Default",
+                date_of_birth: new Date(dateOfBirth.format())
+            });
+            setSignedInUser(user_1);
+            await wait(2);
             setIsSigningInWithGoogle(false);
-            return wait(2);
-        }).then(() => {
             setIsLoading(false);
             setSignUpSuccess(true);
-            return wait(2);
-        })
-        .then(() => {
+            await wait(2);
             navigate("/");
-        })
-        .catch((err) => {
-            if(err.response?.data?.message === "Unique constraint violation"){
-                setUsernameError("There is already another user with this username. Please choose a different username.")
+        } catch (err) {
+            setIsPrivacyPolicyAccepted(false);
+            if (err.response?.data?.message === "Unique constraint violation") {
+                setUsernameError("There is already another user with this username. Please choose a different username.");
                 setIsLoading(false);
                 return wait(4).then(() => {
                     setUsernameError("");
-                })
+                });
             }
             setIsLoading(false);
-            setGeneralError("Error finalising your profile. Please try again later.")
-        })
+            setGeneralError("Error finalising your profile. Please try again later.");
+        }
     }
 
     if(isLoading){
@@ -108,6 +127,15 @@ function CompleteGoogleSignup(){
                 onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
             />
             {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
+            <FormControlLabel 
+                control={
+                    <Checkbox
+                        value={isPrivacyPolicyAccepted}
+                        onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
+                    />} 
+                label={<Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+            />
+            {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
             <br/>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             {generalError ? <Typography color="error">{generalError}</Typography> : null}
