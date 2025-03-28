@@ -71,5 +71,9 @@
     {
         "id": 15,
         "message": "Bug fixes for notification page"
+    },
+    {
+        "id": 16,
+        "message": "Added song description to currently playing song on album page"
     }
 ]

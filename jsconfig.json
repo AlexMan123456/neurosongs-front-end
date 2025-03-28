@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./src",
-      "paths": {
-        "#utils": ["utils"],
-        "#components/*": ["components/*"],
-        "#firebase-config": ["firebase-config.js"],
-        "#api": ["../api.js"]
-      }
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "#utils": ["utils"],
+      "#components/*": ["components/*"],
+      "#firebase-config": ["firebase-config.js"],
+      "#api": ["../api.js"]
     }
   }
+}

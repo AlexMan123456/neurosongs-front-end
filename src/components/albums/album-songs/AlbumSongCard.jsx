@@ -6,19 +6,7 @@ function AlbumSongCard({song, index}){
     const [searchParams, setSearchParams] = useSearchParams();
     const song_id = parseInt(searchParams.get("song_id"));
     const location = useLocation();
-    const navigate = useNavigate();
     const [focus, setFocus] = useState(false);
-
-    function handleClick(event){
-        event.preventDefault();
-        if(song_id === song.song_id){
-            searchParams.delete("song_id")
-            navigate(`${location.pathname}`);
-            return;
-        }
-        searchParams.set("song_id", song.song_id);
-        navigate(`${location.pathname}?${searchParams.toString()}`);
-    }
 
     return (<TableBody>
             <TableRow

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { getSongById } from "../../../api";
+import { getSongById } from "../../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
+import { storage } from "../../../firebase-config";
 import H5AudioPlayer from "react-h5-audio-player";
-import Loading from "../Loading";
+import Loading from "../../Loading";
 
 function AlbumSongPlayer({album}){
     const [searchParams, setSearchParams] = useSearchParams();
