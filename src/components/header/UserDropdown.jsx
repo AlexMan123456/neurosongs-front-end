@@ -71,6 +71,7 @@ function UserDropdown({setSignOutError, isDarkMode}){
                 <IconButton
                     aria-label="Open user dropdown" 
                     onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
+                    onBlur={() => {wait(0.25).then(() => {setDisplayUserList(false)})}}
                 >
                     <NotificationDot notificationCount={notificationCount} setNotificationCount={setNotificationCount}>
                         <Avatar
