@@ -1,4 +1,4 @@
-import { ListItem, ListItemButton, ListItemText } from "@mui/material"
+import { ListItem, ListItemButton, ListItemText, useColorScheme } from "@mui/material"
 import { Fragment, useContext } from "react";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom"
@@ -9,7 +9,8 @@ import getContentIDFromComment from "../../../utils/get-content-id-from-comment"
 function NotificationCard({notification, setNotifications}){
     const contentType = notification.comment.song || notification.comment.replying_to.song ? "songs" : (notification.comment.album || notification.comment.replying_to.album ?"albums" : null);
     const content_id = getContentIDFromComment(notification.comment);
-    const {setCheckNotifications} = useContext(UserContext)
+    const {setCheckNotifications} = useContext(UserContext);
+    const {mode} = useColorScheme();
 
     function handleClick(){
         if(!notification.is_viewed){
@@ -33,7 +34,7 @@ function NotificationCard({notification, setNotifications}){
         <ListItemButton
             component={Link}
             to={`/${contentType}/${content_id}`}
-            sx={{color: !notification.is_viewed ? "blue" : null}}
+            sx={{color: !notification.is_viewed ? (mode === "dark" ? "lightblue" : "blue") : null}}
             onClick={handleClick}
         >
             {notification.message.split("\n").map((line, index) => {
