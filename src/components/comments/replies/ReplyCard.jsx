@@ -12,6 +12,8 @@ import formatDateAndTime from "../../../utils/format-date-and-time";
 import wait from "../../../utils/wait";
 import getRatingColour from "../../../utils/get-rating-colour";
 import DeletePopup from "../../utility/DeletePopup";
+import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
     const [reply, setReply] = useState(givenReply);
@@ -96,7 +98,11 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
                 </>
                 :
                 <>
-                    <Typography component="span" sx={{color: "text.primary"}}>{reply.body}</Typography>
+                    <Typography component="span" sx={{color: "text.primary"}}>
+                        <Markdown>
+                            {formatMarkdownWithLineBreaks(reply.body)}
+                        </Markdown>
+                    </Typography>
                     <Box>
                         {rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null}
                     </Box>
