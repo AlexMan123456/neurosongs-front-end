@@ -63,5 +63,13 @@
     {
         "id": 13,
         "message": "Added markdown rendering to content description, user description, and comments."
+    },
+    {
+        "id": 14,
+        "message": "Hide the user dropdown after shifting focus away from avatar image in right-hand corner"
+    },
+    {
+        "id": 15,
+        "message": "Bug fixes for notification page"
     }
 ]
