@@ -3,6 +3,8 @@ import { getUserById } from "../../../api";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading";
 import formatDate from "../../utils/format-date";
+import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function UserDescription(){
     const {user_id} = useParams()
@@ -32,7 +34,12 @@ function UserDescription(){
 
     return (<section>
         <h2>Description</h2>
-            {description ? <p style={{ whiteSpace: 'pre-line' }}>{description}</p> : <p><em>No description set</em></p>}
+            {description ? 
+            <Markdown>
+                {formatMarkdownWithLineBreaks(description)}
+            </Markdown>
+            : 
+            <p><em>No description set</em></p>}
             <p>Member since: {formatDate(new Date(memberSince))}</p>
     </section>)
 }

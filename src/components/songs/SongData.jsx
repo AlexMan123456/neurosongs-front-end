@@ -6,6 +6,7 @@ import { Button, Typography } from "@mui/material";
 import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
 import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function SongData({song, songData, frontCover, backCover}){
     const [displayFront, setDisplayFront] = useState(true);
@@ -27,9 +28,7 @@ function SongData({song, songData, frontCover, backCover}){
         <h3>Description</h3>
         {songData.description ? 
         <Markdown>
-            {songData.description.split("\n").map((line) => {
-                return line + "  \n"
-            }).join("")}
+            {formatMarkdownWithLineBreaks(songData.description)}
         </Markdown>
         : null}
         <H5AudioPlayer src={song} showJumpControls={false}/>

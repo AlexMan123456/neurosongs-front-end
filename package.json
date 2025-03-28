@@ -39,6 +39,6 @@
     "vite-plugin-pwa": "^0.21.1"
   },
   "imports": {
-    "#utils/getContentIDFromComment": "./dist/src/utils/get-content-id-from-comment.js"
+    "#utils": "./src/utils/index.js"
   }
 }
