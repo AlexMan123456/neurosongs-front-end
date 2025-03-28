@@ -14,6 +14,8 @@ import getRatingColour from "../../utils/get-rating-colour";
 import DeletePopup from "../utility/DeletePopup";
 import ReplyCreator from "./replies/ReplyCreator";
 import RepliesList from "./replies/RepliesList";
+import { formatMarkdownWithLineBreaks } from "#utils";
+import Markdown from "react-markdown";
 
 function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated}){
     const [comment, setComment] = useState(givenComment);
@@ -110,7 +112,11 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
                 </>
                 :
                 <>
-                    <Typography component="span" sx={{color: "text.primary"}}>{comment.body}</Typography>
+                    <Typography component="span" sx={{color: "text.primary"}}>
+                        <Markdown>
+                            {formatMarkdownWithLineBreaks(comment.body)}
+                        </Markdown>
+                    </Typography>
                     {isReplying ? 
                     <ReplyCreator comment={comment} setReplies={setReplies} setIsReplying={setIsReplying}/>
                     : 

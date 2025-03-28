@@ -5,6 +5,8 @@ import StyledLink from "../styling/StyledLink";
 import { Button, Typography } from "@mui/material";
 import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
+import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function SongData({song, songData, frontCover, backCover}){
     const [displayFront, setDisplayFront] = useState(true);
@@ -24,9 +26,11 @@ function SongData({song, songData, frontCover, backCover}){
         <p>{songData.artist.artist_name} (<StyledLink to={`/users/${songData.user_id}`}>@{songData.artist.username}</StyledLink>)</p>
         <p>Album: <StyledLink to={`/albums/${songData.album_id}`}>{songData.album.title}</StyledLink></p>
         <h3>Description</h3>
-        {songData.description ? songData.description.split("\n").map((paragraph, index) => {
-            return <p key={`song-${songData.song_id}-paragraph-${index}`}>{paragraph}</p>
-        }) : null}
+        {songData.description ? 
+        <Markdown>
+            {formatMarkdownWithLineBreaks(songData.description)}
+        </Markdown>
+        : null}
         <H5AudioPlayer src={song} showJumpControls={false}/>
         <p>Created: {formatDate(new Date(songData.created_at))}</p>
     </section>)

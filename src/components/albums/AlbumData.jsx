@@ -10,6 +10,8 @@ import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
 import AlbumSongsTable from "./AlbumSongsTable";
+import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -28,14 +30,16 @@ function AlbumData({album, backCover, frontCover}){
                 width: "25vw",
                 height: "auto"
             }}
-            alt={`${album.name}'s ${displayFront ? "front" : "back"} cover`}
+            alt={`${album.title}'s ${displayFront ? "front" : "back"} cover`}
         />
         <br/>
         {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         <h3>Description</h3>
-        {album.description ? album.description.split("\n").map((paragraph, index) => {
-            return <p key={`album-${album.album_id}-paragraph-${index}`}>{paragraph}</p>
-        }) : null}
+        {album.description ? 
+        <Markdown>
+            {formatMarkdownWithLineBreaks(album.description)}
+        </Markdown>
+        : null}
         <p>Created: {formatDate(new Date(album.created_at))}</p>
         {song_id
         ? <div>
