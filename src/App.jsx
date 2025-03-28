@@ -28,12 +28,13 @@ import { useContext } from "react"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 import CompleteGoogleSignup from "./components/users/sign-in/google-sign-in/CompleteGoogleSignup"
+import AlbumSongComments from "#components/albums/album-songs/AlbumSongComments"
 
 function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
 
   return (<>
-    <Header/>
+    {window.location.href.includes("comments_section_window") ? <Header/> : null}
     <Routes>
       <Route path="/" element={<Homepage/>}/>
       <Route path="/featured" element={<FeaturedPage/>}/>
