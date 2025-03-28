@@ -33,7 +33,7 @@ function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
 
   return (<>
-    {window.location.href.includes("comments_section_window") ? <Header/> : null}
+    <Header/>
     <Routes>
       <Route path="/" element={<Homepage/>}/>
       <Route path="/featured" element={<FeaturedPage/>}/>
