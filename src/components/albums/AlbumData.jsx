@@ -34,11 +34,13 @@ function AlbumData({album, backCover, frontCover}){
         <br/>
         {album.back_cover_reference ? <Button onClick={() => {setDisplayFront((displayFront) => {return !displayFront})}}>View {displayFront ? "back" : "front"} cover</Button> : null}
         <h3>Description</h3>
+        {album.description ? 
         <Markdown>
             {album.description.split("\n").map((line) => {
                 return line + "  \n"
             }).join("")}
         </Markdown>
+        : null}
         <p>Created: {formatDate(new Date(album.created_at))}</p>
         {song_id
         ? <div>
