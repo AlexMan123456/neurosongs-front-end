@@ -11,6 +11,7 @@ import getRatingColour from "../../utils/get-rating-colour";
 import { UserContext } from "../../contexts/UserContext";
 import AlbumSongsTable from "./AlbumSongsTable";
 import Markdown from "react-markdown";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -36,9 +37,7 @@ function AlbumData({album, backCover, frontCover}){
         <h3>Description</h3>
         {album.description ? 
         <Markdown>
-            {album.description.split("\n").map((line) => {
-                return line + "  \n"
-            }).join("")}
+            {formatMarkdownWithLineBreaks(album.description)}
         </Markdown>
         : null}
         <p>Created: {formatDate(new Date(album.created_at))}</p>

@@ -39,6 +39,9 @@
     "vite-plugin-pwa": "^0.21.1"
   },
   "imports": {
-    "#utils": "./src/utils/index.js"
+    "#utils": "./src/utils",
+    "#components/*": "./src/components/*",
+    "#firebase-config": "./src/firebase-config.js",
+    "#api": "./api.js"
   }
 }
