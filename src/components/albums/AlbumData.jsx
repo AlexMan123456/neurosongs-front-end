@@ -13,7 +13,6 @@ import AlbumSongDetails from "./album-songs/AlbumSongDetails";
 import CommentsSection from "#components/comments/CommentsSection";
 import Loading from "#components/Loading";
 import { getSongById } from "#api";
-import AlbumSongComments from "./album-songs/AlbumSongComments";
 
 function AlbumData({album, backCover, frontCover}){
     const [searchParams, setSearchParams] = useSearchParams();
