@@ -68,5 +68,5 @@ function App() {
     {isLargeScreen ? <Footer/> : null}
   </>)
 }
-//
+
 export default App
