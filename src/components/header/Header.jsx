@@ -11,6 +11,7 @@ import { Avatar, Box, FormControl, FormControlLabel, Switch, useColorScheme } fr
 import neurosongs from "../../images/Neurosongs_WebIcon.png"
 import homepageIcon from "../../images/Neurosongs_note.png"
 import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
+import { version } from "../../../package.json"
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -71,9 +72,14 @@ function Header(){
         }
         {signOutError ? <p>{signOutError}</p> : null
         }
-        <h1>
-            <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
-        </h1>
+        <div id="heading">
+            <h1>
+                <Link to="/featured">
+                    <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
+                </Link>
+            </h1>
+            <p>v{version}</p>
+        </div>
         {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }

@@ -1,7 +1,6 @@
-h1 {
+#heading {
   text-align: center;
-  font-family: "Futura", Arial, Helvetica, sans-serif;
-  padding-top: 2vh
+  padding-top: 2vh;
 }
 
 h2 {

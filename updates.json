@@ -19,5 +19,19 @@
     {
         "id": 2,
         "message": "When clicking on a notification on the notifications page, you will now be redirected to a comment page"
+    },
+    {
+        "id": 3,
+        "message": "Small changes to header",
+        "subPoints": [
+            {
+                "id": 1,
+                "message": "Made the header clickable (clicking on it will take you to featured page)"
+            },
+            {
+                "id": 2,
+                "message": "Added version number below the image heading"
+            }
+        ]
     }
 ]
