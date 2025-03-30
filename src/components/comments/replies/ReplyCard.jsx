@@ -14,6 +14,7 @@ import getRatingColour from "../../../utils/get-rating-colour";
 import DeletePopup from "../../utility/DeletePopup";
 import Markdown from "react-markdown";
 import { formatMarkdownWithLineBreaks } from "#utils";
+import { useParams } from "react-router";
 
 function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
     const [reply, setReply] = useState(givenReply);
@@ -23,11 +24,14 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
     const [deleteError, setDeleteError] = useState("");
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const [rating, setRating] = useState({});
+    const {comment_id} = useParams();
+    const [isHighlighted, setIsHighlighted] = useState(false);
 
     const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true);
+        setIsHighlighted(parseInt(comment_id) === reply.comment_id)
         getUserById(reply.user_id).then((user) => {
             const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
             return getDownloadURL(profilePictureRef);
@@ -40,8 +44,8 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
     }, [])
 
     useEffect(() => {
-        const contentType = reply.replying_to.song ? "song" : "album";
-        getRatingByIds(contentType + "s", reply.user_id, reply.replying_to[contentType][`${contentType}_id`]).then((rating) => {
+        const contentType = reply.replying_to.song_id ? "song" : "album";
+        getRatingByIds(contentType + "s", reply.user_id, reply.replying_to[`${contentType}_id`]).then((rating) => {
             setRating(rating);
         })
     }, [ratingVisibilityUpdated])
@@ -82,8 +86,8 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
                     display: "grid"
                 }
             }}
-            primary={<Typography sx={{paddingLeft: "1vw", color: "text.primary"}}>
-                {reply.author.artist_name}
+            primary={<Typography sx={{paddingLeft: "1vw", color: "text.primary", fontWeight: isHighlighted ? "bold" : "normal"}}>
+                {reply.author.artist_name} {isHighlighted ? <Typography variant="overline">Highlighted reply</Typography> : null}
             </Typography>}
             secondary={<>
                 <StyledLink to={`/users/${reply.user_id}`}>@{reply.author.username}</StyledLink>

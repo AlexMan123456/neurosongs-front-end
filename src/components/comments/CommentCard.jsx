@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, ListItem, ListItemText, Popper, TextField, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { deleteComment, getRatingByIds, getUserById } from "../../../api";
+import { deleteComment, getCommentById, getRatingByIds, getUserById } from "../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../firebase-config";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
@@ -16,8 +16,10 @@ import ReplyCreator from "./replies/ReplyCreator";
 import RepliesList from "./replies/RepliesList";
 import { formatMarkdownWithLineBreaks } from "#utils";
 import Markdown from "react-markdown";
+import { useParams } from "react-router";
+import ReplyCard from "./replies/ReplyCard";
 
-function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated}){
+function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated, highlightedReply}){
     const [comment, setComment] = useState(givenComment);
     const [replyCount, setReplyCount] = useState(givenComment.reply_count);
     const [profilePicture, setProfilePicture] = useState(null);
@@ -28,6 +30,8 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
     const [rating, setRating] = useState({});
     const [isReplying, setIsReplying] = useState(false);
     const [replies, setReplies] = useState([]);
+    const [showReplies, setShowReplies] = useState(false);
+    const {comment_id} = useParams();
 
     const {isUserSignedIn, signedInUser} = useContext(UserContext);
 
@@ -126,7 +130,8 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
                     </Box>}
                     {isReplying ? (rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null) : null}
                 </>}
-                {replyCount !== 0 ? <RepliesList comment_id={comment.comment_id} replies={replies} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated} replyCount={replyCount}/> : null}
+                {replyCount !== 0 ? <RepliesList comment_id={comment.comment_id} replies={replies} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated} replyCount={replyCount} showReplies={showReplies} setShowReplies={setShowReplies}/> : null}
+                {highlightedReply && !showReplies ? <ReplyCard reply={highlightedReply}/> : null}
             </>}
         />
         {signedInUser.user_id === comment.user_id && !isEditing && !isReplying ? <>

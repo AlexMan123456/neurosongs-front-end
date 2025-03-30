@@ -9,7 +9,7 @@ import CommentCard from "./CommentCard";
 function SingleCommentPage(){
     const {comment_id} = useParams();
     const [comment, setComment] = useState({});
-    const [topReply, setTopReply] = useState({});
+    const [highlightedReply, setHighlightedReply] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
     const [contentType, setContentType] = useState("")
@@ -19,7 +19,7 @@ function SingleCommentPage(){
         getCommentById(comment_id).then(({comment, reply}) => {
             setComment(comment);
             if(reply){
-                setTopReply(reply);
+                setHighlightedReply(reply);
             }
             setContentType(comment.song ? "song" : "album");
             setIsLoading(false);
@@ -39,7 +39,7 @@ function SingleCommentPage(){
     return (
         <section>
             <StyledLink to={`/${contentType}s/${comment[`${contentType}_id`]}`}>Comment found on: {comment[contentType].title}</StyledLink>
-            <CommentCard comment={comment}/>
+            <CommentCard comment={comment} highlightedReply={highlightedReply}/>
         </section>
     )
 }

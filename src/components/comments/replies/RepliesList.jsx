@@ -6,8 +6,7 @@ import ReplyCard from "./ReplyCard";
 import { Box } from "@mui/system";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
-function RepliesList({comment_id, replies, setReplies, ratingVisibilityUpdated, replyCount}){
-    const [showReplies, setShowReplies] = useState(false);
+function RepliesList({comment_id, replies, setReplies, showReplies, setShowReplies, ratingVisibilityUpdated, replyCount}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
