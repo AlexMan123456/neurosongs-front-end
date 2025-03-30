@@ -172,4 +172,10 @@ function patchNotification(notification_id){
     })
 }
 
-export { getSongs, getUsers, getUserById, deleteUserFromDatabase, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, getNotificationsFromUser, postNotification, patchNotification }
+function getCommentById(comment_id){
+    return api.get(`/api/comments/${comment_id}`).then(({data}) => {
+        return data
+    })
+}
+
+export { getSongs, getUsers, getUserById, deleteUserFromDatabase, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, getNotificationsFromUser, postNotification, patchNotification, getCommentById }
