@@ -6,7 +6,7 @@ function DeletePopup({showMessage, setShowMessage, onDelete, children}){
         open={showMessage}
         onClick={() => {setShowMessage(false)}}
     >
-        <Box sx={{backgroundColor: mode === "dark" ? "black" : "white", borderRadius: 0.7}}>
+        <Box sx={{backgroundColor: mode === "dark" ? "black" : "white", borderRadius: 0.7, zIndex: 1}}>
             <Typography sx={{paddingLeft: "0.5vw", paddingRight: "0.5vw"}}>{children}</Typography>
             <Box sx={{textAlign: "center"}}>
                 <Button onClick={onDelete} color="success">Yes</Button>
