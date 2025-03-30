@@ -82,9 +82,9 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
                     display: "grid"
                 }
             }}
-            primary={<Box sx={{paddingLeft: "1vw"}}>
+            primary={<Typography sx={{paddingLeft: "1vw", color: "text.primary"}}>
                 {reply.author.artist_name}
-            </Box>}
+            </Typography>}
             secondary={<>
                 <StyledLink to={`/users/${reply.user_id}`}>@{reply.author.username}</StyledLink>
                 <Typography sx={{color: "text.secondary", fontSize: "14px"}} component="span"> {formatDateAndTime(new Date(reply.created_at))}</Typography>
@@ -98,7 +98,7 @@ function ReplyCard({reply: givenReply, setReplies, ratingVisibilityUpdated}){
                 </>
                 :
                 <>
-                    <Typography component="span" sx={{color: "text.primary"}}>
+                    <Typography sx={{color: "text.primary", paddingLeft: "0px"}}>
                         <Markdown>
                             {formatMarkdownWithLineBreaks(reply.body)}
                         </Markdown>

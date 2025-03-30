@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { patchNotification } from "../../../../api";
 import { UserContext } from "../../../contexts/UserContext";
 import getContentIDFromComment from "../../../utils/get-content-id-from-comment";
+import { formatMarkdownWithLineBreaks } from "#utils";
 
 function NotificationCard({notification, setNotifications}){
     const contentType = notification.comment.song || notification.comment.replying_to.song ? "songs" : (notification.comment.album || notification.comment.replying_to.album ?"albums" : null);
@@ -37,9 +38,9 @@ function NotificationCard({notification, setNotifications}){
             sx={{color: !notification.is_viewed ? (mode === "dark" ? "lightblue" : "blue") : null}}
             onClick={handleClick}
         >
-            {notification.message.split("\n").map((line, index) => {
-                return <Fragment key={`notification-${notification.comment_notification_id}-line-${index}`}>{line}<br/></Fragment>
-            })}
+            <Markdown>
+                {formatMarkdownWithLineBreaks(notification.message)}
+            </Markdown>
         </ListItemButton>
     </ListItem>)
 }
