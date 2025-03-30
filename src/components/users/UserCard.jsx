@@ -14,7 +14,6 @@ function UserCard({user}){
         setIsLoading(true);
         const profilePictureRef = ref(storage, getProfilePictureDirectory(user));
         getDownloadURL(profilePictureRef).then((profilePictureURL) => {
-            console.log(profilePictureURL)
             setProfilePicture(profilePictureURL);
             setIsLoading(false);
         }).catch((err) => {

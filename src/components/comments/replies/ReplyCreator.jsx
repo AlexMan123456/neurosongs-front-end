@@ -18,21 +18,6 @@ function ReplyCreator({comment, setIsReplying, setReplies}){
             user_id: signedInUser.user_id,
             body: reply
         }).then((reply) => {
-            const splitReply = reply.body.split(0,50)
-            const contentType = comment.song_id ? "song" : "album"
-            return Promise.all([
-                reply,
-                postNotification({
-                    sender_id: signedInUser.user_id,
-                    receiver_id: comment.user_id,
-                    comment_id: reply.comment_id,
-                    message: `New reply to your comment on ${comment[contentType].title}: 
-                    
-                    ${splitReply}${splitReply.length > 50 ? "..." : ""}`
-                })
-            ])
-        })
-        .then(([reply, temp]) => {
             setReplies((replies) => {
                 const newReplies = [...replies];
                 newReplies.push(reply);

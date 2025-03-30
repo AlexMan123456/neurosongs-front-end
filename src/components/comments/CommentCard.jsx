@@ -112,7 +112,7 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
                 </>
                 :
                 <>
-                    <Typography component="span" sx={{color: "text.primary"}}>
+                    <Typography sx={{color: "text.primary", paddingLeft: "0px"}}>
                         <Markdown>
                             {formatMarkdownWithLineBreaks(comment.body)}
                         </Markdown>

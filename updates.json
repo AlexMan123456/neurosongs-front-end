@@ -75,5 +75,9 @@
     {
         "id": 16,
         "message": "Added song description to currently playing song on album page"
+    },
+    {
+        "id": 17,
+        "message": "Fixed notifications to make them work better and you don't get notified about your own comments"
     }
 ]

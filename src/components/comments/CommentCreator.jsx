@@ -1,10 +1,9 @@
-import { Box, Button, FormControl, TextField } from "@mui/material"
+import { Box, Button, FormControl, TextField } from "@mui/material";
 import { useContext, useState } from "react";
+import { postComment } from "../../../api";
 import { UserContext } from "../../contexts/UserContext";
-import { postComment, postNotification } from "../../../api";
-import Loading from "../Loading";
 import wait from "../../utils/wait";
-import RatingSlider from "../ratings/RatingSlider";
+import Loading from "../Loading";
 
 function CommentCreator({contentType, content_id, content_user_id, title, setComments}){
     const [body, setBody] = useState("");
@@ -17,23 +16,6 @@ function CommentCreator({contentType, content_id, content_user_id, title, setCom
         setIsLoading(true);
         const data = {body, user_id: signedInUser.user_id}
         postComment(contentType, content_id, data).then((comment) => {
-            const promises = [comment];
-            if(signedInUser.user_id !== content_user_id){
-                const splitComment = comment.body.split(0,50)
-                promises.push(
-                    postNotification({
-                        sender_id: signedInUser.user_id,
-                        receiver_id: content_user_id,
-                        comment_id: comment.comment_id,
-                        message: `New comment from ${signedInUser.artist_name} (@${signedInUser.username}) on ${title}:
-                            
-                        ${splitComment}${splitComment.length > 50 ? "..." : ""}`
-                    })
-                )
-            }
-            return Promise.all(promises)
-        })
-        .then(([comment, temp]) => {
             setComments((previousComments) => {
                 const newComments = [...previousComments]
                 newComments.unshift(comment);
