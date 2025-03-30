@@ -18,66 +18,6 @@
     },
     {
         "id": 2,
-        "message": "Changed display of updates on homepage"
-    },
-    {
-        "id": 3,
-        "message": "Minor changes to handling of screen resizing"
-    },
-    {
-        "id": 4,
-        "message": "Removed donations link from footer"
-    },
-    {
-        "id": 5,
-        "message": "Added ability to delete user"
-    },
-    {
-        "id": 6,
-        "message": "Added a checkbox to let users accept privacy policy during signup process"
-    },
-    {
-        "id": 7,
-        "message": "Added dark mode toggle"
-    },
-    {
-        "id": 8,
-        "message": "Replaced homepage icon with custom logo"
-    },
-    {
-        "id": 9,
-        "message": "Other minor styling changes"
-    },
-    {
-        "id": 10,
-        "message": "Added extra confirmation screen to Google sign-in"
-    },
-    {
-        "id": 11,
-        "message": "Display dark mode toggle switch in the center of page"
-    },
-    {
-        "id": 12,
-        "message": "Added edit button and delete button to song page"
-    },
-    {
-        "id": 13,
-        "message": "Added markdown rendering to content description, user description, and comments."
-    },
-    {
-        "id": 14,
-        "message": "Hide the user dropdown after shifting focus away from avatar image in right-hand corner"
-    },
-    {
-        "id": 15,
-        "message": "Bug fixes for notification page"
-    },
-    {
-        "id": 16,
-        "message": "Added song description to currently playing song on album page"
-    },
-    {
-        "id": 17,
-        "message": "Fixed notifications to make them work better and you don't get notified about your own comments"
+        "message": "When clicking on a notification on the notifications page, you will now be redirected to a comment page"
     }
 ]

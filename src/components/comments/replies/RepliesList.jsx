@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { getReplies } from "../../../../api"
 import Loading from "../../Loading";
-import { List } from "@mui/material";
+import { Button, List } from "@mui/material";
 import ReplyCard from "./ReplyCard";
+import { Box } from "@mui/system";
+import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
-function RepliesList({comment_id, replies, setReplies, ratingVisibilityUpdated}){
+function RepliesList({comment_id, replies, setReplies, showReplies, setShowReplies, ratingVisibilityUpdated, replyCount}){
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -28,11 +30,18 @@ function RepliesList({comment_id, replies, setReplies, ratingVisibilityUpdated})
     }
 
     return (
-        <List>
-            {replies.map((reply) => {
-                return <ReplyCard key={`reply-${reply.comment_id}`} reply={reply} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
-            })}
-        </List>
+        <Box>
+            <Button onClick={() => {setShowReplies((showReplies) => {return !showReplies})}}>
+                {showReplies ? <ArrowDropUp/> : <ArrowDropDown/>} {replyCount} {replyCount === 1 ? "reply" : "replies"}
+            </Button>
+            {showReplies ?
+            <List>
+                {replies.map((reply) => {
+                    return <ReplyCard key={`reply-${reply.comment_id}`} reply={reply} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
+                })}
+            </List>
+            : null}
+        </Box>
     )
 }
 

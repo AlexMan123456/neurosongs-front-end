@@ -34,7 +34,7 @@ function NotificationCard({notification, setNotifications}){
     return (<ListItem sx={{border: 0.5, borderRadius: 0.7}}>
         <ListItemButton
             component={Link}
-            to={`/${contentType}/${content_id}`}
+            to={`/comments/${notification.comment.comment_id}`}
             sx={{color: !notification.is_viewed ? (mode === "dark" ? "lightblue" : "blue") : null}}
             onClick={handleClick}
         >

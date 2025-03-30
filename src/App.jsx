@@ -28,6 +28,7 @@ import { useContext } from "react"
 import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 import CompleteGoogleSignup from "./components/users/sign-in/google-sign-in/CompleteGoogleSignup"
+import SingleCommentPage from "./components/comments/SingleCommentPage"
 
 function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
@@ -62,6 +63,7 @@ function App() {
       <Route path="/users/:user_id/albums/create/add_songs/:album_id" element={<AlbumSongAdderPage/>}/>
       <Route path="/albums/:album_id/edit" element={<AlbumEditPage/>}/>
       <Route path="/songs/:song_id/edit" element={<SongEditPage/>}/>
+      <Route path="/comments/:comment_id" element={<SingleCommentPage/>}/>
       <Route path="/*" element={<PageNotFound/>}/>
     </Routes>
     <br/>

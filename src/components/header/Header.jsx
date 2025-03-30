@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { Home, Login } from "@mui/icons-material";
 import { Avatar, Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
 import neurosongs from "../../images/Neurosongs_WebIcon.png"
-import NS from "../../images/Neurosongs_NS.png"
+import homepageIcon from "../../images/Neurosongs_note.png"
 import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
 function Header(){
@@ -36,7 +36,7 @@ function Header(){
             <Link 
                 to="/"
             >
-                <img style={{width: "30px", height: "auto"}} src={NS} alt="Return to homepage"/>
+                <img style={{width: "30px", height: "auto"}} src={homepageIcon} alt="Return to homepage"/>
             </Link>
         </Box>
         <FormControl sx={{marginLeft: isLargeScreen ? "45%" : "25%"}}>
