@@ -126,7 +126,7 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
                     </Box>}
                     {isReplying ? (rating.is_visible ? <Typography component="span" color={getRatingColour(rating.score)} sx={{fontSize: "14px"}}>Rating: {rating.score}</Typography> : null) : null}
                 </>}
-                {replyCount !== 0 ? <RepliesList comment_id={comment.comment_id} replies={replies} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated}/> : null}
+                {replyCount !== 0 ? <RepliesList comment_id={comment.comment_id} replies={replies} setReplies={setReplies} ratingVisibilityUpdated={ratingVisibilityUpdated} replyCount={replyCount}/> : null}
             </>}
         />
         {signedInUser.user_id === comment.user_id && !isEditing && !isReplying ? <>
