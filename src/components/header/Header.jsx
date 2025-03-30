@@ -74,7 +74,9 @@ function Header(){
         }
         <div id="heading">
             <h1>
-                <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
+                <Link to="/featured">
+                    <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
+                </Link>
             </h1>
             <p>v{version}</p>
         </div>
