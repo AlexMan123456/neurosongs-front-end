@@ -8,7 +8,7 @@ import getContentIDFromComment from "../../../utils/get-content-id-from-comment"
 import { formatMarkdownWithLineBreaks } from "#utils";
 
 function NotificationCard({notification, setNotifications}){
-    const contentType = notification.comment.song || notification.comment.replying_to.song ? "songs" : (notification.comment.album || notification.comment.replying_to.album ?"albums" : null);
+    const contentType = notification.comment.song_id || notification.comment.replying_to.song_id ? "songs" : (notification.comment.album_id || notification.comment.replying_to.album_id ?"albums" : null);
     const content_id = getContentIDFromComment(notification.comment);
     const {setCheckNotifications} = useContext(UserContext);
     const {mode} = useColorScheme();

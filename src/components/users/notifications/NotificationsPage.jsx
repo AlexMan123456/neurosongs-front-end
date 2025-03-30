@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../../../contexts/UserContext";
-import { getUserById } from "../../../../api";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
 import Loading from "../../Loading";
 import { List } from "@mui/material";
 import NotificationCard from "./NotificationCard";
+import { getNotificationsFromUser } from "#api";
 
 function NotificationsPage(){
     const {user_id} = useParams();
@@ -16,8 +16,8 @@ function NotificationsPage(){
 
     useEffect(() => {
         setIsLoading(true);
-        getUserById(user_id).then(({received_notifications}) => {
-            setNotifications(received_notifications);
+        getNotificationsFromUser(user_id).then((notifications) => {
+            setNotifications(notifications);
             setIsLoading(false);
         }).catch((err) => {
             setError("Error fetching notifications. Please try again later.");
