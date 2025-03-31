@@ -12,6 +12,9 @@ import getProfilePictureDirectory from "../../references/get-profile-picture-dir
 import formatDate from "../../utils/format-date";
 import FollowControl from "./follows/FollowControl";
 import wait from "../../utils/wait";
+import H5AudioPlayer from "react-h5-audio-player";
+import neverGonnaGiveYouUp from "../../audio/never-gonna-give-you-up.mp3";
+
 
 function UserPage(){
     const params = useParams();
@@ -58,6 +61,7 @@ function UserPage(){
             <FollowControl/>
         </header>
         <DisplayCategory/>
+        <H5AudioPlayer autoPlay src={neverGonnaGiveYouUp} showJumpControls={false} showSkipControls={false}/>
     </>)
 }
 
