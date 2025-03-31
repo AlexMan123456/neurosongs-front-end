@@ -257,13 +257,6 @@ function CompleteSignUpPage(){
             value={description}
             onChange={(event) => {setDescription(event.target.value)}}
         />
-        {
-            /*<Box sx={{display: "inline-list-item"}}>
-                <Checkbox value={isPrivacyPolicyAccepted} onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}/>
-                <Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>
-                {privacyPolicyError ? <Typography sx={{paddingTop: "8px"}} color="error">{privacyPolicyError}</Typography> : null}
-            </Box>*/
-        }
         <FormGroup>
         <FormControlLabel 
             control={
@@ -271,7 +264,7 @@ function CompleteSignUpPage(){
                     value={isPrivacyPolicyAccepted}
                     onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
                 />} 
-            label={<Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+            label={<Typography sx={{paddingTop: "8px"}}>I accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
         />
         {privacyPolicyError ? <Typography sx={{paddingTop: "8px"}} color="error">{privacyPolicyError}</Typography> : null}
         </FormGroup>
