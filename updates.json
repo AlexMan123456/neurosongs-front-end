@@ -1,41 +1,6 @@
 [
     {
         "id": 1, 
-        "message": "Branding updates",
-        "subPoints": [
-            {
-                "id": 1,
-                "message": "Changed the header to be an image (thanks [Space Pawdity](https://neurosongs.netlify.app/users/jr3mIiI6v3WOVZQW1khWXR31bXu1)!)"
-            },
-            {
-                "id": 2,
-                "message": "Added new app icon (again, thanks [Space Pawdity](https://neurosongs.netlify.app/users/jr3mIiI6v3WOVZQW1khWXR31bXu1)!)"},
-            {
-                "id": 3,
-                "message": "Changed some of the fonts to match with the new branding"
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "message": "When clicking on a notification on the notifications page, you will now be redirected to a comment page"
-    },
-    {
-        "id": 3,
-        "message": "Small changes to header",
-        "subPoints": [
-            {
-                "id": 1,
-                "message": "Made the header clickable (clicking on it will take you to featured page)"
-            },
-            {
-                "id": 2,
-                "message": "Added version number below the image heading"
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "message": "Wording change to privacy policy checkbox on signup"
+        "message": "Sign in and navigate to your user page. Trust me."
     }
 ]
