@@ -33,5 +33,9 @@
                 "message": "Added version number below the image heading"
             }
         ]
+    },
+    {
+        "id": 4,
+        "message": "Wording change to privacy policy checkbox on signup"
     }
 ]

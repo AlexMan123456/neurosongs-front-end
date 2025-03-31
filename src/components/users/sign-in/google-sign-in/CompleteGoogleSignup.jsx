@@ -133,7 +133,7 @@ function CompleteGoogleSignup(){
                         value={isPrivacyPolicyAccepted}
                         onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
                     />} 
-                label={<Typography sx={{paddingTop: "8px"}}>I agree to the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+                label={<Typography sx={{paddingTop: "8px"}}>I accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
             />
             {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
             <br/>
