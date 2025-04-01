@@ -26,7 +26,7 @@ function CompleteGoogleSignup(){
     const [usernameError, setUsernameError] = useState("");
     const [signUpSuccess, setSignUpSuccess] = useState(false);
     const [generalError, setGeneralError] = useState("");
-    const [isPrivacyPolicyAccepted, setIsPrivacyPolicyAccepted] = useState(true);
+    const [isPrivacyPolicyAccepted, setIsPrivacyPolicyAccepted] = useState(false);
     const [privacyPolicyError, setPrivacyPolicyError] = useState("");
 
     const navigate = useNavigate();
@@ -36,8 +36,8 @@ function CompleteGoogleSignup(){
         
         try {
             setIsLoading(true);
-            if(isPrivacyPolicyAccepted){
-                setPrivacyPolicyError("Please don't not accept the privacy policy.");
+            if(!isPrivacyPolicyAccepted){
+                setPrivacyPolicyError("Please accept the privacy policy.");
                 setIsLoading(false);
                 await wait(4);
                 setPrivacyPolicyError("");
@@ -125,11 +125,10 @@ function CompleteGoogleSignup(){
             <FormControlLabel 
                 control={
                     <Checkbox
-                        defaultChecked
                         value={isPrivacyPolicyAccepted}
                         onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
                     />} 
-                label={<Typography sx={{paddingTop: "8px"}}>I don't accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+                label={<Typography sx={{paddingTop: "8px"}}>I accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
             />
             {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
             <br/>
