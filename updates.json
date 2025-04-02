@@ -12,5 +12,9 @@
                 "message": "If viewing on mobile, navigation bar appears on bottom of screen"
             }
         ]
+    },
+    {
+        "id": 2,
+        "message": "Added ability to delete album from album page"
     }
 ]

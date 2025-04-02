@@ -12,6 +12,8 @@ import { Button, Divider, Typography } from "@mui/material";
 import RatingSection from "../ratings/RatingSection";
 import { UserContext } from "../../contexts/UserContext";
 import wait from "../../utils/wait";
+import DeletePopup from "#components/utility/DeletePopup";
+import Markdown from "react-markdown";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -22,6 +24,7 @@ function SongPage(){
     const [frontCover, setFrontCover] = useState(null);
     const [backCover, setBackCover] = useState(null);
     const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
+    const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const {signedInUser} = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -84,11 +87,20 @@ function SongPage(){
 
     return (<main>
         {signedInUser.user_id === songData.user_id ? <Button component={Link} to={`/songs/${songData.song_id}/edit`}>Edit Song</Button> : null}
-        {signedInUser.user_id === songData.user_id ? <Button color="error" onClick={handleDelete}>Delete Song</Button> : null}
+        {signedInUser.user_id === songData.user_id ? <Button color="error" onClick={() => {setShowDeleteBackdrop(true)}}>Delete Song</Button> : null}
         <SongData song={song} songData={songData} frontCover={frontCover} backCover={backCover}/>
         <RatingSection setRatingVisibilityUpdated={setRatingVisibilityUpdated} contentType="song"/>
         <Divider><h2>Comments</h2></Divider>
         <CommentsSection content={songData} ratingVisibilityUpdated={ratingVisibilityUpdated}/>
+        {<DeletePopup
+            showMessage={showDeleteBackdrop}
+            setShowMessage={setShowDeleteBackdrop}
+            onDelete={handleDelete}
+        >
+            <Markdown>
+                {`Are you sure you want to delete _${songData.title}_?`} 
+            </Markdown>    
+        </DeletePopup>}
     </main>)
 }
 
