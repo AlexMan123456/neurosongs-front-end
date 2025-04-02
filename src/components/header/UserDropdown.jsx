@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import wait from "../../utils/wait";
 import { signOut } from "firebase/auth";
-import { Avatar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Avatar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, useColorScheme } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import { getDownloadURL, ref } from "firebase/storage";
 import { auth, storage } from "../../firebase-config";
@@ -34,10 +34,6 @@ function UserDropdown({setSignOutError, isDarkMode}){
         }
     }, [signedInUser])
 
-    function handleUserSettings(){
-        setDisplayUserList(false);
-    }
-
     function handleSignOut(){
         setDisplayUserList(false);
         const previousLocationString = `${location.pathname}${location.search}`
@@ -47,7 +43,6 @@ function UserDropdown({setSignOutError, isDarkMode}){
         }).then(() => {
             setSignedInUser({});
         }).catch((err) => {
-            console.log(err)
             setSignOutError("Error signing out. Please try again later.");
         }).finally(() => {
             navigate(previousLocationString);
@@ -85,7 +80,8 @@ function UserDropdown({setSignOutError, isDarkMode}){
                     width: isLargeScreen ? "20vw" : "50vw",
                     border: 0.5,
                     right: isLargeScreen ? "0.5vw" : "1.2vw",
-                    backgroundColor: isDarkMode ? "black" : "white"
+                    backgroundColor: isDarkMode ? "black" : "white",
+                    borderColor: isDarkMode ? "white" : "black"
                 }}>
                     <ListItem>
                         <ListItemButton
@@ -93,7 +89,7 @@ function UserDropdown({setSignOutError, isDarkMode}){
                             to={`/users/${signedInUser.user_id}`}
                             onClick={() => {setDisplayUserList(false)}}
                         >
-                            <ListItemText primary="View Profile"/>
+                            <ListItemText sx={{color: isDarkMode ? "white" : "black"}} primary="View Profile"/>
                         </ListItemButton>
                     </ListItem>
                     <Divider/>
@@ -103,7 +99,7 @@ function UserDropdown({setSignOutError, isDarkMode}){
                             to={`/users/${signedInUser.user_id}/notifications`}
                             onClick={() => {setDisplayUserList(false)}}
                         >
-                            <ListItemText primary={
+                            <ListItemText sx={{color: isDarkMode ? "white" : "black"}} primary={
                                 notificationCount === 0 ? "View Notifications" : <strong>View Notifications ({notificationCount})</strong>
                             }/>
                         </ListItemButton>
@@ -114,14 +110,14 @@ function UserDropdown({setSignOutError, isDarkMode}){
                         <ListItemButton 
                             component={Link}
                             to="/users/settings"
-                            onClick={handleUserSettings}>
-                            <ListItemText primary="Settings"/>
+                            onClick={() => {setDisplayUserList(false)}}>
+                            <ListItemText sx={{color: isDarkMode ? "white" : "black"}} primary="Settings"/>
                         </ListItemButton>
                     </ListItem>
                     <Divider/>
                     <ListItem>
                         <ListItemButton onClick={handleSignOut}>
-                            <ListItemText primary="Sign Out"/>
+                            <ListItemText sx={{color: isDarkMode ? "white" : "black"}} primary="Sign Out"/>
                         </ListItemButton>
                     </ListItem>
                 </List> : null}
