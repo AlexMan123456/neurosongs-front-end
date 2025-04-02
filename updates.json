@@ -16,5 +16,9 @@
     {
         "id": 2,
         "message": "Added ability to delete album from album page"
+    },
+    {
+        "id": 3,
+        "message": "Fixed an issue with user dropdown in light mode"
     }
 ]
