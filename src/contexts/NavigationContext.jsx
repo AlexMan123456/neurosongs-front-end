@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react"
 import { ScreenSizeContext } from "./ScreenSizeContext";
-import NavigationDrawer from "#components/NavigationDrawer";
+import NavigationDrawer from "#components/navigation/NavigationDrawer";
 
 const NavigationContext = createContext();
 
