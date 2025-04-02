@@ -7,6 +7,9 @@ import wait from "../../utils/wait";
 import Loading from "../Loading";
 import DeletePopup from "../utility/DeletePopup";
 import Markdown from "react-markdown";
+import { deleteObject, ref } from "firebase/storage";
+import { getAlbumCoverDirectory, getSongDirectory } from "#references";
+import { storage } from "#firebase-config";
 
 function AlbumCardOptions({album, setAlbums}){
     const [anchorElement, setAnchorElement] = useState(null);
@@ -20,6 +23,24 @@ function AlbumCardOptions({album, setAlbums}){
     function handleDelete(){
         setIsLoading(true);
         deleteAlbum(album.album_id).then(() => {
+            const promises = []
+            if(album.front_cover_reference !== "Default"){
+                const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
+                promises.push(deleteObject(frontCoverRef));
+            }
+            if(album.back_cover_reference){
+                const backCoverRef = ref(storage, getAlbumCoverDirectory(album, "back"));
+                promises.push(deleteObject(backCoverRef));
+            }
+            return Promise.all(promises);
+        }).then(() => {
+            const promises = []
+            for(const song of album.songs){
+                const songRef = ref(storage, getSongDirectory(song));
+                promises.push(deleteObject(songRef));
+            }
+            return Promise.all(promises)
+        }).then(() => {
             setAlbums((albums) => {
                 const newAlbums = [...albums];
                 
