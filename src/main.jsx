@@ -7,6 +7,7 @@ import App from './App.jsx'
 import { ScreenSizeProvider } from './contexts/ScreenSizeContext.jsx'
 import { UserProvider } from './contexts/UserContext.jsx'
 import './index.css'
+import { NavigationProvider } from '#contexts/NavigationContext.jsx'
 
 const theme = createTheme({
   typography: {
@@ -29,7 +30,9 @@ createRoot(document.getElementById('root')).render(
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <UserProvider>
           <BrowserRouter>
-            <App/>
+            <NavigationProvider>
+              <App/>
+            </NavigationProvider>
           </BrowserRouter>
         </UserProvider>
       </LocalizationProvider>

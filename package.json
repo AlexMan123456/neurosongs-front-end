@@ -41,6 +41,7 @@
   "imports": {
     "#utils": "./src/utils",
     "#components/*": "./src/components/*",
+    "#contexts/*": "./src/contexts/*",
     "#firebase-config": "./src/firebase-config.js",
     "#api": "./api.js"
   }
