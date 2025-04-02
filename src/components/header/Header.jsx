@@ -1,17 +1,10 @@
-import { Login } from "@mui/icons-material";
-import { Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
-import { isSignInWithEmailLink } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
+import { Box, useColorScheme } from "@mui/material";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { version } from "../../../package.json";
 import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
-import { UserContext } from "../../contexts/UserContext";
-import { auth } from "../../firebase-config";
 import neurosongs from "../../images/Neurosongs_WebIcon.png";
 import homepageIcon from "../../images/Neurosongs_note.png";
-import Navigation from "../Navigation";
-import StyledLink from "../styling/StyledLink";
-import UserDropdown from "./UserDropdown";
 import HeaderElements from "./HeaderElements";
 
 function Header(){
@@ -44,7 +37,6 @@ function Header(){
             </h1>
             <p>v{version}</p>
         </div>
-        {!isSignInWithEmailLink(auth, window.location.href) ? <Navigation/> : null}
     </header>)
 }
 
