@@ -22,6 +22,7 @@ import { Link, useLocation } from 'react-router-dom';
 import HeaderElements from '../header/HeaderElements';
 import homepageIcon from "#images/Neurosongs_NS.png";
 import neurosongsNote from "#images/Neurosongs_note.png";
+import HomepageIcon from '#components/styling/HomepageIcon';
 
 const drawerWidth = 240;
 
@@ -191,7 +192,7 @@ function NavigationDrawer({children}){
                   >
                     {
                       {
-                        Homepage: <img style={{width: "20px", height: "auto"}} src={homepageIcon}/>,
+                        Homepage: <HomepageIcon/>,
                         Featured: <Star/>,
                         Search: <Search/>
                       }[text]

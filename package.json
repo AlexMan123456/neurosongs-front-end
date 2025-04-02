@@ -42,7 +42,9 @@
     "#utils": "./src/utils",
     "#components/*": "./src/components/*",
     "#contexts/*": "./src/contexts/*",
+    "#references": "./src/references",
     "#firebase-config": "./src/firebase-config.js",
-    "#api": "./api.js"
+    "#api": "./api.js",
+    "#images/*": "./src/images/*"
   }
 }
