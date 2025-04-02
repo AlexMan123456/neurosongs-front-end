@@ -1,5 +1,5 @@
 // Component taken and adapted from https://mui.com/material-ui/react-drawer/?srsltid=AfmBOorPcMMjB0Ls4a-m1oKuECslEiWu2cSZuceDFmd2CcZwBfsss8sA#mini-variant-drawer
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useColorScheme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -18,9 +18,14 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import neurosongsNote from "../images/Neurosongs_note.png";
-import { Search, Star } from '@mui/icons-material';
+import { Login, Search, Star } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '#contexts/UserContext';
+import UserDropdown from './header/UserDropdown';
+import StyledLink from './styling/StyledLink';
+import homepageIcon from "../images/Neurosongs_NS.png"
+import HeaderElements from './header/HeaderElements';
 
 const drawerWidth = 240;
 
@@ -106,6 +111,9 @@ function NavigationDrawer({children}){
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const {isUserSignedIn} = useContext(UserContext);
+  const [signOutError, setSignOutError] = useState("");
+  const {mode} = useColorScheme();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -137,6 +145,7 @@ function NavigationDrawer({children}){
           <Typography variant="h6" noWrap component="div">
             Neurosongs
           </Typography>
+          <HeaderElements/>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -147,7 +156,7 @@ function NavigationDrawer({children}){
         </DrawerHeader>
         <Divider />
         <List>
-          {["Featured", "Search"].map((text, index) => {
+          {["Homepage", "Featured", "Search"].map((text, index) => {
             const lowerCaseText = text.toLowerCase();
             return (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
@@ -166,8 +175,8 @@ function NavigationDrawer({children}){
                         },
                   ]}
                   component={Link}
-                  to={`/${lowerCaseText}`}
-                  selected={location.pathname.includes(lowerCaseText)}
+                  to={`/${text !== "Homepage" ? lowerCaseText : ""}`}
+                  selected={location.pathname.includes(lowerCaseText) || (text === "Homepage" && location.pathname === "/")}
                 >
                   <ListItemIcon
                     sx={[
@@ -186,6 +195,7 @@ function NavigationDrawer({children}){
                   >
                     {
                       {
+                        Homepage: <img style={{width: "20px", height: "auto"}} src={homepageIcon}/>,
                         Featured: <Star/>,
                         Search: <Search/>
                       }[text]
