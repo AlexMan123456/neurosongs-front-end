@@ -3,9 +3,12 @@
     "baseUrl": "./src",
     "paths": {
       "#utils": ["utils"],
+      "#references": ["references"],
       "#components/*": ["components/*"],
       "#firebase-config": ["firebase-config.js"],
-      "#api": ["../api.js"]
+      "#api": ["../api.js"],
+      "#contexts/*": ["contexts/*"],
+      "#images/*": ["images/*"]
     }
   }
 }

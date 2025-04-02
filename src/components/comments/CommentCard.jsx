@@ -18,6 +18,7 @@ import { formatMarkdownWithLineBreaks } from "#utils";
 import Markdown from "react-markdown";
 import { useParams } from "react-router";
 import ReplyCard from "./replies/ReplyCard";
+import { ScreenSizeContext } from "#contexts/ScreenSizeContext";
 
 function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdated, highlightedReply}){
     const [comment, setComment] = useState(givenComment);
@@ -31,7 +32,7 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
     const [isReplying, setIsReplying] = useState(false);
     const [replies, setReplies] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
-    const {comment_id} = useParams();
+    const {isLargeScreen} = useContext(ScreenSizeContext);
 
     const {isUserSignedIn, signedInUser} = useContext(UserContext);
 
@@ -90,7 +91,8 @@ function CommentCard({comment: givenComment, setComments, ratingVisibilityUpdate
         sx={{
             padding: "35vw 30pvh",
             border: 0.5,
-            borderRadius: 0.7
+            borderRadius: 0.7,
+            width: isLargeScreen ? "90%" : "100%"
         }}
     >
         {!isLoading ? <Avatar src={profilePicture}/> : <Loading/>} 

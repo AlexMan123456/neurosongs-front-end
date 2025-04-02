@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import largeScreenCondition from "../../utils/large-screen-condition";
+import { useContext } from "react";
 import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
 
 function StyledImage({src, alt}){

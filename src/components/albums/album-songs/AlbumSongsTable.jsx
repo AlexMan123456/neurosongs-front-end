@@ -1,9 +1,12 @@
 import { Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import AlbumSongCard from "./AlbumSongCard"
+import { useContext } from "react"
+import { ScreenSizeContext } from "#contexts/ScreenSizeContext"
 
 function AlbumSongTable({songs}){
+    const {isLargeScreen} = useContext(ScreenSizeContext);
     return (
-        <TableContainer>
+        <TableContainer sx={{width: isLargeScreen ? "90%" : "99.9%"}}>
             <Table>
                 <TableHead>
                     <TableRow>

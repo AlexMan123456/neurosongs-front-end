@@ -1,41 +1,16 @@
 [
     {
         "id": 1, 
-        "message": "Branding updates",
+        "message": "Navigation layout changes",
         "subPoints": [
             {
                 "id": 1,
-                "message": "Changed the header to be an image (thanks [Space Pawdity](https://neurosongs.netlify.app/users/jr3mIiI6v3WOVZQW1khWXR31bXu1)!)"
+                "message": "If viewing on desktop, there is now a drawer component to the left of the screen to help with navigation"
             },
             {
                 "id": 2,
-                "message": "Added new app icon (again, thanks [Space Pawdity](https://neurosongs.netlify.app/users/jr3mIiI6v3WOVZQW1khWXR31bXu1)!)"},
-            {
-                "id": 3,
-                "message": "Changed some of the fonts to match with the new branding"
+                "message": "If viewing on mobile, navigation bar appears on bottom of screen"
             }
         ]
-    },
-    {
-        "id": 2,
-        "message": "When clicking on a notification on the notifications page, you will now be redirected to a comment page"
-    },
-    {
-        "id": 3,
-        "message": "Small changes to header",
-        "subPoints": [
-            {
-                "id": 1,
-                "message": "Made the header clickable (clicking on it will take you to featured page)"
-            },
-            {
-                "id": 2,
-                "message": "Added version number below the image heading"
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "message": "Wording change to privacy policy checkbox on signup"
     }
 ]

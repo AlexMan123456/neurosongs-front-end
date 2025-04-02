@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import largeScreenCondition from "../utils/large-screen-condition";
 
 const ScreenSizeContext = createContext();
 
@@ -8,6 +7,9 @@ function ScreenSizeProvider({children}){
     const [windowHeight, setWindowHeight] = useState(window.innerHeight);
     const [isLargeScreen, setIsLargeScreen] = useState(largeScreenCondition(window.innerWidth, window.innerHeight));
     
+    function largeScreenCondition(width, height){
+        return width > 669 && height > 650
+    }
     
     useEffect(() => {
         function setDimensions(){

@@ -1,7 +1,7 @@
 {
   "name": "neurosongs-front-end",
   "private": true,
-  "version": "3.2.2",
+  "version": "4.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -41,7 +41,10 @@
   "imports": {
     "#utils": "./src/utils",
     "#components/*": "./src/components/*",
+    "#contexts/*": "./src/contexts/*",
+    "#references": "./src/references",
     "#firebase-config": "./src/firebase-config.js",
-    "#api": "./api.js"
+    "#api": "./api.js",
+    "#images/*": "./src/images/*"
   }
 }
