@@ -71,6 +71,8 @@ function Homepage(){
 
                 <p>With all that said, have fun exploring the site! If you enjoyed your visit (and even if you didn't), please feel free to let me know your thoughts by filling out <StyledLink to="https://docs.google.com/forms/d/e/1FAIpQLScILg15VZOUU-JwXj9nh5amvmOP35VE_cGz4BIAMRzzA8Alkw/viewform?usp=dialog">this feedback form.</StyledLink> This will allow me to keep improving the experience and keep working to make this site the best it can be!</p>
 
+                <p>All credit goes to <StyledLink to="https://neurosongs.netlify.app/users/jr3mIiI6v3WOVZQW1khWXR31bXu1">Space Pawdity</StyledLink> for the logo design. They designed the main logo you see at the top of the page, as well as the app icon.</p>
+
                 <p>I'll leave it here for now. Enjoy the site!</p>
 
                 <p><StyledLink to="https://neurosongs-privacy.netlify.app/">See privacy policy</StyledLink></p>
