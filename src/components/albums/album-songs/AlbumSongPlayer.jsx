@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { getSongById } from "../../../../api";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../firebase-config";
 import H5AudioPlayer from "react-h5-audio-player";
 import Loading from "../../Loading";
+import { ScreenSizeContext } from "#contexts/ScreenSizeContext";
 
 function AlbumSongPlayer({album}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,6 +15,7 @@ function AlbumSongPlayer({album}){
     const [songURL, setSongURL] = useState(null);
     const navigate = useNavigate()
     const location = useLocation()
+    const {isLargeScreen} = useContext(ScreenSizeContext);
 
     useEffect(() => {
         async function loadSong(){
@@ -30,6 +32,7 @@ function AlbumSongPlayer({album}){
         }
         loadSong()
     }, [song_id])
+
 
     function nextSong(){
         const songIDs = album.songs.map((song) => {
@@ -74,6 +77,7 @@ function AlbumSongPlayer({album}){
     }
 
     return <H5AudioPlayer
+        style={{width: isLargeScreen ? "90%" : "100%"}}
         src={songURL}
         autoPlay={true} 
         showJumpControls={false}

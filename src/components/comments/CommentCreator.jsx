@@ -4,11 +4,12 @@ import { postComment } from "../../../api";
 import { UserContext } from "../../contexts/UserContext";
 import wait from "../../utils/wait";
 import Loading from "../Loading";
+import { ScreenSizeContext } from "#contexts/ScreenSizeContext";
 
 function CommentCreator({contentType, content_id, content_user_id, title, setComments}){
     const [body, setBody] = useState("");
     const {signedInUser, isUserSignedIn} = useContext(UserContext);
-
+    const {isLargeScreen} = useContext(ScreenSizeContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("")
 
@@ -39,7 +40,7 @@ function CommentCreator({contentType, content_id, content_user_id, title, setCom
     return (<FormControl>
         <TextField
             sx={{
-                width: "98vw",
+                width: isLargeScreen ? "90vw" : "98vw",
                 backgroundColor: isUserSignedIn ? null : "lightgray"
             }}
             minRows={5}
