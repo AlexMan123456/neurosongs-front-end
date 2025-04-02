@@ -30,13 +30,13 @@ function AlbumCardOptions({album, setAlbums}){
                 newAlbums.splice(albumIndex, 1);
                 return newAlbums;
             })
+            setIsLoading(false);
         }).catch((err) => {
             setError("Error deleting album. Please try again later.");
+            setIsLoading(false);
             wait(4).then(() => {
                 setError("");
             })
-        }).finally(() => {
-            setIsLoading(false);
         })
     }
 
@@ -71,7 +71,8 @@ function AlbumCardOptions({album, setAlbums}){
             >
                 <Markdown>{`Are you sure you want to delete ${album.title}?`}</Markdown>
             </DeletePopup>
-            </Menu>
+            {error ? <Typography color="error">{error}</Typography> : null}
+        </Menu>
     </Box>)
 }
 
