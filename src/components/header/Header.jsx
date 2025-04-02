@@ -38,7 +38,7 @@ function Header(){
         </>}
         <div id="heading">
             <h1>
-                <Link to="/featured">
+                <Link to="/">
                     <img style={{width: "300px", height: "auto"}} src={neurosongs} alt="Neurosongs"/>
                 </Link>
             </h1>
