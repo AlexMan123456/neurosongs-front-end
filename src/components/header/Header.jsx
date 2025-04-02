@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from "react"
-import Navigation from "../Navigation"
-import UserDropdown from "./UserDropdown";
-import { UserContext } from "../../contexts/UserContext";
-import StyledLink from "../styling/StyledLink";
+import { Login } from "@mui/icons-material";
+import { Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
 import { isSignInWithEmailLink } from "firebase/auth";
-import { auth } from "../../firebase-config";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Home, Login } from "@mui/icons-material";
-import { Avatar, Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
-import neurosongs from "../../images/Neurosongs_WebIcon.png"
-import homepageIcon from "../../images/Neurosongs_note.png"
+import { version } from "../../../package.json";
 import { ScreenSizeContext } from "../../contexts/ScreenSizeContext";
-import { version } from "../../../package.json"
+import { UserContext } from "../../contexts/UserContext";
+import { auth } from "../../firebase-config";
+import neurosongs from "../../images/Neurosongs_WebIcon.png";
+import homepageIcon from "../../images/Neurosongs_note.png";
+import Navigation from "../Navigation";
+import StyledLink from "../styling/StyledLink";
+import UserDropdown from "./UserDropdown";
 
 function Header(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -61,12 +61,11 @@ function Header(){
             right: "0px",
             top: "0px"
         }}>
-            <Link
+            <StyledLink
                 to="/sign_in"
-                
                 >
                 <Login/>
-            </Link>
+            </StyledLink>
             <StyledLink to="/sign_in">Sign in</StyledLink>
         </Box>
         }
