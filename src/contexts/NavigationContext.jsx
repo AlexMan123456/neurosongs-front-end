@@ -8,7 +8,11 @@ const NavigationContext = createContext();
 function NavigationProvider({children}){
     const {isLargeScreen} = useContext(ScreenSizeContext);
 
-    return isLargeScreen ? <NavigationDrawer>{children}</NavigationDrawer> : <NavigationBottom>{children}</NavigationBottom>
+    return (
+        <NavigationContext.Provider>
+            {isLargeScreen ? <NavigationDrawer>{children}</NavigationDrawer> : <NavigationBottom>{children}</NavigationBottom>}
+        </NavigationContext.Provider>
+    )
 }
 
 export { NavigationContext, NavigationProvider }
