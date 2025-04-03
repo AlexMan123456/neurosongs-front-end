@@ -1,10 +1,11 @@
 import { ScreenSizeContext } from "#contexts/ScreenSizeContext";
 import { UserContext } from "#contexts/UserContext";
-import { Box, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
+import { Box, Button, FormControl, FormControlLabel, Switch, useColorScheme } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import UserDropdown from "./UserDropdown";
 import StyledLink from "#components/styling/StyledLink";
-import { Login } from "@mui/icons-material";
+import { Login, Person } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 function HeaderElements(){
     const {isUserSignedIn} = useContext(UserContext);
@@ -41,12 +42,16 @@ function HeaderElements(){
                 right: "0px",
                 top: "0px"
             }}>
-                <StyledLink
-                    to="/sign_in"
+                <Box sx={{paddingTop: "10px", paddingRight: "3px"}}>
+                    <Button
+                        color="inherit"
+                        variant="outlined"
+                        component={Link}
+                        to="/sign_in"
                     >
-                    <Login/>
-                </StyledLink>
-                <StyledLink to="/sign_in">Sign in</StyledLink>
+                        <Person/> Sign in
+                    </Button>
+                </Box>
             </Box>
             }
             {signOutError ? <p>{signOutError}</p> : null}
