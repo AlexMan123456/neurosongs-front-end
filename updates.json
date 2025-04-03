@@ -24,5 +24,9 @@
     {
         "id": 4,
         "message": "Fixed sign-in button"
+    },
+    {
+        "id": 5,
+        "message": "Resize sign in button for mobile"
     }
 ]

@@ -42,12 +42,14 @@ function HeaderElements(){
                 right: "0px",
                 top: "0px"
             }}>
-                <Box sx={{paddingTop: "10px", paddingRight: "3px"}}>
+                <Box sx={{paddingTop: "10px", paddingRight: "3px", width: isLargeScreen ? null : "90px", height: "90px"
+                }}>
                     <Button
                         color="inherit"
                         variant="outlined"
                         component={Link}
                         to="/sign_in"
+                        sx={{fontSize: isLargeScreen ? null : "12px"}}
                     >
                         <Person/> Sign in
                     </Button>
