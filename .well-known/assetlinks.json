@@ -6,6 +6,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "app.netlify.neurosongs.twa",
-        "sha256_cert_fingerprints": ["AB:B6:25:A5:CF:DE:95:09:E5:23:BA:85:21:D5:94:80:23:BB:3F:37:F3:98:C4:F9:12:88:FA:A3:81:CD:BD:49"]
+        "sha256_cert_fingerprints": ["33:DE:FD:DB:A0:C8:1F:F8:CD:9F:DB:9E:31:B1:4F:2D:5F:A6:AA:AB:91:C5:F9:74:D2:94:64:19:D6:A9:65:22"]
       }
     }]
