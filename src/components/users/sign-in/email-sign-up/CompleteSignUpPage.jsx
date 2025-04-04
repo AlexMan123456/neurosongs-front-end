@@ -229,6 +229,7 @@ function CompleteSignUpPage(){
         />
         {displayConfirmPasswordHelperText ? <FormHelperText>Enter your password again to confirm.</FormHelperText> : null}
         <DatePicker
+            required
             label="Date of birth"
             value={dateOfBirth}
             onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
