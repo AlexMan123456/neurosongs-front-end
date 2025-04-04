@@ -1,10 +1,8 @@
 import { useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";
-import { Button, Checkbox, FormControl, FormControlLabel, TextField, Typography } from "@mui/material";
-import verifyUserAge from "../../../../utils/verify-user-age";
+import { Box, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, TextField, Typography } from "@mui/material";
 import { UserContext } from "../../../../contexts/UserContext";
-import wait from "../../../../utils/wait";
 import SignUpSuccess from "../SignUpSuccess";
 import dayjs from "dayjs";
 import { postUser } from "../../../../../api";
@@ -14,12 +12,13 @@ import { ref, uploadBytes } from "@firebase/storage";
 import { storage } from "../../../../firebase-config";
 import getProfilePictureDirectory from "../../../../references/get-profile-picture-directory";
 import StyledLink from "../../../styling/StyledLink";
+import { formatGoogleDisplayNameAsUsername, verifyUserAge, wait } from "#utils";
 
 function CompleteGoogleSignup(){
     const {setSignedInUser, firebaseUser, setIsSigningInWithGoogle} = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [artistName, setArtistName] = useState(firebaseUser.displayName);
-    const [username, setUsername] = useState(firebaseUser.displayName);
+    const [username, setUsername] = useState(formatGoogleDisplayNameAsUsername(firebaseUser.displayName));
     const [profilePicture, setProfilePicture] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState(dayjs());
     const [dateOfBirthError, setDateOfBirthError] = useState("");
@@ -28,12 +27,12 @@ function CompleteGoogleSignup(){
     const [generalError, setGeneralError] = useState("");
     const [isPrivacyPolicyAccepted, setIsPrivacyPolicyAccepted] = useState(false);
     const [privacyPolicyError, setPrivacyPolicyError] = useState("");
+    const [displayUsernameHelperText, setDisplayUsernameHelperText] = useState(false);
+    const [description, setDescription] = useState("");
 
     const navigate = useNavigate();
 
     async function handleSubmit(){
-        
-        
         try {
             setIsLoading(true);
             if(!isPrivacyPolicyAccepted){
@@ -52,19 +51,29 @@ function CompleteGoogleSignup(){
                 return;
             }
 
+            if(username.includes(" ") || username.includes("@")){
+                setUsernameError("Username must not contain spaces or @");
+                setIsLoading(false);
+                await wait(4);
+                setUsernameError("");
+                return;
+            }
+
             if(profilePicture){
                 const profilePictureRef = ref(storage, getProfilePictureDirectory({user_id: firebaseUser.uid, profile_picture: profilePicture.name}))
                 await uploadBytes(profilePictureRef, profilePicture);
             }
-            const user_1 = await postUser({
+
+            const user = await postUser({
                 user_id: firebaseUser.uid,
                 artist_name: artistName,
                 username,
+                description,
                 email: firebaseUser.email,
                 profile_picture: profilePicture?.name ?? "Default",
                 date_of_birth: new Date(dateOfBirth.format())
             });
-            setSignedInUser(user_1);
+            setSignedInUser(user);
             await wait(2);
             setIsSigningInWithGoogle(false);
             setIsLoading(false);
@@ -95,8 +104,8 @@ function CompleteGoogleSignup(){
 
     return (<section>
         <h2>Welcome to Neurosongs{firebaseUser.displayName ? `, ${firebaseUser.displayName}` : "!"}</h2>
-        <p>Please confirm the following details</p>
-        <FormControl>
+        <Typography>Please confirm the following details</Typography>
+        <FormControl sx={{paddingTop: "5px"}}>
             <AvatarInput
                 file={profilePicture}
                 setFile={setProfilePicture}
@@ -114,14 +123,30 @@ function CompleteGoogleSignup(){
                 label="Username"
                 value={username}
                 onChange={(event) => {setUsername(event.target.value)}}
+                onFocus={() => {setDisplayUsernameHelperText(true)}}
+                onBlur={() => {setDisplayUsernameHelperText(false)}}
             />
+            {displayUsernameHelperText ? <FormHelperText>NOTE: Your username must be unique and not contain spaces or @ sign</FormHelperText> : null}
             {usernameError ? <Typography color="error">{usernameError}</Typography> : null}
             <DatePicker
+                required
                 label="Date of birth"
                 value={dateOfBirth}
                 onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
             />
             {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
+            <h3>Optional</h3>
+            <Typography>This can be changed later</Typography>
+            <TextField
+                multiline
+                sx={{
+                    minWidth: "30vw",
+                }}
+                minRows={5}
+                label="Description"
+                value={description}
+                onChange={(event) => {setDescription(event.target.value)}}
+            />
             <FormControlLabel 
                 control={
                     <Checkbox

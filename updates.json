@@ -28,5 +28,23 @@
     {
         "id": 5,
         "message": "Resize sign in button for mobile"
+    },
+    {
+        "id": 6,
+        "message": "Changes to Google sign-up process",
+        "subPoints": [
+            {
+                "id": 1,
+                "message": "Added error messages in the cases where username contains spaces or @"
+            },
+            {
+                "id": 2,
+                "message": "If Google sign-up process causes username to have spaces or @, remove spaces and replace @ with 'a'"
+            },
+            {
+                "id": 3,
+                "message": "Allow users to edit their user descriptions from Google sign-up page"
+            }
+        ]
     }
 ]
