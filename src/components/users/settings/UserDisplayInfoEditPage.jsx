@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-import { Avatar, Button, FormControl, TextField } from "@mui/material";
+import { Avatar, Box, Button, FormControl, Stack, TextField } from "@mui/material";
 import { getUserById, patchUser } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -110,29 +110,31 @@ function UserDisplayInfoEditPage(){
     return (<section>
         <h2>Edit user details</h2>
         <FormControl>
-            {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
-            <FileInput onChange={handleAvatarDisplay} accept="image/*">Change Profile Picture</FileInput>
-            <TextField
-                label="Username"
-                value={username}
-                onChange={(event) => {setUsername(event.target.value)}}
-            />
-            <TextField
-                label="Artist Name"
-                value={artist_name}
-                onChange={(event) => {setArtistName(event.target.value)}}
-            />
-            <TextField
-                multiline
-                sx={{
-                    minWidth: "30vw",
-                }}
-                minRows={5}
-                label="Description"
-                value={description}
-                onChange={(event) => {setDescription(event.target.value)}}
-            />
-            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+                <Stack spacing={2}>
+                {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
+                <FileInput onChange={handleAvatarDisplay} accept="image/*">Change Profile Picture</FileInput>
+                    <TextField
+                        label="Username"
+                        value={username}
+                        onChange={(event) => {setUsername(event.target.value)}}
+                    />
+                    <TextField
+                        label="Artist Name"
+                        value={artist_name}
+                        onChange={(event) => {setArtistName(event.target.value)}}
+                    />
+                    <TextField
+                        multiline
+                        sx={{
+                            minWidth: "30vw",
+                        }}
+                        minRows={5}
+                        label="Description"
+                        value={description}
+                        onChange={(event) => {setDescription(event.target.value)}}
+                    />
+                <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+                </Stack>
         </FormControl>
     </section>)
 }
