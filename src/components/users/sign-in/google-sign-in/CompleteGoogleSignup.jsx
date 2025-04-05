@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { DatePicker } from "@mui/x-date-pickers";
-import { Box, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Stack, TextField, Typography } from "@mui/material";
 import { UserContext } from "../../../../contexts/UserContext";
 import SignUpSuccess from "../SignUpSuccess";
 import dayjs from "dayjs";
@@ -105,58 +105,63 @@ function CompleteGoogleSignup(){
     return (<section>
         <h2>Welcome to Neurosongs{firebaseUser.displayName ? `, ${firebaseUser.displayName}` : "!"}</h2>
         <Typography>Please confirm the following details</Typography>
-        <FormControl sx={{paddingTop: "5px"}}>
-            <AvatarInput
-                file={profilePicture}
-                setFile={setProfilePicture}
-            >
-                Set profile picture    
-            </AvatarInput>
-            <TextField
-                required
-                label="Artist name"
-                value={artistName}
-                onChange={(event) => {setArtistName(event.target.value)}}
-            />
-            <TextField
-                required
-                label="Username"
-                value={username}
-                onChange={(event) => {setUsername(event.target.value)}}
-                onFocus={() => {setDisplayUsernameHelperText(true)}}
-                onBlur={() => {setDisplayUsernameHelperText(false)}}
-            />
-            {displayUsernameHelperText ? <FormHelperText>NOTE: Your username must be unique and not contain spaces or @ sign</FormHelperText> : null}
-            {usernameError ? <Typography color="error">{usernameError}</Typography> : null}
-            <DatePicker
-                required
-                label="Date of birth"
-                value={dateOfBirth}
-                onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
-            />
-            {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
-            <h3>Optional</h3>
-            <Typography>This can be changed later</Typography>
-            <TextField
-                multiline
-                sx={{
-                    minWidth: "30vw",
-                }}
-                minRows={5}
-                label="Description"
-                value={description}
-                onChange={(event) => {setDescription(event.target.value)}}
-            />
-            <FormControlLabel 
-                control={
-                    <Checkbox
+        <br/>
+        <FormControl>
+            <Stack spacing={1}>
+                <AvatarInput
+                    file={profilePicture}
+                    setFile={setProfilePicture}
+                    >
+                    Set profile picture    
+                </AvatarInput>
+                <TextField
+                    required
+                    label="Artist name"
+                    value={artistName}
+                    onChange={(event) => {setArtistName(event.target.value)}}
+                    />
+                <TextField
+                    required
+                    label="Username"
+                    value={username}
+                    onChange={(event) => {setUsername(event.target.value)}}
+                    onFocus={() => {setDisplayUsernameHelperText(true)}}
+                    onBlur={() => {setDisplayUsernameHelperText(false)}}
+                    />
+                {displayUsernameHelperText ? <FormHelperText>NOTE: Your username must be unique and not contain spaces or @ sign</FormHelperText> : null}
+                {usernameError ? <Typography color="error">{usernameError}</Typography> : null}
+                <DatePicker
+                    required
+                    label="Date of birth"
+                    value={dateOfBirth}
+                    onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
+                    />
+                {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
+                <br/>
+                <h3>Optional</h3>
+                <Typography>This can be changed later</Typography>
+                <TextField
+                    multiline
+                    sx={{
+                        minWidth: "30vw",
+                    }}
+                    minRows={5}
+                    label="Description"
+                    value={description}
+                    onChange={(event) => {setDescription(event.target.value)}}
+                    />
+            </Stack>
+                <br/>
+                <FormControlLabel 
+                    control={
+                        <Checkbox
                         value={isPrivacyPolicyAccepted}
                         onClick={() => {setIsPrivacyPolicyAccepted((policyAccepted) => {return !policyAccepted})}}
-                    />} 
-                label={<Typography sx={{paddingTop: "8px"}}>I accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
-            />
-            {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
-            <br/>
+                        />} 
+                        label={<Typography sx={{paddingTop: "8px"}}>I accept the <StyledLink to="https://neurosongs-privacy.netlify.app/" target="_blank">privacy policy</StyledLink></Typography>}
+                        />
+                {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
+                <br/>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             {generalError ? <Typography color="error">{generalError}</Typography> : null}
         </FormControl>

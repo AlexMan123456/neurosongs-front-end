@@ -46,5 +46,13 @@
                 "message": "Allow users to edit their user descriptions from Google sign-up page"
             }
         ]
+    },
+    {
+        "id": 7,
+        "message": "Added some extra spacing between text areas on forms"
+    },
+    {
+        "id": 8,
+        "message": "General bug fixes to email sign-up process"
     }
 ]

@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, TextField } from "@mui/material"
+import { Button, FormControl, FormHelperText, Stack, TextField } from "@mui/material"
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { useState } from "react"
 import { auth } from "../../../../firebase-config";
@@ -62,13 +62,15 @@ function GetEmailForSignUpPage(){
     return (<section>
     <h2>Create account</h2>
     <FormControl>
-        <TextField
-            required
-            label="Email"
-            value={email}
-            onChange={(event) => {setEmail(event.target.value)}}
-        />
-        <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+        <Stack spacing={1}>
+            <TextField
+                required
+                label="Email"
+                value={email}
+                onChange={(event) => {setEmail(event.target.value)}}
+                />
+            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+        </Stack>
     </FormControl>
     {error ? <p>{error}</p> : null}
     </section>)

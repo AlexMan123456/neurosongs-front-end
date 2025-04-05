@@ -3,7 +3,7 @@ import { getSongById, patchSong } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import wait from "../../../utils/wait";
 import Loading from "../../Loading";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, FormControl, Stack, TextField } from "@mui/material";
 import SongAudioInput from "../song-creation/SongAudioInput";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import getSongDirectory from "../../../references/get-song-directory";
@@ -79,31 +79,33 @@ function SongEditPage(){
     }
 
     return (<FormControl>
-        <TextField
-            required
-            label="Title"
-            value={title}
-            onChange={(event) => {setTitle(event.target.value)}}
-        />
-        <TextField
-            multiline
-            sx={{
-                minWidth: "30vw",
-            }}
-            minRows={5}
-            label="Description"
-            value={description}
-            onChange={(event) => {setDescription(event.target.value)}}
-        />
-        <br/>
-        <SongFileChanger
-            user_id={userID}
-            album_id={albumID}
-            file={newFile}
-            setFile={setNewFile}
-            isFileChanged={isFileChanged}
-            setIsFileChanged={setIsFileChanged}
-        />
+        <Stack spacing={1}>
+            <TextField
+                required
+                label="Title"
+                value={title}
+                onChange={(event) => {setTitle(event.target.value)}}
+            />
+            <TextField
+                multiline
+                sx={{
+                    minWidth: "30vw",
+                }}
+                minRows={5}
+                label="Description"
+                value={description}
+                onChange={(event) => {setDescription(event.target.value)}}
+            />
+            <br/>
+            <SongFileChanger
+                user_id={userID}
+                album_id={albumID}
+                file={newFile}
+                setFile={setNewFile}
+                isFileChanged={isFileChanged}
+                setIsFileChanged={setIsFileChanged}
+            />
+        </Stack>
         <br/>
         <Button variant="contained" onClick={handleSubmit}>Submit</Button>
         {error ? <p>{error}</p> : null}
