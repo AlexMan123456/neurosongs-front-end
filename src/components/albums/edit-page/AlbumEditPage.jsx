@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../Loading";
 import { UserContext } from "../../../contexts/UserContext";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
-import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { Button, FormControl, Stack, TextField, Typography } from "@mui/material";
 import FileInput from "../../styling/FileInput";
 import AlbumCoverInput from "../album-creation/AlbumCoverInput";
 import { ref, uploadBytes } from "firebase/storage";
@@ -104,29 +104,31 @@ function AlbumEditPage(){
     }
 
     return (<FormControl>
-        <AlbumCoverInput
-            side="front"
-            setCover={setFrontCover}
-        />
-        <AlbumCoverInput
-            side="back"
-            setCover={setBackCover}
-        />
-        <TextField
-            label="Title"
-            value={title}
-            onChange={(event) => {setTitle(event.target.value)}}
-        />
-        <TextField
-            multiline
-            sx={{
-                minWidth: "30vw",
-            }}
-            minRows={5}
-            label="Description"
-            value={description}
-            onChange={(event) => {setDescription(event.target.value)}}
-        />
+        <Stack spacing={1}>
+            <AlbumCoverInput
+                side="front"
+                setCover={setFrontCover}
+            />
+            <AlbumCoverInput
+                side="back"
+                setCover={setBackCover}
+            />
+            <TextField
+                label="Title"
+                value={title}
+                onChange={(event) => {setTitle(event.target.value)}}
+            />
+            <TextField
+                multiline
+                sx={{
+                    minWidth: "30vw",
+                }}
+                minRows={5}
+                label="Description"
+                value={description}
+                onChange={(event) => {setDescription(event.target.value)}}
+            />
+        </Stack>
         {error ? <p>{error}</p> : null}
         <ReorderSongs songs={songs} setSongs={setSongs}/>
         <Button onClick={handleSubmit}>Submit</Button>
