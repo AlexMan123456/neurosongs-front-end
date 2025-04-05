@@ -110,7 +110,7 @@ function UserDisplayInfoEditPage(){
     return (<section>
         <h2>Edit user details</h2>
         <FormControl>
-                <Stack spacing={2}>
+                <Stack spacing={1}>
                 {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
                 <FileInput onChange={handleAvatarDisplay} accept="image/*">Change Profile Picture</FileInput>
                     <TextField

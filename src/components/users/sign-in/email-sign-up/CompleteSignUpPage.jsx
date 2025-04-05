@@ -185,7 +185,7 @@ function CompleteSignUpPage(){
     return (<>
     <h2>Please enter the following details</h2>
     <FormControl>
-        <Stack spacing={2}>
+        <Stack spacing={1}>
             {isProfilePictureLoading ? <Loading/> : (!profilePictureError ? <Avatar src={profilePictureDisplay}/> : <p>{profilePictureError}</p>)}
             <FileInput onChange={handleAvatarDisplay} accept="image/*">Set Profile Picture</FileInput>
             <TextField
@@ -250,6 +250,7 @@ function CompleteSignUpPage(){
                 onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
                 />
             {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
+            <br/>
             <h3>Optional</h3>
             <p>This can be changed later</p>
             <TextField

@@ -1,4 +1,4 @@
-import { Button, FormControl, TextField } from "@mui/material"
+import { Button, FormControl, Stack, TextField } from "@mui/material"
 import { useContext, useState } from "react"
 import { auth } from "../../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -26,18 +26,20 @@ function EmailAndPasswordSignIn({setIsLoading, setSignInError}){
     }
 
     return (<FormControl>
-        <TextField
-            label="Email"
-            value={email}
-            onChange={(event) => {setEmail(event.target.value)}}
-        />
-        <TextField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(event) => {setPassword(event.target.value)}}
-        />
-        <Button variant="contained" onClick={handleSubmit}>Sign in</Button>
+        <Stack spacing={1}>
+            <TextField
+                label="Email"
+                value={email}
+                onChange={(event) => {setEmail(event.target.value)}}
+                />
+            <TextField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={(event) => {setPassword(event.target.value)}}
+                />
+            <Button variant="contained" onClick={handleSubmit}>Sign in</Button>
+        </Stack>
     </FormControl>)
 }
 

@@ -107,7 +107,7 @@ function CompleteGoogleSignup(){
         <Typography>Please confirm the following details</Typography>
         <br/>
         <FormControl>
-            <Stack spacing={2}>
+            <Stack spacing={1}>
                 <AvatarInput
                     file={profilePicture}
                     setFile={setProfilePicture}
@@ -137,6 +137,7 @@ function CompleteGoogleSignup(){
                     onChange={(newDateOfBirth) => {setDateOfBirth(newDateOfBirth)}}
                     />
                 {dateOfBirthError ? <Typography color="error">{dateOfBirthError}</Typography> : null}
+                <br/>
                 <h3>Optional</h3>
                 <Typography>This can be changed later</Typography>
                 <TextField
@@ -150,6 +151,7 @@ function CompleteGoogleSignup(){
                     onChange={(event) => {setDescription(event.target.value)}}
                     />
             </Stack>
+                <br/>
                 <FormControlLabel 
                     control={
                         <Checkbox
