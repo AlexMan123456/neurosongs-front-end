@@ -149,6 +149,7 @@ function CompleteGoogleSignup(){
                     value={description}
                     onChange={(event) => {setDescription(event.target.value)}}
                     />
+            </Stack>
                 <FormControlLabel 
                     control={
                         <Checkbox
@@ -159,7 +160,6 @@ function CompleteGoogleSignup(){
                         />
                 {privacyPolicyError ? <Typography color="error">{privacyPolicyError}</Typography> : null}
                 <br/>
-            </Stack>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             {generalError ? <Typography color="error">{generalError}</Typography> : null}
         </FormControl>
