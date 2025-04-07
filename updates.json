@@ -58,5 +58,9 @@
     {
         "id": 9,
         "message": "Fixed a bug with the ordering of songs on album page"
+    },
+    {
+        "id": 10,
+        "message": "Changes to back-end API connection"
     }
 ]

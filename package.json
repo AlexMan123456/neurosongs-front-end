@@ -1,7 +1,7 @@
 {
   "name": "neurosongs-front-end",
   "private": true,
-  "version": "4.0.8",
+  "version": "4.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
