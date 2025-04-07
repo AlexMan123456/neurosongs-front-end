@@ -1,7 +1,9 @@
+import { appCheck } from "#firebase-config"
 import axios from "axios"
+import { getToken } from "firebase/app-check"
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL
+    baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
 function getSongs(queries){
@@ -23,7 +25,13 @@ function getUserById(user_id){
 }
 
 function deleteUserFromDatabase(user_id){
-    return api.delete(`/api/users/${user_id}`)
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/users/${user_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
 }
 
 function getSongById(song_id){
@@ -45,13 +53,26 @@ function getAlbumById(album_id){
 }
 
 function postUser(data){
-    return api.post("/api/users", data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post("/api/users", data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })  
+    }).then(({data}) => {
         return data.user
     })
 }
 
 function patchUser(user_id, data){
-    return api.patch(`/api/users/${user_id}`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/users/${user_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.user
     })
 }
@@ -69,89 +90,190 @@ function getReplies(comment_id){
 }
 
 function postComment(contentType, content_id, data){
-    return api.post(`/api/${contentType}/${content_id}/comments`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/${contentType}/${content_id}/comments`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.comment;
     })
 }
 
 function postReply(comment_id, data){
-    return api.post(`/api/comments/${comment_id}/replies`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/comments/${comment_id}/replies`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.reply
     })
 }
 
 function patchComment(comment_id, data){
-    return api.patch(`/api/comments/${comment_id}`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/comments/${comment_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.comment;
     })
 }
 
 function deleteComment(comment_id){
-    return api.delete(`/api/comments/${comment_id}`);
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/comments/${comment_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        });
+    })
 }
 
 function postAlbum(data){
-    return api.post(`/api/albums`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/albums`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.album;
     })
 }
 
 function postSong(album_id, data){
-    return api.post(`/api/albums/${album_id}/songs`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/albums/${album_id}/songs`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.song
     })
 }
 
 function patchAlbum(album_id, data){
-    return api.patch(`/api/albums/${album_id}`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/albums/${album_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.album
     })
 }
 
 function deleteAlbum(album_id){
-    return api.delete(`/api/albums/${album_id}`)
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/albums/${album_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
 }
 
 function patchSong(song_id, data){
-    return api.patch(`/api/songs/${song_id}`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/songs/${song_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.song;
     })
 }
 
 function deleteSong(song_id){
-    return api.delete(`/api/songs/${song_id}`)
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/songs/${song_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
 }
 
 function getRatingByIds(contentType, user_id, content_id){
-    return api.get(`/api/ratings/${contentType}/${content_id}/users/${user_id}`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.rating;
     })
 }
 
 function postRating(contentType, content_id, data){
-    return api.post(`/api/${contentType}/${content_id}/ratings`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/${contentType}/${content_id}/ratings`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.rating;
     })
 }
 
 function patchRating(contentType, user_id, content_id, data){
-    return api.patch(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.rating;
     })
 }
 
 function deleteRating(contentType, user_id, content_id){
-    return api.delete(`/api/ratings/${contentType}/${content_id}/users/${user_id}`)
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/ratings/${contentType}/${content_id}/users/${user_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
 }
 
 function postFollow(follower_id, following_id){
-    return api.post(`/api/follows/follower/${follower_id}/following/${following_id}`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/follows/follower/${follower_id}/following/${following_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.follow;
     })
 }
 
 function removeFollow(follower_id, following_id){
-    return api.delete(`/api/follows/follower/${follower_id}/following/${following_id}`)
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/follows/follower/${follower_id}/following/${following_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
 }
 
 function getNotificationsFromUser(user_id){
@@ -161,13 +283,27 @@ function getNotificationsFromUser(user_id){
 }
 
 function postNotification(data){
-    return api.post("/api/notifications", data).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.post("/api/notifications", data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.notification;
     })
 }
 
 function patchNotification(notification_id){
-    return api.patch(`/api/notifications/${notification_id}`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/notifications/${notification_id}`, null, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.notification;
     })
 }
