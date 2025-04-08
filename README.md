@@ -97,7 +97,7 @@ Once you submit everything, you will be shown a page containing your site key an
     
     VITE_RECAPTCHA_SITE_KEY=your_site_key
 
-As for the secret key, the site itself does not need to know this. Instead, you will be adding this in the Firebase console. In the Firebase console, go to your project and register your site with app check. Choose reCAPTCHA (**not** reCAPTCHA Enterprise), and then paste your secret key in the `reCAPTCHA secret key` textfield provided. Once you save your changes here, assuming the back-end has been set up for app checking, it should now be working. To find out how to set up the front-end for app checking, see the corresponding Firebase App Checking section of the [`README.md` in the back-end repository](https://github.com/AlexMan123456/neurosongs-back-end/blob/main/README.md)
+As for the secret key, the site itself does not need to know this. Instead, you will be adding this in the Firebase console. In the Firebase console, go to your project and register your site with app check. Choose reCAPTCHA (**not** reCAPTCHA Enterprise), and then paste your secret key in the `reCAPTCHA secret key` textfield provided. Once you save your changes here, assuming the back-end has been set up for app checking, it should now be working. To find out how to set up the front-end for app checking, see the corresponding Firebase App Checking section of the [`README.md` in the back-end repository](https://github.com/AlexMan123456/neurosongs-back-end?tab=readme-ov-file#firebase-app-checking)
 
 ## Running the Site in Development Mode
 
