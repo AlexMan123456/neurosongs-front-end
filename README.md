@@ -109,6 +109,6 @@ Also make sure that your back-end server is running so that the site can make re
 
 ## Extra links
 
-Link to hosted site: https://neurosongs.netlify.app/
+Link to hosted site: https://neurosongs.net
 
 Link to back-end repository: https://github.com/AlexMan123456/neurosongs-back-end
