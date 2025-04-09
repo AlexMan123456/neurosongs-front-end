@@ -30,7 +30,7 @@ function SongEditPage(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        getSongById(song_id).then((song) => {
+        getSongById(song_id, signedInUser.user_id).then((song) => {
             setUserID(song.user_id);
             setAlbumID(song.album_id);
 

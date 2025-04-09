@@ -19,7 +19,7 @@ function AlbumSelector(){
 
     useEffect(() => {
         setIsLoading(true);
-        getAlbums({user_id}).then((albums) => {
+        getAlbums({user_id}, signedInUser.user_id).then((albums) => {
             setIsLoading(false);
             setAlbums(albums);
         })

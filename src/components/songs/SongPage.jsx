@@ -33,7 +33,7 @@ function SongPage(){
             try {
                 setIsLoading(true);
     
-                const songData = await getSongById(song_id);
+                const songData = await getSongById(song_id, signedInUser.user_id);
                 
                 const songRef = ref(storage, getSongDirectory(songData));
                 setSong(await getDownloadURL(songRef));

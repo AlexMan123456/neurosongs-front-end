@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getAlbums, getSongs } from "../../api";
 import SongCard from "./songs/SongCard";
 import AlbumCard from "./albums/AlbumCard";
@@ -7,18 +7,20 @@ import { List } from "@mui/material";
 import SongsTable from "./songs/SongsTable";
 import AllSongs from "./songs/AllSongs";
 import DisplaySongs from "./songs/DisplaySongs";
+import { UserContext } from "#contexts/UserContext";
 
 function FeaturedPage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
     const [featuredAlbums, setFeaturedAlbums] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const {signedInUser} = useContext(UserContext)
 
     useEffect(() => {
         setIsLoading(true);
         getSongs({is_featured: true}).then((songs) => {
             setFeaturedSongs(songs);
-            return getAlbums({is_featured: true});
+            return getAlbums({is_featured: true}, signedInUser.user_id);
         }).then((albums) => {
             setIsLoading(false);
             setFeaturedAlbums(albums);

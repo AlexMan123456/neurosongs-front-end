@@ -6,6 +6,7 @@ import { storage } from "../../../firebase-config";
 import H5AudioPlayer from "react-h5-audio-player";
 import Loading from "../../Loading";
 import { ScreenSizeContext } from "#contexts/ScreenSizeContext";
+import { UserContext } from "#contexts/UserContext";
 
 function AlbumSongPlayer({album}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -16,12 +17,13 @@ function AlbumSongPlayer({album}){
     const navigate = useNavigate()
     const location = useLocation()
     const {isLargeScreen} = useContext(ScreenSizeContext);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         async function loadSong(){
             try {
                 setIsLoading(true);
-                const songData = await getSongById(song_id);
+                const songData = await getSongById(song_id, signedInUser.user_id);
                 const songRef = ref(storage, `${songData.user_id}/albums/${album.album_id}/songs/${songData.reference}`);
                 setIsLoading(false);
                 setSongURL(await getDownloadURL(songRef));

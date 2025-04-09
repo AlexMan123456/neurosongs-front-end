@@ -19,7 +19,7 @@ function RatingSection({contentType, setRatingVisibilityUpdated}){
 
     useEffect(() => {
         setIsLoading(true);
-        const getContent = contentType === "song" ? getSongById(params[`${contentType}_id`]) : getAlbumById(params[`${contentType}_id`], signedInUser.user_id)
+        const getContent = contentType === "song" ? getSongById(params[`${contentType}_id`], signedInUser.user_id) : getAlbumById(params[`${contentType}_id`], signedInUser.user_id)
         getContent.then(({average_rating, rating_count}) => {
             setAverageRating(average_rating);
             setRatingCount(rating_count);
