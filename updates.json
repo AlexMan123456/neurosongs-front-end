@@ -62,5 +62,9 @@
     {
         "id": 10,
         "message": "Changes to back-end API connection"
+    },
+    {
+        "id": 11,
+        "message": "Minor changes to API connection"
     }
 ]
