@@ -28,7 +28,7 @@ function AlbumData({album, backCover, frontCover}){
     useEffect(() => {
         if(song_id){
             setIsLoading(true);
-            getSongById(song_id).then((song) => {
+            getSongById(song_id, signedInUser.user_id).then((song) => {
                 setSong(song);
                 setIsLoading(false);
             }).catch((err) => {

@@ -6,20 +6,43 @@ const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
-function getSongs(queries){
-    return api.get("/api/songs", {params: queries}).then(({data}) => {
+function getSongs(queries, signedInUserID){
+    return getToken(appCheck).then(({token}) => {
+        return api.get("/api/songs", {
+            params: queries,
+            headers: {
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": signedInUserID
+            }
+        })
+    })
+    .then(({data}) => {
         return data.songs
     })
 }
 
 function getUsers(queries){
-    return api.get("/api/users", {params: queries}).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get("/api/users", {
+            params: queries,
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data.users
     })
 }
 
 function getUserById(user_id){
-    return api.get(`/api/users/${user_id}`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/users/${user_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.user
     })
 }
@@ -34,20 +57,42 @@ function deleteUserFromDatabase(user_id){
     })
 }
 
-function getSongById(song_id){
-    return api.get(`/api/songs/${song_id}`).then(({data}) => {
+function getSongById(song_id, signedInUserID){
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/songs/${song_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": signedInUserID
+            }
+        })
+    }).then(({data}) => {
         return data.song
     })
 }
 
-function getAlbums(queries){
-    return api.get("/api/albums", {params: queries}).then(({data}) => {
+function getAlbums(queries, signedInUserID){
+    return getToken(appCheck).then(({token}) => {
+        return api.get("/api/albums", {
+            params: queries,
+            headers: {
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": signedInUserID
+            }
+        })
+    }).then(({data}) => {
         return data.albums
     })
 }
 
-function getAlbumById(album_id){
-    return api.get(`/api/albums/${album_id}`).then(({data}) => {
+function getAlbumById(album_id, signedInUserID){
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/albums/${album_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": signedInUserID
+            }
+        })
+    }).then(({data}) => {
         return data.album
     })
 }
@@ -78,13 +123,25 @@ function patchUser(user_id, data){
 }
 
 function getComments(contentType, content_id){
-    return api.get(`/api/${contentType}/${content_id}/comments`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/${contentType}/${content_id}/comments`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.comments;
     })
 }
 
 function getReplies(comment_id){
-    return api.get(`/api/comments/${comment_id}/replies`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/comments/${comment_id}/replies`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.replies;
     })
 }
@@ -277,7 +334,13 @@ function removeFollow(follower_id, following_id){
 }
 
 function getNotificationsFromUser(user_id){
-    return api.get(`/api/users/${user_id}/notifications`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/users/${user_id}/notifications`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
         return data.notifications;
     })
 }
@@ -309,7 +372,14 @@ function patchNotification(notification_id){
 }
 
 function getCommentById(comment_id){
-    return api.get(`/api/comments/${comment_id}`).then(({data}) => {
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/comments/${comment_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+    .then(({data}) => {
         return data
     })
 }

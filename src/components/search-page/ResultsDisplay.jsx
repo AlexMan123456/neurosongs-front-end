@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getAlbums, getSongs, getUsers } from "../../../api";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import wait from "../../utils/wait";
@@ -7,6 +7,7 @@ import SongResults from "./content-display/SongResults";
 import AlbumResults from "./content-display/AlbumResults";
 import UserResults from "./content-display/UserResults";
 import { Button } from "@mui/material";
+import { UserContext } from "#contexts/UserContext";
 
 function ResultsDisplay({searchFor, setSearchQuery}){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,13 +19,14 @@ function ResultsDisplay({searchFor, setSearchQuery}){
     const [content, setContent] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const {signedInUser} = useContext(UserContext)
 
     useEffect(() => {
         if(search_query){
             setIsLoading(true);
             const getContent = {
-                songs: getSongs({search_query}),
-                albums: getAlbums({search_query}),
+                songs: getSongs({search_query}, signedInUser.user_id),
+                albums: getAlbums({search_query}, signedInUser.user_id),
                 users: getUsers({search_query})
             }[searchFor]
 

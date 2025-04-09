@@ -32,7 +32,7 @@ function SongAdder(){
 
     useEffect(() => {
         setIsLoading(true);
-        getAlbumById(album_id).then((album) => {
+        getAlbumById(album_id, signedInUser.user_id).then((album) => {
             setAlbum(album);
             const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
             return getDownloadURL(frontCoverRef)

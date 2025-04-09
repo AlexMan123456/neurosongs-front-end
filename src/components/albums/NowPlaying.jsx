@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { getSongById } from "../../../api";
 import Loading from "../Loading";
 import StyledLink from "../styling/StyledLink";
+import { UserContext } from "#contexts/UserContext";
 
 function NowPlaying(){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -10,10 +11,11 @@ function NowPlaying(){
     const [songData, setSongData] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const {signedInUser} = useContext(UserContext)
 
     useEffect(() => {
         setIsLoading(true);
-        getSongById(song_id).then((song) => {
+        getSongById(song_id, signedInUser.user_id).then((song) => {
             setIsLoading(false);
             setSongData(song);
         }).catch((err) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAlbumById, getSongById } from "../../../api";
 import { useParams } from "react-router-dom";
 import RatingSetter from "./RatingSetter";
@@ -6,6 +6,7 @@ import wait from "../../utils/wait";
 import { Typography } from "@mui/material";
 import getRatingColour from "../../utils/get-rating-colour";
 import Loading from "../Loading";
+import { UserContext } from "#contexts/UserContext";
 
 function RatingSection({contentType, setRatingVisibilityUpdated}){
     const params = useParams();
@@ -14,10 +15,11 @@ function RatingSection({contentType, setRatingVisibilityUpdated}){
     const [error, setError] = useState("");
     const [currentRating, setCurrentRating] = useState(0);
     const [ratingCount, setRatingCount] = useState(0);
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true);
-        const getContent = contentType === "song" ? getSongById(params[`${contentType}_id`]) : getAlbumById(params[`${contentType}_id`])
+        const getContent = contentType === "song" ? getSongById(params[`${contentType}_id`], signedInUser.user_id) : getAlbumById(params[`${contentType}_id`], signedInUser.user_id)
         getContent.then(({average_rating, rating_count}) => {
             setAverageRating(average_rating);
             setRatingCount(rating_count);
