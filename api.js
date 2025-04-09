@@ -46,8 +46,16 @@ function getAlbums(queries){
     })
 }
 
-function getAlbumById(album_id){
-    return api.get(`/api/albums/${album_id}`).then(({data}) => {
+function getAlbumById(album_id, user_id){
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/albums/${album_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": user_id
+            }
+        })
+    })
+    .then(({data}) => {
         return data.album
     })
 }

@@ -24,7 +24,7 @@ function AlbumSongAdderPage(){
 
     useEffect(() => {
         setIsLoading(true);
-        getAlbumById(album_id).then((album) => {
+        getAlbumById(album_id, signedInUser.user_id).then((album) => {
             setIsLoading(false);
             setAlbum(album);
         }).catch((err) => {
