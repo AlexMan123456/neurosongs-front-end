@@ -58,7 +58,7 @@ function AlbumData({album, backCover, frontCover}){
             {formatMarkdownWithLineBreaks(album.description)}
         </Markdown>
         : null}
-        <p>Created: {formatDate(new Date(album.created_at))}</p>
+        <p>Created: {formatDate(new Date(album.created_at))} ({album.visibility})</p>
         {song_id
         ? 
         (isLoading 

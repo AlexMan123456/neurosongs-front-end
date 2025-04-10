@@ -122,11 +122,12 @@ function patchUser(user_id, data){
     })
 }
 
-function getComments(contentType, content_id){
+function getComments(contentType, content_id, signedInUserID){
     return getToken(appCheck).then(({token}) => {
         return api.get(`/api/${contentType}/${content_id}/comments`, {
             headers: {
-                "X-Firebase-AppCheck": token
+                "X-Firebase-AppCheck": token,
+                "App-SignedInUser": signedInUserID
             }
         })
     }).then(({data}) => {

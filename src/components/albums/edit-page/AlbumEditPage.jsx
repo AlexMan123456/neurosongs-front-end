@@ -12,6 +12,7 @@ import { storage } from "../../../firebase-config";
 import getAlbumCoverDirectory from "../../../references/get-album-cover-directory";
 import wait from "../../../utils/wait";
 import ReorderSongs from "./ReorderSongs";
+import VisibilityOptions from "#components/utility/VisibilityOptions";
 
 function AlbumEditPage(){
     const {album_id} = useParams();
@@ -26,6 +27,7 @@ function AlbumEditPage(){
     
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [visibility, setVisibility] = useState(album.visibility)
 
     const navigate = useNavigate();
 
@@ -56,7 +58,7 @@ function AlbumEditPage(){
                 return;
             }
             
-            const data = {title};
+            const data = {title, visibility};
             
             if(description){
                 data.description = description;
@@ -128,6 +130,7 @@ function AlbumEditPage(){
                 value={description}
                 onChange={(event) => {setDescription(event.target.value)}}
             />
+            <VisibilityOptions visibility={visibility} setVisibility={setVisibility} width={"125px"}/>
         </Stack>
         {error ? <p>{error}</p> : null}
         <ReorderSongs songs={songs} setSongs={setSongs}/>
