@@ -15,6 +15,7 @@ function SongsTable({songs, setSongs}){
                         <TableCell>Artist</TableCell>
                         {!location.pathname.includes("/users") ? <TableCell>Username</TableCell> : null}
                         <TableCell>Album</TableCell>
+                        <TableCell>Visibility</TableCell>
                     </TableRow>
                 </TableHead>
                 {songs.map((song) => {

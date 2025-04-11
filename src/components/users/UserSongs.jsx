@@ -21,7 +21,7 @@ function UserSongs(){
 
     useEffect(() => {
         setIsLoading(true);
-        getSongs({user_id}).then((songs) => {
+        getSongs({user_id}, signedInUser.user_id).then((songs) => {
             setIsLoading(false);
             setSongs(songs);
         }).catch((err) => {
