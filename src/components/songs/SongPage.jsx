@@ -14,6 +14,7 @@ import { UserContext } from "../../contexts/UserContext";
 import wait from "../../utils/wait";
 import DeletePopup from "#components/utility/DeletePopup";
 import Markdown from "react-markdown";
+import ForbiddenAccess from "#components/errors/ForbiddenAccess";
 
 function SongPage(){
     const {song_id} = useParams()
@@ -27,6 +28,7 @@ function SongPage(){
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const {signedInUser} = useContext(UserContext);
     const navigate = useNavigate();
+    const [forbidAccess, setForbidAccess] = useState(false);
 
     useEffect(() => {
         async function getAllData(){
@@ -50,7 +52,11 @@ function SongPage(){
                 setIsLoading(false);
             } catch(err) {
                 setIsLoading(false);
-                setError("Error fetching data. Please try again later.")
+                if(err.status === 403){
+                    setForbidAccess(true);
+                    return;
+                }
+                setError("Error fetching data. Please try again later.");
             }
         }
         getAllData()
@@ -79,6 +85,10 @@ function SongPage(){
 
     if(isLoading){
         return <Loading/>
+    }
+
+    if(forbidAccess){
+        return <ForbiddenAccess/>
     }
 
     if(error){
