@@ -22,7 +22,7 @@ function SongAdder(){
     const [frontCover, setFrontCover] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [visibility, setVisibility] = useState(album.visibility);
+    const [visibility, setVisibility] = useState("");
 
     const [songAudio, setSongAudio] = useState(null);
     const [songFile, setSongFile] = useState(null);
@@ -36,6 +36,7 @@ function SongAdder(){
         setIsLoading(true);
         getAlbumById(album_id, signedInUser.user_id).then((album) => {
             setAlbum(album);
+            setVisibility(album.visibility);
             const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
             return getDownloadURL(frontCoverRef)
         }).then((frontCoverURL) => {
@@ -68,7 +69,7 @@ function SongAdder(){
             setIsLoading(false);
         }).catch((err) => {
             setIsLoading(false);
-            setError("Error fetching audio file. Please try again later.")
+            setError("Error fetching audio file. Please try again later.");
             return wait(4).then(() => {
                 setError("");
             })
