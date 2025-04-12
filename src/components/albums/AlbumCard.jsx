@@ -1,6 +1,6 @@
 import { useLocation, useParams } from "react-router-dom";
 import StyledLink from "../styling/StyledLink";
-import { Box, Card, CardContent, ListItem, ListItemText, Stack } from "@mui/material";
+import { Box, Card, CardContent, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import AlbumImage from "./AlbumImage";
 import { ArrowDropDown } from "@mui/icons-material";
 import AlbumCardOptions from "./AlbumCardOptions";
@@ -38,6 +38,7 @@ function AlbumCard({album, setAlbums}){
                         <StyledLink to={`/users/${album.user_id}`}>@{album.artist.username}</StyledLink>
                     </ListItemText>
                     : null}
+                    {signedInUser.user_id === user_id ? <ListItemText>Visibility: {album.visibility}</ListItemText> : null}
                 </CardContent>
             </Card>
         </ListItem>
