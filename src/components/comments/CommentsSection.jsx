@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import CommentCreator from "./CommentCreator"
 import { getComments } from "../../../api";
 import CommentsList from "./CommentsList";
 import Loading from "../Loading";
+import { UserContext } from "#contexts/UserContext";
 
 function CommentsSection({content, ratingVisibilityUpdated}){
     const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
+    const {signedInUser} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true);
-        getComments(content.song_id ? "songs" : "albums", content.song_id ?? content.album_id).then((comments) => {
+        getComments(content.song_id ? "songs" : "albums", content.song_id ?? content.album_id, signedInUser.user_id).then((comments) => {
             setIsLoading(false);
             setComments(comments);
         }).catch((err) => {

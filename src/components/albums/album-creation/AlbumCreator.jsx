@@ -1,4 +1,4 @@
-import { Button, FormControl, TextField } from "@mui/material"
+import { Button, FormControl, Stack, TextField } from "@mui/material"
 import { useContext, useState } from "react"
 import { UserContext } from "../../../contexts/UserContext";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -6,12 +6,14 @@ import { postAlbum } from "../../../../api";
 import Loading from "../../Loading";
 import wait from "../../../utils/wait";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
+import VisibilityOptions from "#components/utility/VisibilityOptions";
 
 function AlbumCreator(){
     const {user_id} = useParams()
     const {signedInUser} = useContext(UserContext);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [visibility, setVisibility] = useState("public");
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -25,7 +27,7 @@ function AlbumCreator(){
             })
         }
 
-        const data = {user_id, title};
+        const data = {user_id, title, visibility};
         if(description){
             data.description = description;
         }
@@ -55,24 +57,27 @@ function AlbumCreator(){
         <h2>Create an album</h2>
         <h3>Please enter the following details</h3>
             <FormControl>
-                <TextField
-                    required
-                    label="Title"
-                    value={title}
-                    onChange={(event) => {setTitle(event.target.value)}}
-                />
-                <TextField
-                    multiline
-                    sx={{
-                        minWidth: "30vw",
-                    }}
-                    minRows={5}
-                    label="Description"
-                    value={description}
-                    onChange={(event) => {setDescription(event.target.value)}}
-                />
-                <Button onClick={handleSubmit}>Next</Button>
-                {error ? <p>{error}</p> : null}
+                <Stack spacing={1}>
+                    <TextField
+                        required
+                        label="Title"
+                        value={title}
+                        onChange={(event) => {setTitle(event.target.value)}}
+                    />
+                    <TextField
+                        multiline
+                        sx={{
+                            minWidth: "30vw",
+                        }}
+                        minRows={5}
+                        label="Description"
+                        value={description}
+                        onChange={(event) => {setDescription(event.target.value)}}
+                    />
+                    <VisibilityOptions visibility={visibility} setVisibility={setVisibility}/>
+                    <Button onClick={handleSubmit}>Next</Button>
+                    {error ? <p>{error}</p> : null}
+                </Stack>
             </FormControl>
     </section>)
 }

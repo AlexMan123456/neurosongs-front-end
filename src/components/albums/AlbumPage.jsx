@@ -14,6 +14,7 @@ import { getSongDirectory } from "#references";
 import DeletePopup from "#components/utility/DeletePopup";
 import Markdown from "react-markdown";
 import { wait } from "#utils";
+import ForbiddenAccess from "#components/errors/ForbiddenAccess";
 
 function AlbumPage(){
     const {album_id} = useParams();
@@ -25,6 +26,7 @@ function AlbumPage(){
     const [ratingVisibilityUpdated, setRatingVisibilityUpdated] = useState(false);
     const [showDeleteBackdrop, setShowDeleteBackdrop] = useState(false);
     const {signedInUser} = useContext(UserContext);
+    const [forbidAccess, setForbidAccess] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,7 +46,11 @@ function AlbumPage(){
                 setIsLoading(false);
             } catch(err) {
                 setIsLoading(false);
-                setError("Could not get album. Please try again later.")
+                if(err.status === 403){
+                    setForbidAccess(true);
+                    return;
+                }
+                setError("Could not get album. Please try again later.");
             }
         }
         getAlbumData()
@@ -96,6 +102,10 @@ function AlbumPage(){
 
     if(error){
         return <p>{error}</p>
+    }
+
+    if(forbidAccess){
+        return <ForbiddenAccess/>
     }
     
     return (<>

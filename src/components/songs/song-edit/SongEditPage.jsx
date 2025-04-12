@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { getSongById, patchSong } from "../../../../api";
+import { getAlbumById, getSongById, patchSong } from "../../../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import wait from "../../../utils/wait";
 import Loading from "../../Loading";
@@ -11,6 +11,7 @@ import { storage } from "../../../firebase-config";
 import { UserContext } from "../../../contexts/UserContext";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
 import SongFileChanger from "./SongFileChanger";
+import VisibilityOptions from "#components/utility/VisibilityOptions";
 
 function SongEditPage(){
     const [userID, setUserID] = useState("");
@@ -21,6 +22,8 @@ function SongEditPage(){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [isFileChanged, setIsFileChanged] = useState(false);
+    const [visibility, setVisibility] = useState("");
+    const [albumVisibility, setAlbumVisibility] = useState("");
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
@@ -38,9 +41,13 @@ function SongEditPage(){
             setDescription(song.description ?? "");
             setOldFileName(song.reference);
             setNewFile({name: song.reference});
-
+            setVisibility(song.visibility);
+            return getAlbumById(song.album_id, signedInUser.user_id)
+        }).then(({visibility}) => {
+            setAlbumVisibility(visibility);
             setIsLoading(false);
-        }).catch((err) => {
+        })
+        .catch((err) => {
             setError("Error fetching album data. Please try again later");
             setIsLoading(false);
             wait(4).then(() => {
@@ -52,7 +59,7 @@ function SongEditPage(){
     async function handleSubmit(){
         setIsLoading(true);
         try {
-            const data = {title, description}
+            const data = {title, description, visibility}
             if(isFileChanged){
                 const oldSongRef = ref(storage, getSongDirectory({user_id: userID, album_id: albumID, reference: oldFileName}));
                 await deleteObject(oldSongRef);
@@ -105,6 +112,8 @@ function SongEditPage(){
                 isFileChanged={isFileChanged}
                 setIsFileChanged={setIsFileChanged}
             />
+            <br/>
+            <VisibilityOptions visibility={visibility} setVisibility={setVisibility} albumVisibility={albumVisibility}/>
         </Stack>
         <br/>
         <Button variant="contained" onClick={handleSubmit}>Submit</Button>

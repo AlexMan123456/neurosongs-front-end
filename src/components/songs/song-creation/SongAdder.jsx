@@ -8,11 +8,12 @@ import getAlbumCoverDirectory from "../../../references/get-album-cover-director
 import Loading from "../../Loading";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
 import StyledImage from "../../styling/StyledImage";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, FormControl, Stack, TextField } from "@mui/material";
 import H5AudioPlayer from "react-h5-audio-player";
 import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
 import getSongDirectory from "../../../references/get-song-directory";
+import VisibilityOptions from "#components/utility/VisibilityOptions";
 
 function SongAdder(){
     const {album_id} = useParams();
@@ -21,6 +22,7 @@ function SongAdder(){
     const [frontCover, setFrontCover] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [visibility, setVisibility] = useState("");
 
     const [songAudio, setSongAudio] = useState(null);
     const [songFile, setSongFile] = useState(null);
@@ -34,6 +36,7 @@ function SongAdder(){
         setIsLoading(true);
         getAlbumById(album_id, signedInUser.user_id).then((album) => {
             setAlbum(album);
+            setVisibility(album.visibility);
             const frontCoverRef = ref(storage, getAlbumCoverDirectory(album, "front"));
             return getDownloadURL(frontCoverRef)
         }).then((frontCoverURL) => {
@@ -66,7 +69,7 @@ function SongAdder(){
             setIsLoading(false);
         }).catch((err) => {
             setIsLoading(false);
-            setError("Error fetching audio file. Please try again later.")
+            setError("Error fetching audio file. Please try again later.");
             return wait(4).then(() => {
                 setError("");
             })
@@ -99,7 +102,8 @@ function SongAdder(){
         const data = {
             user_id: album.user_id,
             title,
-            reference: songFile.name
+            reference: songFile.name,
+            visibility
         }
 
         if(description){
@@ -137,31 +141,34 @@ function SongAdder(){
         <br/>
         <br/>
         <FormControl>
-            <TextField
-                required
-                label="Title"
-                value={title}
-                onChange={(event) => {setTitle(event.target.value)}}
-            />
-            <TextField
-                multiline
-                sx={{
-                    minWidth: "30vw",
-                }}
-                minRows={5}
-                label="Description"
-                value={description}
-                onChange={(event) => {setDescription(event.target.value)}}
-            />
-            {songAudio ? <H5AudioPlayer src={songAudio}/> : null}
-            {<FileInput
-                accept="audio/*"
-                onChange={handleAudioInput}
-            >
-                Upload audio
-            </FileInput>}
-            {error ? <p>{error}</p> : null}
-            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            <Stack spacing={1}>
+                <TextField
+                    required
+                    label="Title"
+                    value={title}
+                    onChange={(event) => {setTitle(event.target.value)}}
+                />
+                <TextField
+                    multiline
+                    sx={{
+                        minWidth: "30vw",
+                    }}
+                    minRows={5}
+                    label="Description"
+                    value={description}
+                    onChange={(event) => {setDescription(event.target.value)}}
+                />
+                {songAudio ? <H5AudioPlayer src={songAudio}/> : null}
+                {<FileInput
+                    accept="audio/*"
+                    onChange={handleAudioInput}
+                >
+                    Upload audio
+                </FileInput>}
+                <VisibilityOptions visibility={visibility} setVisibility={setVisibility} width="125px" albumVisibility={album.visibility}/>
+                {error ? <p>{error}</p> : null}
+                <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            </Stack>
         </FormControl>
         </section>)
 }

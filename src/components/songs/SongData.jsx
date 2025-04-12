@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import 'react-h5-audio-player/lib/styles.css';
 import H5AudioPlayer from "react-h5-audio-player";
 import StyledLink from "../styling/StyledLink";
@@ -7,9 +7,11 @@ import formatDate from "../../utils/format-date";
 import getRatingColour from "../../utils/get-rating-colour";
 import Markdown from "react-markdown";
 import { formatMarkdownWithLineBreaks } from "#utils";
+import { UserContext } from "#contexts/UserContext";
 
 function SongData({song, songData, frontCover, backCover}){
     const [displayFront, setDisplayFront] = useState(true);
+    const {signedInUser} = useContext(UserContext);
 
     return (<section>
         <img 
@@ -33,6 +35,7 @@ function SongData({song, songData, frontCover, backCover}){
         : null}
         <H5AudioPlayer src={song} showJumpControls={false}/>
         <p>Created: {formatDate(new Date(songData.created_at))}</p>
+        {signedInUser.user_id === songData.user_id ? <p>Visibility: {songData.visibility}</p> : null}
     </section>)
 }
 
