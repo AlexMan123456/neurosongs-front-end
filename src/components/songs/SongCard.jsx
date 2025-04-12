@@ -18,7 +18,6 @@ function SongCard({song, setSongs}){
     const {user_id} = useParams();
     
     useEffect(() => {
-        console.log(song.visibility)
         setIsLoading(true);
         const frontCoverRef = ref(storage, getAlbumCoverDirectory({user_id: song.user_id, album_id: song.album_id, front_cover_reference: song.album.front_cover_reference}, "front"))
         getDownloadURL(frontCoverRef).then((frontCoverURL) => {

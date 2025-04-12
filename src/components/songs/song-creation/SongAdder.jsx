@@ -8,7 +8,7 @@ import getAlbumCoverDirectory from "../../../references/get-album-cover-director
 import Loading from "../../Loading";
 import ForbiddenAccess from "../../errors/ForbiddenAccess";
 import StyledImage from "../../styling/StyledImage";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, FormControl, Stack, TextField } from "@mui/material";
 import H5AudioPlayer from "react-h5-audio-player";
 import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
@@ -137,31 +137,33 @@ function SongAdder(){
         <br/>
         <br/>
         <FormControl>
-            <TextField
-                required
-                label="Title"
-                value={title}
-                onChange={(event) => {setTitle(event.target.value)}}
-            />
-            <TextField
-                multiline
-                sx={{
-                    minWidth: "30vw",
-                }}
-                minRows={5}
-                label="Description"
-                value={description}
-                onChange={(event) => {setDescription(event.target.value)}}
-            />
-            {songAudio ? <H5AudioPlayer src={songAudio}/> : null}
-            {<FileInput
-                accept="audio/*"
-                onChange={handleAudioInput}
-            >
-                Upload audio
-            </FileInput>}
-            {error ? <p>{error}</p> : null}
-            <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            <Stack spacing={1}>
+                <TextField
+                    required
+                    label="Title"
+                    value={title}
+                    onChange={(event) => {setTitle(event.target.value)}}
+                />
+                <TextField
+                    multiline
+                    sx={{
+                        minWidth: "30vw",
+                    }}
+                    minRows={5}
+                    label="Description"
+                    value={description}
+                    onChange={(event) => {setDescription(event.target.value)}}
+                />
+                {songAudio ? <H5AudioPlayer src={songAudio}/> : null}
+                {<FileInput
+                    accept="audio/*"
+                    onChange={handleAudioInput}
+                >
+                    Upload audio
+                </FileInput>}
+                {error ? <p>{error}</p> : null}
+                <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            </Stack>
         </FormControl>
         </section>)
 }
