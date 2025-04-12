@@ -27,7 +27,7 @@ function AlbumEditPage(){
     
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [visibility, setVisibility] = useState(album.visibility)
+    const [visibility, setVisibility] = useState("")
 
     const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ function AlbumEditPage(){
             setFrontCover(album.front_cover_reference);
             setBackCover(album.back_cover_reference);
             setSongs(album.songs);
+            setVisibility(album.visibility)
             setIsLoading(false);
         }).catch((err) => {
             setIsLoading(false);
