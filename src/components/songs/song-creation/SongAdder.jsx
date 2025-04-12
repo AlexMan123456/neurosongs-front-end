@@ -13,6 +13,7 @@ import H5AudioPlayer from "react-h5-audio-player";
 import FileInput from "../../styling/FileInput";
 import wait from "../../../utils/wait";
 import getSongDirectory from "../../../references/get-song-directory";
+import VisibilityOptions from "#components/utility/VisibilityOptions";
 
 function SongAdder(){
     const {album_id} = useParams();
@@ -21,6 +22,7 @@ function SongAdder(){
     const [frontCover, setFrontCover] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [visibility, setVisibility] = useState(album.visibility);
 
     const [songAudio, setSongAudio] = useState(null);
     const [songFile, setSongFile] = useState(null);
@@ -99,7 +101,8 @@ function SongAdder(){
         const data = {
             user_id: album.user_id,
             title,
-            reference: songFile.name
+            reference: songFile.name,
+            visibility
         }
 
         if(description){
@@ -161,6 +164,7 @@ function SongAdder(){
                 >
                     Upload audio
                 </FileInput>}
+                <VisibilityOptions visibility={visibility} setVisibility={setVisibility} width="125px" albumVisibility={album.visibility}/>
                 {error ? <p>{error}</p> : null}
                 <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             </Stack>

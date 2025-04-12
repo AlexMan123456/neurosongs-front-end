@@ -24,7 +24,7 @@ function VisibilityOptions({visibility, setVisibility, width, albumVisibility}){
     return (
         <FormControl sx={{width}}>
             <InputLabel id="visibility-label">Visibility</InputLabel>
-            <Select labelId="visibility-label" value={visibility} onChange={(event) => {setVisibility(event.target.value)}}>
+            <Select labelId="visibility-label" value={visibility} onChange={(event) => {setVisibility(event.target.value)}} defaultValue={visibility ?? albumVisibility ?? "public"}>
                 {visibilityOptions.map((option) => {
                     return <MenuItem key={option} value={option}>{option}</MenuItem>
                 })}
