@@ -66,5 +66,9 @@
     {
         "id": 11,
         "message": "Minor changes to API connection"
+    },
+    {
+        "id": 12,
+        "message": "Added visibility options"
     }
 ]
