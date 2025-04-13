@@ -59,7 +59,11 @@ function AlbumEditPage(){
                 return;
             }
             
-            const data = {title, visibility};
+            const data = {title};
+
+            if(visibility !== album.visibility){
+                data.visibility = visibility;
+            }
             
             if(description){
                 data.description = description;
