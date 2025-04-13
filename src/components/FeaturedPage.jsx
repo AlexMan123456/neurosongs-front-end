@@ -49,8 +49,6 @@ function FeaturedPage(){
             <h3>Featured Songs</h3>
             {isLoading ? <Loading/> : <DisplaySongs songs={featuredSongs}/>}
         </>}
-        <h2>Most Recent Songs</h2>
-        <AllSongs/>
     </section>)
 }
 
