@@ -1,6 +1,6 @@
 // Component taken and adapted from https://mui.com/material-ui/react-drawer/?srsltid=AfmBOorPcMMjB0Ls4a-m1oKuECslEiWu2cSZuceDFmd2CcZwBfsss8sA#mini-variant-drawer
 import { UserContext } from '#contexts/UserContext';
-import { Search, Star } from '@mui/icons-material';
+import { AccessTime, Search, Star } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MuiAppBar from '@mui/material/AppBar';
@@ -153,7 +153,7 @@ function NavigationDrawer({children}){
         </DrawerHeader>
         <Divider />
         <List>
-          {["Homepage", "Featured", "Search"].map((text, index) => {
+          {["Homepage", "Featured", "Recent", "Search"].map((text, index) => {
             const lowerCaseText = text.toLowerCase();
             return (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
@@ -194,6 +194,7 @@ function NavigationDrawer({children}){
                       {
                         Homepage: <HomepageIcon/>,
                         Featured: <Star/>,
+                        Recent: <AccessTime/>,
                         Search: <Search/>
                       }[text]
                     }

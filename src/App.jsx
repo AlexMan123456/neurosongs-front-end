@@ -29,6 +29,7 @@ import AlbumEditPage from "./components/albums/edit-page/AlbumEditPage"
 import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 import CompleteGoogleSignup from "./components/users/sign-in/google-sign-in/CompleteGoogleSignup"
 import SingleCommentPage from "./components/comments/SingleCommentPage"
+import RecentsPage from "#components/RecentsPage"
 
 function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
@@ -64,6 +65,8 @@ function App() {
       <Route path="/albums/:album_id/edit" element={<AlbumEditPage/>}/>
       <Route path="/songs/:song_id/edit" element={<SongEditPage/>}/>
       <Route path="/comments/:comment_id" element={<SingleCommentPage/>}/>
+      <Route path="/recent" element={<RecentsPage/>}/>
+      <Route path="/recent/:category" element={<RecentsPage/>}/>
       <Route path="/*" element={<PageNotFound/>}/>
     </Routes>
     <br/>

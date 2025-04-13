@@ -2,7 +2,7 @@ import Loading from "#components/Loading";
 import { UserContext } from "#contexts/UserContext";
 import { storage } from "#firebase-config";
 import { getProfilePictureDirectory } from "#references";
-import { Search, Star } from "@mui/icons-material"
+import { AccessTime, Search, Star } from "@mui/icons-material"
 import { Avatar, BottomNavigation, BottomNavigationAction, Paper } from "@mui/material"
 import { getDownloadURL, ref } from "firebase/storage";
 import { useContext, useEffect, useState } from "react";
@@ -50,14 +50,21 @@ function NavigationBottom({children}){
                         label="Featured"
                         icon={<Star/>}
                         component={Link}
-                        to="featured"
+                        to="/featured"
+                    />
+                    <BottomNavigationAction
+                        value="recent"
+                        label="Recent"
+                        icon={<AccessTime/>}
+                        component={Link}
+                        to="/recent"
                     />
                     <BottomNavigationAction
                         value="search"
                         label="Search"
                         icon={<Search/>}
                         component={Link}
-                        to="search"
+                        to="/search"
                     />
                     {isUserSignedIn ? <BottomNavigationAction
                         value="profile"
