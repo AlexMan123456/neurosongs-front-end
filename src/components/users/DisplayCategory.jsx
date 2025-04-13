@@ -46,10 +46,11 @@ function DisplayCategory(){
                 songs: <UserSongs/>, 
                 albums: <UserAlbums/>,
                 description: <UserDescription/>
-            }[chosenCategory] ?? (<section>
-                <h2>Category not found</h2>
-                <p>The category you're trying to access does not exist</p>
-            </section>
+            }[chosenCategory] ?? (
+                <section>
+                    <h2>Category not found</h2>
+                    <p>The category you're trying to access does not exist</p>
+                </section>
             )
         }
     </section>)
