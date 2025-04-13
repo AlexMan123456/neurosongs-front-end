@@ -59,9 +59,8 @@ From there, choose to add storage to your project. You may be asked to add a Clo
                 allow delete: if false;
             }
             match /{userId} {
-                allow read: if true
-            allow delete: if request.auth.uid == userId;
-            
+                allow read: if true;
+                allow delete: if request.auth.uid == userId;
             }
             match /{userId}/images/profile-picture/{image} {
                 allow read: if true;
