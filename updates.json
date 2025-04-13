@@ -70,5 +70,9 @@
     {
         "id": 12,
         "message": "Added visibility options"
+    },
+    {
+        "id": 13,
+        "message": "Fix an issue with the song visibility updating when album is edited but album visibility is not"
     }
 ]
