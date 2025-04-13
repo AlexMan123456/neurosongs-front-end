@@ -28,9 +28,7 @@ function AllSongs(){
         return <p>{error}</p>
     }
 
-    return (<section>
-        <DisplaySongs songs={songs}/>
-    </section>)
+    return <DisplaySongs songs={songs}/>
 }
 
 export default AllSongs
