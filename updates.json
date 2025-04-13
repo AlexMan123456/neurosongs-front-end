@@ -74,5 +74,9 @@
     {
         "id": 13,
         "message": "Fix an issue with the song visibility updating when album is edited but album visibility is not"
+    },
+    {
+        "id": 14,
+        "message": "Added separate page to check recent content"
     }
 ]
