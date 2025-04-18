@@ -62,7 +62,7 @@ function AlbumCoverEditor(){
             if(Object.keys(data).length !== 0){
                 await patchAlbum(album_id, data)
             }
-            navigate(`/users/${user_id}`)
+            navigate(`/albums/${album_id}`)
         } catch(err) {
             setError("Error setting album covers. Please try again later.")
             await wait(4);

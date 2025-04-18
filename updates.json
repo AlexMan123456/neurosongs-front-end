@@ -82,5 +82,9 @@
     {
         "id": 15,
         "message": "Add visibility to songs on signed in user user's profile on mobile version"
+    },
+    {
+        "id": 16,
+        "message": "Changed redirect after posting content"
     }
 ]
