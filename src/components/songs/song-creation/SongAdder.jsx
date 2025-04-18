@@ -117,7 +117,7 @@ function SongAdder(){
             return Promise.all([song, wait(2)]);
         }).then(([song, temp]) => {
             setIsLoading(false);
-            navigate(`/albums/${song.album_id}?song_id=${song.song_id}`);
+            navigate(`/songs/${song.song_id}`);
         }).catch((err) => {
             setIsLoading(false);
             setError("Error posting song. Please try again later.");
