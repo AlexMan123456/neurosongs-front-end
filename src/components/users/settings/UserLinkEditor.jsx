@@ -1,4 +1,5 @@
-import { ListItem, TextField } from "@mui/material"
+import { deleteLink } from "#api";
+import { Button, ListItem, TextField } from "@mui/material"
 import { useEffect, useState } from "react";
 
 function UserLinkEditor({link, setLinks}){
@@ -17,6 +18,12 @@ function UserLinkEditor({link, setLinks}){
         })
     }, [name, URL])
 
+    function handleDelete(){
+        deleteLink(link.link_id).then(() => {
+            window.location.reload(false);
+        })
+    }
+
     return (
         <ListItem>
             <TextField
@@ -31,6 +38,7 @@ function UserLinkEditor({link, setLinks}){
                 value={URL}
                 onChange={(event) => {setURL(event.target.value)}}
             />
+            {link.link_id ? <Button color="error" onClick={handleDelete}>Delete</Button> : null}
         </ListItem>
     )
 }
