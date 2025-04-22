@@ -5,12 +5,14 @@ import { Box, Button, List, Stack, TextField, Typography } from "@mui/material"
 import { Fragment, useContext, useEffect, useState } from "react"
 import UserLinkEditor from "./UserLinkEditor";
 import { useNavigate } from "react-router-dom";
+import { wait } from "#utils";
 
 function EditUserLinksSection(){
     const [links, setLinks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-    const [addingLink, setAddingLink] = useState(false);
+    const [linkFetchError, setLinkFetchError] = useState("");
+    const [linkPostError, setLinkPostError] = useState("");
+    const [isAddLinkDisabled, setIsAddLinkDisabled] = useState(false);
     const {signedInUser} = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ function EditUserLinksSection(){
             setLinks(links);
             setIsLoading(false);
         }).catch(() => {
-            setError("Error fetching links. Please try again later.")
+            setLinkFetchError("Error fetching links. Please try again later.")
             setIsLoading(false);
         })
     }, [])
@@ -31,6 +33,7 @@ function EditUserLinksSection(){
             newLinks.push({name: "", url: ""});
             return newLinks
         })
+        setIsAddLinkDisabled(true);
     }
 
     function handleSubmit(){
@@ -38,7 +41,10 @@ function EditUserLinksSection(){
         const promises = [];
         for(const link of links){
             if(link.link_id){
-                promises.push(patchLink(link.link_id, link))
+                const data = {...link}
+                delete data.link_id
+                delete data.user_id
+                promises.push(patchLink(link.link_id, data))
             } else {
                 promises.push(postLink(signedInUser.user_id, link))
             }
@@ -46,6 +52,16 @@ function EditUserLinksSection(){
         return Promise.all(promises).then(() => {
             setIsLoading(false);
             navigate(`/users/${signedInUser.user_id}/description`)
+        }).catch((error) => {
+            if(error.response?.data?.message === "Invalid URL"){
+                setLinkPostError("Invalid URL link. Please try again.");
+                setIsLoading(false);
+                return wait(4).then(() => {
+                    setLinkPostError("");
+                })
+            }
+            setLinkPostError("Error posting link. Please try again later.");
+            setIsLoading(false);
         })
     }
 
@@ -53,8 +69,8 @@ function EditUserLinksSection(){
         return <Loading/>
     }
 
-    if(error){
-        return <Typography color="error">{error}</Typography>
+    if(linkFetchError){
+        return <Typography color="error">{linkFetchError}</Typography>
     }
 
     return (
@@ -67,7 +83,8 @@ function EditUserLinksSection(){
                     }) : null}
                 </List>
             </Stack>
-            <Button onClick={handleAddLink}>Add Link</Button>
+            {linkPostError ? <Typography color="error">{linkPostError}</Typography> : null}
+            <Button disabled={isAddLinkDisabled} onClick={handleAddLink}>Add Link</Button>
             <Button variant="contained" onClick={handleSubmit}>Submit</Button>
         </>
     )
