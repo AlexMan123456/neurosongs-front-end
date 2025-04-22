@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import formatDate from "../../utils/format-date";
 import Markdown from "react-markdown";
 import { formatMarkdownWithLineBreaks } from "#utils";
+import UserLinks from "./UserLinks";
 
 function UserDescription(){
     const {user_id} = useParams()
@@ -41,6 +42,7 @@ function UserDescription(){
             : 
             <p><em>No description set</em></p>}
             <p>Member since: {formatDate(new Date(memberSince))}</p>
+        <UserLinks/>
     </section>)
 }
 

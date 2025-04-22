@@ -385,4 +385,50 @@ function getCommentById(comment_id){
     })
 }
 
-export { getSongs, getUsers, getUserById, deleteUserFromDatabase, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, getNotificationsFromUser, postNotification, patchNotification, getCommentById }
+function getLinks(user_id){
+    return getToken(appCheck).then(({token}) => {
+        return api.get(`/api/users/${user_id}/links`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    }).then(({data}) => {
+        return data.links;
+    })
+}
+
+function postLink(user_id, data){
+    return getToken(appCheck).then(({token}) => {
+        return api.post(`/api/users/${user_id}/links`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        }).then(({data}) => {
+            return data.link;
+        })
+    })
+}
+
+function patchLink(link_id, data){
+    return getToken(appCheck).then(({token}) => {
+        return api.patch(`/api/links/${link_id}`, data, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        }).then(({data}) => {
+            return data.link;
+        })
+    })
+}
+
+function deleteLink(link_id){
+    return getToken(appCheck).then(({token}) => {
+        return api.delete(`/api/links/${link_id}`, {
+            headers: {
+                "X-Firebase-AppCheck": token
+            }
+        })
+    })
+}
+
+export { getSongs, getUsers, getUserById, deleteUserFromDatabase, getSongById, getAlbums, getAlbumById, postUser, patchUser, getComments, getReplies, postComment, postReply, patchComment, deleteComment, postAlbum, postSong, patchAlbum, deleteAlbum, patchSong, deleteSong, getRatingByIds, postRating, patchRating, deleteRating, postFollow, removeFollow, getNotificationsFromUser, postNotification, patchNotification, getCommentById, getLinks, postLink, patchLink, deleteLink }

@@ -85,6 +85,13 @@ function UserSettingsPage(){
         <Divider/>
         <ListItemButton
             component={Link}
+            to={`/users/settings/${signedInUser.user_id}/edit_links`}
+        >
+            <ListItemText primary="Edit Links"/>
+        </ListItemButton>
+        <Divider/>
+        <ListItemButton
+            component={Link}
             to={`/users/settings/${signedInUser.user_id}/edit_date_of_birth`} 
         >
             <ListItemText primary="Edit Date of Birth"/>
