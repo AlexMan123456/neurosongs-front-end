@@ -30,6 +30,7 @@ import { ScreenSizeContext } from "./contexts/ScreenSizeContext"
 import CompleteGoogleSignup from "./components/users/sign-in/google-sign-in/CompleteGoogleSignup"
 import SingleCommentPage from "./components/comments/SingleCommentPage"
 import RecentsPage from "#components/RecentsPage"
+import EditUserLinksSection from "#components/users/settings/EditUserLinksSection"
 
 function App() {
   const {isLargeScreen} = useContext(ScreenSizeContext)
@@ -55,6 +56,7 @@ function App() {
       <Route path="/users/:user_id/notifications" element={<NotificationsPage/>}/>
       <Route path="/loading" element={<LoadingPage/>}/>
       <Route path="/users/settings/:user_id/edit_display" element={<UserDisplayInfoEditPage/>}/>
+      <Route path="/users/settings/:user_id/edit_links" element={<EditUserLinksSection/>}/>
       <Route path="/users/settings/:user_id/edit_date_of_birth" element={<EditDateOfBirthPage/>}/>
       <Route path="/sign_in/reset_password" element={<GetEmailToResetPassword/>}/>
       <Route path="/users/:user_id/albums/create" element={<AlbumCreator/>}/>
