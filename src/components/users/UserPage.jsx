@@ -47,7 +47,7 @@ function UserPage(){
 
     return (<>
         <header>
-            {signedInUser.user_id === user.user_id ? <Button component={Link} to={`/users/settings/${user.user_id}/edit_display`}>Edit</Button> : null}
+            {signedInUser.user_id === user.user_id ? <Button component={Link} to={`/users/settings`}>Edit</Button> : null}
             <Avatar
                 src={profilePictureURL}
                 alt={`${user.username}'s profile picture`}
