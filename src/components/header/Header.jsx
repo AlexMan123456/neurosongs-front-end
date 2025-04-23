@@ -12,7 +12,7 @@ function Header(){
     const {isLargeScreen} = useContext(ScreenSizeContext)
   
     return (<header>
-        {isLargeScreen ? null : <>
+        {isLargeScreen ? null : <Box display="flex">
         <Box 
             style={{
                     position: "absolute",
@@ -28,7 +28,7 @@ function Header(){
             </Link>
         </Box>
             <HeaderElements/>
-        </>}
+        </Box>}
         <div id="heading">
             <h1>
                 <Link to="/">
