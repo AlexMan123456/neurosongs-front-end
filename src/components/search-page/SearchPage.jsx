@@ -15,7 +15,7 @@ function SearchPage(){
     }, [search_for])
 
     return (<>
-        <header>
+        <search>
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
             <Typography>Search for:</Typography>
             <ToggleButtonGroup
@@ -46,7 +46,7 @@ function SearchPage(){
                     Users
                 </ToggleButton>
             </ToggleButtonGroup>
-        </header>
+        </search>
         <main>
             <ResultsDisplay searchFor={searchFor} searchTriggered={searchTriggered} setSearchQuery={setSearchQuery}/>
         </main>

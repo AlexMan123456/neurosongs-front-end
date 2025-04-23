@@ -12,23 +12,14 @@ function Header(){
     const {isLargeScreen} = useContext(ScreenSizeContext)
   
     return (<header>
-        {isLargeScreen ? null : <>
-        <Box 
-            style={{
-                    position: "absolute",
-                    textAlign: "left",
-                    paddingLeft: "10px",
-                    zIndex: 1
-                }}
-        >
+        {isLargeScreen ? null : <Box display="flex" alignItems="center">
             <Link 
                 to="/"
             >
-                <img style={{width: "30px", height: "auto"}} src={homepageIcon} alt="Return to homepage"/>
+                <img style={{width: "30px", height: "auto", paddingLeft: "5px"}} src={homepageIcon} alt="Return to homepage"/>
             </Link>
-        </Box>
             <HeaderElements/>
-        </>}
+        </Box>}
         <div id="heading">
             <h1>
                 <Link to="/">

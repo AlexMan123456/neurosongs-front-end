@@ -54,15 +54,7 @@ function UserDropdown({setSignOutError, isDarkMode}){
     }
 
     return (
-            <Box 
-                sx={{
-                    position: "absolute",
-                    textAlign: "right",
-                    right: "0px",
-                    top: "0px",
-                    zIndex: 1,
-                }}
-            >
+            <Box>
                 <IconButton
                     aria-label="Open user dropdown" 
                     onClick={() => {setDisplayUserList((displayUserList) => {return !displayUserList})}}
@@ -77,6 +69,7 @@ function UserDropdown({setSignOutError, isDarkMode}){
                 </IconButton>
                 {displayUserList ? 
                 <List sx={{
+                    position: "absolute",
                     width: isLargeScreen ? "20vw" : "50vw",
                     border: 0.5,
                     right: isLargeScreen ? "0.5vw" : "1.2vw",
