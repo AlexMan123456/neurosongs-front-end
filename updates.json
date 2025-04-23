@@ -90,5 +90,13 @@
     {
         "id": 17,
         "message": "Add links section to user description"
+    },
+    {
+        "id": 18,
+        "message": "Change appearance of dark/light mode toggle"
+    },
+    {
+        "id": 19,
+        "message": "Styling changes"
     }
 ]
