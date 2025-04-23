@@ -13,11 +13,11 @@ function HeaderElements(){
     const {mode, setMode} = useColorScheme();
     const [isDarkByDefault, setIsDarkByDefault] = useState(mode === "dark");
     const [isDarkMode, setIsDarkMode] = useState(isDarkByDefault);
-    const {isLargeScreen, windowWidth} = useContext(ScreenSizeContext)
+    const {isLargeScreen} = useContext(ScreenSizeContext)
 
-    /* useEffect(() => {
+    useEffect(() => {
         setMode(isDarkMode ? "dark" : "light")
-    }, [isDarkMode]) */
+    }, [isDarkMode])
 
     return (
         <>
@@ -33,7 +33,11 @@ function HeaderElements(){
                     labelPlacement= "end"
                 />
             </FormControl> */}
-            <IconButton sx={{marginLeft: "auto"}} onClick={() => {setMode(mode === "dark" ? "light" : "dark")}}>
+            <IconButton
+                sx={{marginLeft: "auto"}}
+                onClick={() => {setIsDarkMode((darkMode) => {return !darkMode})}}
+                aria-label={`Enable ${isDarkMode ? "light" : "dark"} mode`}
+            >
                {mode === "dark" ? <LightMode/> : <DarkMode/>}
             </IconButton>
             {isUserSignedIn
