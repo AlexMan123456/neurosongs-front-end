@@ -1,106 +1,35 @@
 [
     {
-        "id": 1, 
-        "message": "Navigation layout changes",
-        "subPoints": [
+        "version": "5.3.3",
+        "changes": [
             {
                 "id": 1,
-                "message": "If viewing on desktop, there is now a drawer component to the left of the screen to help with navigation"
-            },
-            {
-                "id": 2,
-                "message": "If viewing on mobile, navigation bar appears on bottom of screen"
+                "message": "Change how update information is displayed",
+                "subPoints": [
+                    {
+                        "id": 1,
+                        "message": "Changes are now grouped by version, making it clearer to see exactly what got changed in which version of the app"
+                    }
+                ]
             }
         ]
     },
     {
-        "id": 2,
-        "message": "Added ability to delete album from album page"
-    },
-    {
-        "id": 3,
-        "message": "Fixed an issue with user dropdown in light mode"
-    },
-    {
-        "id": 4,
-        "message": "Fixed sign-in button"
-    },
-    {
-        "id": 5,
-        "message": "Resize sign in button for mobile"
-    },
-    {
-        "id": 6,
-        "message": "Changes to Google sign-up process",
-        "subPoints": [
+        "version": "5.3.2",
+        "changes": [
             {
                 "id": 1,
-                "message": "Added error messages in the cases where username contains spaces or @"
-            },
-            {
-                "id": 2,
-                "message": "If Google sign-up process causes username to have spaces or @, remove spaces and replace @ with 'a'"
-            },
-            {
-                "id": 3,
-                "message": "Allow users to edit their user descriptions from Google sign-up page"
+                "message": "Bug fixes"
             }
         ]
     },
     {
-        "id": 7,
-        "message": "Added some extra spacing between text areas on forms"
-    },
-    {
-        "id": 8,
-        "message": "General bug fixes to email sign-up process"
-    },
-    {
-        "id": 9,
-        "message": "Fixed a bug with the ordering of songs on album page"
-    },
-    {
-        "id": 10,
-        "message": "Changes to back-end API connection"
-    },
-    {
-        "id": 11,
-        "message": "Minor changes to API connection"
-    },
-    {
-        "id": 12,
-        "message": "Added visibility options"
-    },
-    {
-        "id": 13,
-        "message": "Fix an issue with the song visibility updating when album is edited but album visibility is not"
-    },
-    {
-        "id": 14,
-        "message": "Added separate page to check recent content"
-    },
-    {
-        "id": 15,
-        "message": "Add visibility to songs on signed in user user's profile on mobile version"
-    },
-    {
-        "id": 16,
-        "message": "Changed redirect after posting content"
-    },
-    {
-        "id": 17,
-        "message": "Add links section to user description"
-    },
-    {
-        "id": 18,
-        "message": "Change appearance of dark/light mode toggle"
-    },
-    {
-        "id": 19,
-        "message": "Styling changes"
-    },
-    {
-        "id": 20,
-        "message": "Bug fixes"
+        "version": "5.3.1",
+        "changes": [
+            {
+                "id": 1,
+                "message": "Styling changes"
+            }
+        ]
     }
 ]
