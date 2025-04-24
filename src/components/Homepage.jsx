@@ -6,6 +6,7 @@ import { version } from "../../package.json"
 import eighthNote from "../images/Neurosongs_note.png"
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
+import Updates from "./Updates";
 
 function Homepage(){
     const [viewUpdates, setViewUpdates] = useState(false);
@@ -16,50 +17,7 @@ function Homepage(){
             <p>v{version}</p>
             <p>By: Alex Man</p>
         </header>
-            <Button onClick={() => {setViewUpdates((viewUpdates) => {return !viewUpdates})}}>{viewUpdates ? "Hide" : "See"} recent updates</Button>
-            {viewUpdates ? 
-            <List sx={{
-                    paddingLeft: "1vw",
-                    paddingTop: "3vh",
-                    border: 0.5,
-                    borderRadius: 0.7,
-                }}
-            >
-                {updates.map((update) => {
-                    return (
-                    <>
-                        <ListItem key={update.id} sx={{marginTop: "-30px"}}>
-                            <ListItemIcon>
-                                <img src={eighthNote} alt="Bullet point" style={{width: "25px", height: "auto"}}/>
-                            </ListItemIcon>
-                                <ListItemText primary={
-                                    <Markdown>
-                                        {update.message}
-                                    </Markdown>}
-                                />
-                        </ListItem>
-                        {update.subPoints ? 
-                        <List sx={{paddingLeft: "35px"}}>
-                            {update.subPoints.map((subPoint, index) => {
-                                return (
-                                    <ListItem key={`subpoint-${subPoint.id}`} sx={{marginTop: "-30px"}}>
-                                        <ListItemIcon>
-                                            <img src={eighthNote} alt="Bullet point" style={{width: "25px", height: "auto"}}/>
-                                        </ListItemIcon>
-                                        <ListItemText primary={
-                                            <Markdown>
-                                                {subPoint.message}
-                                            </Markdown>}
-                                        />
-                                    </ListItem>
-                                    )
-                                })}
-                        </List> : null}
-                    </>
-                    )
-                })}
-            </List>
-            : null}
+            <Updates/>
             <main>
                 <p>Welcome to my latest project. This is a website I created called Neurosongs, and it essentially aims to be a community site for musicians. You can think of it as being somewhat of a mix between YouTube, Spotify, and a hint of Metacritic. It has the streaming capabilities of Spotify, mixed with the community aspects of YouTube, and you can also give each song a numerical rating, similarly to Metacritic.</p>
 
