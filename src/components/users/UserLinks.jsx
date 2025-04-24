@@ -35,8 +35,8 @@ function UserLinks(){
             <List>
                 {links.map((link) => {
                     return (
-                        <ListItem>
-                            <StyledLink key={`link-${link.link_id}`} to={link.url}>{link.name}</StyledLink>
+                        <ListItem key={`link-${link.link_id}`}>
+                            <StyledLink to={link.url}>{link.name}</StyledLink>
                         </ListItem>
                     )
                         
