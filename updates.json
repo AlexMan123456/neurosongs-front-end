@@ -98,5 +98,9 @@
     {
         "id": 19,
         "message": "Styling changes"
+    },
+    {
+        "id": 20,
+        "message": "Bug fixes"
     }
 ]
