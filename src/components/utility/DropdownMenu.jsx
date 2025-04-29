@@ -1,6 +1,6 @@
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
-import { Box, Button, Menu, MenuItem } from "@mui/material"
-import { useState } from "react"
+import { Box, Button, Menu } from "@mui/material";
+import { useState } from "react";
 
 function DropdownMenu({children}){
     const [anchorElement, setAnchorElement] = useState(null);

@@ -1,16 +1,10 @@
-import { Box, Button, Checkbox, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import StyledLink from "./styling/StyledLink";
-import { useEffect, useState } from "react";
-import updates from "../../updates.json"
-import { version } from "../../package.json"
-import eighthNote from "../images/Neurosongs_note.png"
-import Markdown from "react-markdown";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { version } from "../../package.json";
+import StyledLink from "./styling/StyledLink";
 import Updates from "./Updates";
 
 function Homepage(){
-    const [viewUpdates, setViewUpdates] = useState(false);
-
     return (<section>
         <header>
             <h2>Welcome to Neurosongs!</h2>

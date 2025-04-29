@@ -1,17 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
-import { getUserById } from "../../../api";
-import Loading from "../Loading";
-import StyledLink from "../styling/StyledLink";
 import { Avatar, Button } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
+import { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { getUserById } from "../../../api";
 import { UserContext } from "../../contexts/UserContext";
-import DisplayCategory from "./DisplayCategory";
+import { storage } from "../../firebase-config";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
-import formatDate from "../../utils/format-date";
+import Loading from "../Loading";
+import DisplayCategory from "./DisplayCategory";
 import FollowControl from "./follows/FollowControl";
-import wait from "../../utils/wait";
 
 function UserPage(){
     const params = useParams();

@@ -1,10 +1,10 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@mui/material"
+import { Avatar, ListItem, ListItemText } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { storage } from "../../firebase-config";
 import getProfilePictureDirectory from "../../references/get-profile-picture-directory";
-import StyledLink from "../styling/StyledLink";
 import Loading from "../Loading";
+import StyledLink from "../styling/StyledLink";
 
 function UserCard({user}){
     const [profilePicture, setProfilePicture] = useState(null);
