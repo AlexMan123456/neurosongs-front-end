@@ -43,19 +43,24 @@ function HeaderElements(){
             {isUserSignedIn
             ? 
             <UserDropdown setSignOutError={setSignOutError} isDarkMode={isDarkMode}/>
-            : <Box style={{
+            : <Box sx={{
                 textAlign: "right",
-                right: "0px",
-                top: "0px"
+                paddingLeft: "5px"
             }}>
-                <Box sx={{paddingTop: "10px", paddingRight: "3px", width: isLargeScreen ? null : "90px", height: "90px"
+                <Box sx={{
+                    display: "flex",
+                    paddingRight: "3px",
+                    width: isLargeScreen ? null : "90px",
+                    height: "90px",
+                    alignItems: "center"
                 }}>
                     <Button
                         color="inherit"
                         variant="outlined"
                         component={Link}
                         to="/sign_in"
-                        sx={{fontSize: isLargeScreen ? null : "12px"}}
+                        sx={{
+                            fontSize: isLargeScreen ? null : "12px"}}
                     >
                         <Person/> Sign in
                     </Button>
