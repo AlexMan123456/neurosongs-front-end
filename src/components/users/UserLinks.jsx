@@ -1,9 +1,9 @@
 import { getLinks } from "#api";
 import Loading from "#components/Loading";
 import StyledLink from "#components/styling/StyledLink";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 function UserLinks(){
     const {user_id} = useParams();

@@ -1,14 +1,11 @@
+import { Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { getSongs } from "../../../api";
-import SongCard from "../songs/SongCard";
-import Loading from "../Loading";
-import { Box, List } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { getSongs } from "../../../api";
 import { UserContext } from "../../contexts/UserContext";
-import StyledLink from "../styling/StyledLink";
-import SongsTable from "../songs/SongsTable";
-import SongsList from "../songs/SongsList";
+import Loading from "../Loading";
 import DisplaySongs from "../songs/DisplaySongs";
+import StyledLink from "../styling/StyledLink";
 
 function UserSongs(){
     const {signedInUser} = useContext(UserContext);

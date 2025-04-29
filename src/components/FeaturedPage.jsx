@@ -1,13 +1,10 @@
-import { useContext, useEffect, useState } from "react"
+import { UserContext } from "#contexts/UserContext";
+import { List } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 import { getAlbums, getSongs } from "../../api";
-import SongCard from "./songs/SongCard";
 import AlbumCard from "./albums/AlbumCard";
 import Loading from "./Loading";
-import { List } from "@mui/material";
-import SongsTable from "./songs/SongsTable";
-import AllSongs from "./songs/AllSongs";
 import DisplaySongs from "./songs/DisplaySongs";
-import { UserContext } from "#contexts/UserContext";
 
 function FeaturedPage(){
     const [featuredSongs, setFeaturedSongs] = useState([]);
