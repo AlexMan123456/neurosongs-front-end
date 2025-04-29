@@ -51,7 +51,7 @@ function HeaderElements(){
                     display: "flex",
                     paddingRight: "3px",
                     width: isLargeScreen ? null : "90px",
-                    height: "90px",
+                    height: isLargeScreen ? "20px" : null,
                     alignItems: "center"
                 }}>
                     <Button
@@ -60,7 +60,9 @@ function HeaderElements(){
                         component={Link}
                         to="/sign_in"
                         sx={{
-                            fontSize: isLargeScreen ? null : "12px"}}
+                            fontSize: isLargeScreen ? null : "12px",
+                            textWrap: "nowrap"
+                        }}
                     >
                         <Person/> Sign in
                     </Button>
