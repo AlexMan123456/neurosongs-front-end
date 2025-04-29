@@ -1,5 +1,24 @@
 [
     {
+        "version": "5.3.5",
+        "changes": [
+            {
+                "id": 1,
+                "message": "More styling fixes",
+                "subPoints": [
+                    {
+                        "id": 1,
+                        "message": "Fix app bar of desktop view being very vertically big"
+                    },
+                    {
+                        "id": 2,
+                        "message": "Fix sign in button on mobile view taking up multiple lines"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "version": "5.3.4",
         "changes": [
             {
