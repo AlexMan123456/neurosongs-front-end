@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.3.4",
+        "changes": [
+            {
+                "id": 1,
+                "message": "Fix alignment of sign in button and light/dark mode toggle"
+            }
+        ]
+    },
+    {
         "version": "5.3.3",
         "changes": [
             {
